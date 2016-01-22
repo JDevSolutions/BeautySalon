@@ -7,6 +7,13 @@
     <groupId>ua.com.jdev</groupId>
     <artifactId>BeautySalon</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>15.0</version>
+        </dependency>
+    </dependencies>
     <packaging>jar</packaging>
     <name>Beauty Salon</name>
 
