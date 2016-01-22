@@ -7,13 +7,6 @@
     <groupId>ua.com.jdev</groupId>
     <artifactId>BeautySalon</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>15.0</version>
-        </dependency>
-    </dependencies>
     <packaging>jar</packaging>
     <name>Beauty Salon</name>
 
@@ -21,8 +14,34 @@
         <jdk.version>1.8</jdk.version>
     </properties>
 
+    <dependencies>
+
+        <!-- A set of annotations used for code inspection support and code documentation. -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>15.0</version>
+        </dependency>
+
+        <!-- MySQL JDBC Type 4 driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+
+        <!-- Apache POI - Java API To Access Microsoft Format Files -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.14-beta1</version>
+        </dependency>
+
+    </dependencies>
+
     <build>
         <resources>
+            <!-- Эта запись позволяет мавену находить файлы разметки (ресурсы) в стандартных местах для JavaFX -->
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
@@ -31,6 +50,7 @@
             </resource>
         </resources>
         <plugins>
+
             <!-- эта зависимость для сборки проекта в jar-файл -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -50,6 +70,7 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <!-- Точка входа в приложение -->
                             <mainClass>ua.com.jdev.MainApp</mainClass>
                         </manifest>
                     </archive>
