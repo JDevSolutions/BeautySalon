@@ -18,6 +18,7 @@ public class Client extends Person {
 
     public Client() {
         super(null, null, null, null);
+        this.cardNumber = new SimpleStringProperty(null);
     }
 
     public String getCardNumber() {

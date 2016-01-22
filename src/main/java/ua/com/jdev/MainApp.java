@@ -11,9 +11,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
+import ua.com.jdev.model.Goods;
+import ua.com.jdev.model.ScheduleRecord;
 import ua.com.jdev.view.TabsOverviewController;
 import ua.com.jdev.view.dialogs.ClientEditDialogController;
 import ua.com.jdev.view.dialogs.EmployeeEditDialogController;
+import ua.com.jdev.view.dialogs.GoodsEditDialogController;
+import ua.com.jdev.view.dialogs.ScheduleEditDialogController;
 
 import java.io.IOException;
 
@@ -22,16 +26,22 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
-    ClientEditDialogController clientController;
-    EmployeeEditDialogController employeeController;
+    private ScheduleEditDialogController scheduleController;
+    private ClientEditDialogController clientController;
+    private EmployeeEditDialogController employeeController;
+    private GoodsEditDialogController goodsController;
 
     /**
-     * The data as an observable list of Persons.
+     * The data as an observable list of Persons, Goods and Schedule.
      */
+    private ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
+    private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
     private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
     private ObservableList<Client> clientData = FXCollections.observableArrayList();
 
     public MainApp() {
+        scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
+        goodsData.add(new Goods("0154", "Краска для волос", "49.90"));
         employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
         clientData.add(new Client("Olga", "Ivanovna", "Safronova", "380503219876"));
     }
@@ -100,12 +110,20 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
-    public ObservableList<Client> getClientData() {
-        return clientData;
+    public ObservableList<ScheduleRecord> getScheduleRecordData() {
+        return scheduleRecordData;
+    }
+
+    public ObservableList<Goods> getGoodsData() {
+        return goodsData;
     }
 
     public ObservableList<Employee> getEmployeeData() {
         return employeeData;
+    }
+
+    public ObservableList<Client> getClientData() {
+        return clientData;
     }
 
     /**
@@ -113,33 +131,64 @@ public class MainApp extends Application {
      * clicks OK, the changes are saved into the provided person object and true
      * is returned.
      *
-     * @param client the person object to be edited
+     * @param scheduleRecord the person object to be edited
      * @return true if the user clicked OK, false otherwise.
      */
-    public boolean showClientEditDialog(Client client) {
+    public boolean showScheduleEditDialog(ScheduleRecord scheduleRecord) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/dialogs/ClientEditDialog.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/dialogs/ScheduleEditDialog.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Редактирование записи о клиенте");
+            dialogStage.setTitle("Редактирование записи о визите клиента");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the client into the controller.
-            clientController = loader.getController();
-            clientController.setDialogStage(dialogStage);
-            clientController.setClient(client);
+            // Set the goods into the controller.
+            scheduleController = loader.getController();
+            scheduleController.setDialogStage(dialogStage);
+            scheduleController.setScheduleRecord(scheduleRecord);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
-            return clientController.isOkClicked();
+            return scheduleController.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showGoodsEditDialog(Goods goods) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/dialogs/GoodsEditDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Редактирование записи о товаре");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the goods into the controller.
+            goodsController = loader.getController();
+            goodsController.setDialogStage(dialogStage);
+            goodsController.setGoods(goods);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return goodsController.isOkClicked();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,11 +227,51 @@ public class MainApp extends Application {
         }
     }
 
-    public ClientEditDialogController getClientController() {
-        return clientController;
+
+    public boolean showClientEditDialog(Client client) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/dialogs/ClientEditDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Редактирование записи о клиенте");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the client into the controller.
+            clientController = loader.getController();
+            clientController.setDialogStage(dialogStage);
+            clientController.setClient(client);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return clientController.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public ScheduleEditDialogController getScheduleController() {
+        return scheduleController;
+    }
+
+    public GoodsEditDialogController getGoodsController() {
+        return goodsController;
     }
 
     public EmployeeEditDialogController getEmployeeController() {
         return employeeController;
+    }
+
+    public ClientEditDialogController getClientController() {
+        return clientController;
     }
 }

@@ -16,7 +16,7 @@
                                 <TableView fx:id="scheduleTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
                                         <TableColumn fx:id="timeColumnSchedule" maxWidth="200.0" minWidth="100.0" prefWidth="125.0" text="Время" />
-                                        <TableColumn fx:id="masterColumnSchedule" minWidth="200.0" prefWidth="75.0" text="Мастер" />
+                                        <TableColumn fx:id="employeeColumnSchedule" minWidth="200.0" prefWidth="75.0" text="Мастер" />
                                         <TableColumn fx:id="clientColumnSchedule" minWidth="200.0" prefWidth="75.0" text="Клиент" />
                                     </columns>
                                     <columnResizePolicy>
@@ -25,9 +25,9 @@
                                 </TableView>
                                 <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                     <children>
-                                        <Button fx:id="addBtnSchedule" mnemonicParsing="false" text="Добавить" />
-                                        <Button fx:id="editBtnSchedule" mnemonicParsing="false" text="Изменить" />
-                                        <Button fx:id="deleteBtnSchedule" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Удалить" />
+                                        <Button fx:id="addBtnSchedule" mnemonicParsing="false" onAction="#handleNewScheduleRecord" prefWidth="70.0" text="Добавить" />
+                                        <Button fx:id="editBtnSchedule" mnemonicParsing="false" onAction="#handleEditScheduleRecord" prefWidth="70.0" text="Изменить" />
+                                        <Button fx:id="deleteBtnSchedule" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteScheduleRecord" prefWidth="70.0" text="Удалить" />
                                     </children>
                                 </HBox>
                             </children>
@@ -40,7 +40,7 @@
                             <children>
                                 <TableView fx:id="goodsTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn fx:id="numberColumnGoods" maxWidth="200.0" minWidth="100.0" prefWidth="120.0" text="Номер" />
+                                        <TableColumn fx:id="codeColumnGoods" maxWidth="200.0" minWidth="100.0" prefWidth="120.0" text="Номер" />
                                         <TableColumn fx:id="nameColumnGoods" prefWidth="75.0" text="Наименование" />
                                         <TableColumn fx:id="priceColumnGoods" maxWidth="200.0" minWidth="100.0" prefWidth="125.0" text="Цена" />
                                     </columns>
@@ -50,9 +50,9 @@
                                 </TableView>
                                 <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                     <children>
-                                        <Button fx:id="addBtnGoods" mnemonicParsing="false" text="Добавить" />
-                                        <Button fx:id="editBtnGoods" mnemonicParsing="false" text="Изменить" />
-                                        <Button fx:id="deleteBtnGoods" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Удалить" />
+                                        <Button fx:id="addBtnGoods" mnemonicParsing="false" onAction="#handleNewGoods" prefWidth="70.0" text="Добавить" />
+                                        <Button fx:id="editBtnGoods" mnemonicParsing="false" onAction="#handleEditGoods" prefWidth="70.0" text="Изменить" />
+                                        <Button fx:id="deleteBtnGoods" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteGoods" prefWidth="70.0" text="Удалить" />
                                     </children>
                                 </HBox>
                             </children>
@@ -77,9 +77,9 @@
                                 </TableView>
                                 <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                     <children>
-                                        <Button fx:id="addBtnEmployee" mnemonicParsing="false" onAction="#handleNewEmployee" text="Добавить" />
-                                        <Button fx:id="editBtnEmployee" mnemonicParsing="false" onAction="#handleEditEmployee" text="Изменить" />
-                                        <Button fx:id="deleteBtnEmployee" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteEmployee" text="Удалить" />
+                                        <Button fx:id="addBtnEmployee" mnemonicParsing="false" onAction="#handleNewEmployee" prefWidth="70.0" text="Добавить" />
+                                        <Button fx:id="editBtnEmployee" mnemonicParsing="false" onAction="#handleEditEmployee" prefWidth="70.0" text="Изменить" />
+                                        <Button fx:id="deleteBtnEmployee" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteEmployee" prefWidth="70.0" text="Удалить" />
                                     </children>
                                 </HBox>
                             </children>
@@ -104,9 +104,9 @@
                                 </TableView>
                                 <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                     <children>
-                                        <Button fx:id="addBtnClient" mnemonicParsing="false" onAction="#handleNewClient" text="Добавить" />
-                                        <Button fx:id="editBtnClient" mnemonicParsing="false" onAction="#handleEditClient" text="Изменить" />
-                                        <Button fx:id="deleteBtnClient" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteClient" text="Удалить" />
+                                        <Button fx:id="addBtnClient" mnemonicParsing="false" onAction="#handleNewClient" prefWidth="70.0" text="Добавить" />
+                                        <Button fx:id="editBtnClient" mnemonicParsing="false" onAction="#handleEditClient" prefWidth="70.0" text="Изменить" />
+                                        <Button fx:id="deleteBtnClient" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteClient" prefWidth="70.0" text="Удалить" />
                                     </children>
                                 </HBox>
                             </children>
