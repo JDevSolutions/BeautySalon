@@ -2,11 +2,11 @@ package ua.com.jdev.dbase;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import org.jetbrains.annotations.NotNull;
+import ua.com.jdev.entity.DBEntity;
+import ua.com.jdev.entity.WindowEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
-import ua.com.jdev.entity.DBEntity;
-import ua.com.jdev.entity.WindowEntity;
 
 /**
  * Created by Yurii Mikhailichenko on 17.01.2016.
@@ -15,7 +15,7 @@ import ua.com.jdev.entity.WindowEntity;
  */
 public class DBHelper {
     public static final String URL = "jdbc:mysql://localhost:3306";
-    public static final String USER = "root";
+    public static final String USER = "iris";
     public static final String PASSWORD = "1234qaz";
 
     private static Connection connection;
