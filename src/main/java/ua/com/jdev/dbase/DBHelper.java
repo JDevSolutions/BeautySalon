@@ -4,12 +4,14 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.jetbrains.annotations.NotNull;
+import ua.com.jdev.entity.WindowEntity;
+import ua.com.jdev.model.Client;
+import ua.com.jdev.model.Employee;
+import ua.com.jdev.model.Goods;
+import ua.com.jdev.model.ScheduleRecord;
 
 import java.sql.*;
 import java.util.ArrayList;
-
-import ua.com.jdev.entity.WindowEntity;
-import ua.com.jdev.model.*;
 
 /**
  * Created by Yurii Mikhailichenko on 17.01.2016.
