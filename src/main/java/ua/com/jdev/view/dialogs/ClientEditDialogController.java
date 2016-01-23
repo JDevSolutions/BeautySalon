@@ -108,7 +108,7 @@ public class ClientEditDialogController {
             errorMessage += "Фамилия клиента содержит ошибку!\n";
         }
 
-        if (phoneClientField.getText().length() != 12) {
+        if (phoneClientField.getText().length() != 10) {
             errorMessage += "Номер телефона клиента должен состоять из 12 цифр!\n";
         } else {
             // Проверка, что в поле только цифры
