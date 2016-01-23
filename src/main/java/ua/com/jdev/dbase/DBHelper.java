@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.jetbrains.annotations.NotNull;
 import ua.com.jdev.entity.WindowEntity;
-import ua.com.jdev.model.Client;
-import ua.com.jdev.model.Employee;
-import ua.com.jdev.model.Goods;
-import ua.com.jdev.model.ScheduleRecord;
+import ua.com.jdev.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class DBHelper {
     private static Connection connection;
     private static Statement statement;
     private static ResultSet resultSet;
-    private static ObservableList<? extends Object> outcomingData;
+    private static ObservableList<? extends Base> outcomingData;
 
     private static final String DATABASE_NAME = "iris_db";
     private static final String TABLE_EMPLOYEES = "employees";
@@ -39,7 +36,7 @@ public class DBHelper {
 
 
 
-    public static ObservableList<? extends Object> getData(WindowEntity entity) {
+    public static ObservableList<? extends Base> getData(WindowEntity entity) {
         execute(entity);
         return outcomingData;
     }
@@ -93,8 +90,8 @@ public class DBHelper {
         }
     }
 
-    private static ObservableList<? extends Object> executeQuery(String query, String tableName) {
-        ObservableList<? extends Object> dataList = null;
+    private static ObservableList<? extends Base> executeQuery(String query, String tableName) {
+        ObservableList<? extends Base> dataList = null;
         try {
             try {
                 // opening database connection to MySQL server
@@ -264,8 +261,8 @@ public class DBHelper {
     }
 
 
-    private static ObservableList<? extends Object> getObservableList(ResultSet set, String tableName) {
-        ObservableList<? extends Object> currentData = null;
+    private static ObservableList<? extends Base> getObservableList(ResultSet set, String tableName) {
+        ObservableList<? extends Base> currentData = null;
         ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
         ObservableList<Goods> goodsData = FXCollections.observableArrayList();
         ObservableList<Employee> employeeData = FXCollections.observableArrayList();
