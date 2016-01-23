@@ -3,7 +3,7 @@ package ua.com.jdev.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ScheduleRecord {
+public class ScheduleRecord extends Base {
 
     private StringProperty time;
     private StringProperty employee;

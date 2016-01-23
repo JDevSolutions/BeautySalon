@@ -3,8 +3,7 @@ package ua.com.jdev.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public abstract class Person {
-
+public abstract class Person extends Base {
 
     private final StringProperty firstName;
     private final StringProperty secondName;

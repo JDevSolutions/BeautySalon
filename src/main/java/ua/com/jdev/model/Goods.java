@@ -3,7 +3,7 @@ package ua.com.jdev.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Goods {
+public class Goods extends Base {
 
     private StringProperty code;
     private StringProperty name;
