@@ -168,14 +168,17 @@ public class DBHelper {
          */
         ArrayList<String> labels = entity.getLabels();
         ArrayList<String> values = entity.getValues();
-        StringBuilder queryBuilder = new StringBuilder(entity.getKeyWord());
+        StringBuilder queryBuilder = new StringBuilder(entity.getKeyWord() + " * FROM " + entity.getTableName());
+/*
         for (int i = 0; i < labels.size(); i++) {
             queryBuilder.append(" " + labels.get(i) + (i != (labels.size() - 1) ? "," : " "));
         }
+
         queryBuilder.append("FROM " + entity.getTableName());
         if (values.size() > 0) {
             queryBuilder.append(" WHERE " + values.get(0));
         }
+*/
         return queryBuilder.toString();
     }
 
@@ -264,7 +267,7 @@ public class DBHelper {
         ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
         ObservableList<Goods> goodsData = FXCollections.observableArrayList();
         ObservableList<Employee> employeeData = FXCollections.observableArrayList();
-        ObservableList<Person> clientData = FXCollections.observableArrayList();
+        ObservableList<Client> clientData = FXCollections.observableArrayList();
         try {
             switch (tableName.toLowerCase()) {
                 case "clients":
@@ -304,15 +307,15 @@ public class DBHelper {
 
     private static ObservableList<Employee> fillEmployees(ResultSet set, ObservableList<Employee> employeeData) throws SQLException {
         while (set.next()) {
-            employeeData.add(new Employee(set.getString(1), set.getString(2), set.getString(3), set.getString(4),
-                    set.getString(5)));
+            employeeData.add(new Employee(set.getString(2), set.getString(3), set.getString(4), set.getString(5),
+                    set.getString(6)));
         }
         return employeeData;
     }
 
-    private static ObservableList<Person> fillClients(ResultSet set, ObservableList<Person> clientData) throws SQLException {
+    private static ObservableList<Client> fillClients(ResultSet set, ObservableList<Client> clientData) throws SQLException {
         while (set.next()) {
-            clientData.add(new Client(set.getString(1), set.getString(2), set.getString(3), set.getString(4)));
+            clientData.add(new Client(set.getString(2), set.getString(3), set.getString(4), set.getString(5)));
         }
         return clientData;
     }
