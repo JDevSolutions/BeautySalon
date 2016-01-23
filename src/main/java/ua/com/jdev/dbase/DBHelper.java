@@ -34,19 +34,7 @@ public class DBHelper {
     private static final String TABLE_CLIENTS = "clients";
     private static final String TABLE_CARDS = "cards";
 
-    public static void main(String[] args) {
-        ArrayList<String> labels = new ArrayList<>();
-        ArrayList<String> values = new ArrayList<>();
-        labels.add("firstName");
-        labels.add("secondName");
-        labels.add("lastName");
-        labels.add("phone");
-        WindowEntity entity = new WindowEntity(labels, values, "SELECT", "clients");
-        ObservableList<? extends Object> o = getData(entity);
-        for (Object c : o) {
-            System.out.println(((Client) c).getFirstName() + " " + ((Client) c).getLastName());
-        }
-    }
+
 
 
     public static ObservableList<? extends Object> getData(WindowEntity entity) {
