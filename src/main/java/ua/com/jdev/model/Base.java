@@ -1,4 +1,4 @@
 package ua.com.jdev.model;
 
-public class Base {
+public abstract class Base {
 }
