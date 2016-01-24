@@ -1,7 +1,5 @@
 package ua.com.jdev.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,17 +8,17 @@ public class Goods extends Base {
     private StringProperty code;
     private StringProperty name;
     private StringProperty price;
-    private IntegerProperty amount;
+    private StringProperty amount;
 
     public Goods() {
-        this(null, null, null, 0);
+        this(null, null, null, null);
     }
 
-    public Goods(String code, String name, String price, int amount) {
+    public Goods(String code, String name, String price, String amount) {
         this.code = new SimpleStringProperty(code);
         this.name = new SimpleStringProperty(name);
         this.price = new SimpleStringProperty(price);
-        this.amount = new SimpleIntegerProperty(amount);
+        this.amount = new SimpleStringProperty(amount);
     }
 
     public String getCode() {
@@ -59,15 +57,15 @@ public class Goods extends Base {
         this.price.set(price);
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount.get();
     }
 
-    public IntegerProperty amountProperty() {
+    public StringProperty amountProperty() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount.set(amount);
     }
 }
