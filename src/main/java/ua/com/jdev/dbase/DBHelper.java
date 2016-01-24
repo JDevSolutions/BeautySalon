@@ -3,7 +3,6 @@ package ua.com.jdev.dbase;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import ua.com.jdev.entity.WindowEntity;
 import ua.com.jdev.model.*;
@@ -42,11 +41,101 @@ public class DBHelper {
     }
 
     public static void addBase(Base baseObject) {
-
+        if (baseObject instanceof Client) {
+            Client client = (Client) baseObject;
+            addClient(client);
+        } else if (baseObject instanceof Goods) {
+            Goods goods = (Goods) baseObject;
+            addGoods(goods);
+        } else if (baseObject instanceof Employee) {
+            Employee employee = (Employee) baseObject;
+            addEmployee(employee);
+        } else if (baseObject instanceof ScheduleRecord) {
+            ScheduleRecord record = (ScheduleRecord) baseObject;
+            addScheduleRecord(record);
+        }
     }
 
     public static void editBase(Base baseObject) {
+        if (baseObject instanceof Client) {
+            Client client = (Client) baseObject;
+            updateClient(client);
+        } else if (baseObject instanceof Goods) {
+            Goods goods = (Goods) baseObject;
+            updateGoods(goods);
+        } else if (baseObject instanceof Employee) {
+            Employee employee = (Employee) baseObject;
+            updateEmployee(employee);
+        } else if (baseObject instanceof ScheduleRecord) {
+            ScheduleRecord record = (ScheduleRecord) baseObject;
+            updateScheduleRecord(record);
+        }
+    }
 
+    private static void addClient(Client client) {
+        StringBuilder query = "INSERT INTO client (id, firstName, secondName, lastName, phone, cardNumber) VALUES (" +
+                appendRequiredField(client.getId()) + ", " + appendRequiredField(client.getFirstName()) + ", " +
+                appendField(client.getSecondName()) + ", " + appendRequiredField(client.getLastName()) + ", " +
+                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ");";
+        executeUpdate(query.toString());
+    }
+
+    private static void addGoods(Goods goods) {
+        StringBuilder query = "INSERT INTO goods (id, code, name, price, amount) VALUES (" +
+                appendRequiredField(goods.getId()) + ", " + appendRequiredField(goods.getCode()) + ", " +
+                appendRequiredField(goods.getName()) + ", " + appendField(goods.getPrice()) + ", " +
+                appendField(goods.getAmount());
+        executeUpdate(query.toString());
+    }
+
+    private static void addEmployee(Employee employee) {
+        StringBuilder query = new StringBuilder("INSERT INTO employees (id, firstName, secondName, lastName, phone, profession) VALUES (" +
+                appendRequiredField(employee.getId()) + ", " + appendRequiredField(employee.getFirstName()) + ", " +
+                appendField(employee.getSecondName()) + ", " + appendRequiredField(employee.getLastName()) + ", " +
+                appendField(employee.getPhone()) + appendRequiredField(employee.getPosition()) + ");");
+        executeUpdate(query.toString());
+    }
+
+    private static void addScheduleRecord(ScheduleRecord record) {
+        //not implemented
+    }
+
+    private static void updateClient(Client client) {
+        StringBuilder query = new StringBuilder("UPDATE clients SET firstName = " + appendRequiredField(client.getFirstName()) +
+                ", secondName = " + appendField(client.getSecondName()) + ", lastName =  " +
+                appendRequiredField(client.getLastName()) + ", phone = " + appendField(client.getPhone()) +
+                ", cardNumber = " + appendRequiredField(client.getCardNumber()) + " WHERE id = " + client.getId() + ";");
+    }
+
+    private static void updateGoods(Goods goods) {
+        StringBuilder query = new StringBuilder("UPDATE goods SET code = " + appendRequiredField(goods.getCode()) +
+                ", name = " + appendField(goods.getName()) + ", price =  " + appendField(goods.getPrice()) +
+                ", amount = " + appendField(goods.getAmount()) + ";");
+    }
+
+    private static void updateEmployee(Employee employee) {
+        StringBuilder query = new StringBuilder("UPDATE employees SET firstName = " + appendRequiredField(employee.getFirstName()) +
+                ", secondName = " + appendField(employee.getSecondName()) + ", lastName =  " +
+                appendRequiredField(employee.getLastName()) + ", phone = " + appendField(employee.getPhone()) +
+                ", profession = " + appendRequiredField(employee.getPosition()) + " WHERE id = " + client.getId() + ";");
+    }
+
+    private static void updateScheduleRecord(ScheduleRecord record) {
+        //not implemented
+    }
+
+
+    private static String appendField(String param) {
+        return !param.equals("") ? "'" + param + "'" : "NULL";
+    }
+
+    private static String appendRequiredField(String param) throws IllegalArgumentException {
+        try {
+            if (param.equals("")) throw new IllegalArgumentException("Illegal value on field!");
+        } catch (NullPointerException npe) {
+            throw new IllegalArgumentException("Illegal value on field!");
+        }
+        return "'" + param + "'";
     }
 
     public static ObservableList<? extends Base> selectBase() {
@@ -141,6 +230,7 @@ public class DBHelper {
     }
 
     @NotNull
+    @Deprecated
     private static String createUpdateQuery(WindowEntity entity) {
         /**
          * Генератор запроса UPDATE
@@ -159,6 +249,7 @@ public class DBHelper {
     }
 
     @NotNull
+    @Deprecated
     private static String createInsertQuery(WindowEntity entity) {
         /**
          * Генератор запроса INSERT.
@@ -179,6 +270,7 @@ public class DBHelper {
     }
 
     @NotNull
+    @Deprecated
     private static String createSelectQuery(WindowEntity entity) {
         /**
          * Генератор запроса SELECT
