@@ -3,6 +3,7 @@ package ua.com.jdev.dbase;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import ua.com.jdev.entity.WindowEntity;
 import ua.com.jdev.model.*;
@@ -34,13 +35,33 @@ public class DBHelper {
     private static final String TABLE_CARDS = "cards";
 
 
-
-
+    @Deprecated
     public static ObservableList<? extends Base> getData(WindowEntity entity) {
         execute(entity);
         return outcomingData;
     }
 
+    public static void addBase(Base baseObject) {
+
+    }
+
+    public static void editBase(Base baseObject) {
+
+    }
+
+    public static ObservableList<? extends Base> selectBase() {
+        return null;
+    }
+
+    public static void deleteBase(Base baseObject) {
+
+    }
+
+    private static void execute(Base baseObject) {
+
+    }
+
+    @Deprecated
     public static void execute(WindowEntity entity) throws IllegalArgumentException {
         /**
          * @throws IllegalArgumentException
