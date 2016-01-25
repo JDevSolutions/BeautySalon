@@ -8,15 +8,33 @@ public class ScheduleRecord extends Base {
     private StringProperty time;
     private StringProperty employee;
     private StringProperty client;
+    private StringProperty price;
+    private boolean paid = false;
 
     public ScheduleRecord() {
-        this(null, null, null);
+        this(null, null, null, null);
     }
 
     public ScheduleRecord(String time, String employee, String client) {
         this.time = new SimpleStringProperty(time);
         this.employee = new SimpleStringProperty(employee);
         this.client = new SimpleStringProperty(client);
+        this.price = new SimpleStringProperty("");
+    }
+
+    public ScheduleRecord(String time, String employee, String client, String price) {
+        this.time = new SimpleStringProperty(time);
+        this.employee = new SimpleStringProperty(employee);
+        this.client = new SimpleStringProperty(client);
+        this.price = new SimpleStringProperty(price);
+    }
+
+    public ScheduleRecord(String time, String employee, String client, String price, boolean paid) {
+        this.time = new SimpleStringProperty(time);
+        this.employee = new SimpleStringProperty(employee);
+        this.client = new SimpleStringProperty(client);
+        this.price = new SimpleStringProperty(price);
+        this.paid = paid;
     }
 
     public String getTime() {
@@ -53,5 +71,25 @@ public class ScheduleRecord extends Base {
 
     public void setClient(String client) {
         this.client.set(client);
+    }
+
+    public String getPrice() {
+        return price.get();
+    }
+
+    public StringProperty priceProperty() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price.set(price);
+    }
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 }

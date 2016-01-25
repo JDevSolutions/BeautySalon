@@ -3,6 +3,7 @@ package ua.com.jdev.view.dialogs;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ua.com.jdev.model.ScheduleRecord;
@@ -15,6 +16,10 @@ public class ScheduleEditDialogController {
     private TextField employeeScheduleField;
     @FXML
     private TextField clientScheduleField;
+    @FXML
+    private TextField priceScheduleField;
+    @FXML
+    private CheckBox paidScheduleCheckBox;
 
     private Stage dialogStage;
     // TODO: 22.01.2016  
@@ -49,6 +54,8 @@ public class ScheduleEditDialogController {
         timeScheduleField.setText(scheduleRecord.getTime());
         employeeScheduleField.setText(scheduleRecord.getEmployee());
         clientScheduleField.setText(scheduleRecord.getClient());
+        priceScheduleField.setText(scheduleRecord.getPrice());
+        paidScheduleCheckBox.setSelected(scheduleRecord.isPaid());
     }
 
     /**
@@ -69,6 +76,8 @@ public class ScheduleEditDialogController {
             scheduleRecord.setTime(timeScheduleField.getText());
             scheduleRecord.setEmployee(employeeScheduleField.getText());
             scheduleRecord.setClient(clientScheduleField.getText());
+            scheduleRecord.setPrice(priceScheduleField.getText());
+            scheduleRecord.setPaid(paidScheduleCheckBox.isSelected());
 
             okClicked = true;
             dialogStage.close();
@@ -100,6 +109,9 @@ public class ScheduleEditDialogController {
         if (clientScheduleField.getText() == null || clientScheduleField.getText().length() == 0) {
             errorMessage += "Имя клиента содержит ошибку!\n";
         }
+        if (priceScheduleField.getText() == null || priceScheduleField.getText().length() == 0) {
+            errorMessage += "Цена услуг содержит ошибку!\n";
+        }
 
         if (errorMessage.length() == 0) {
             return true;
@@ -127,5 +139,13 @@ public class ScheduleEditDialogController {
 
     public TextField getClientScheduleField() {
         return clientScheduleField;
+    }
+
+    public TextField getPriceScheduleField() {
+        return priceScheduleField;
+    }
+
+    public CheckBox getPaidScheduleCheckBox() {
+        return paidScheduleCheckBox;
     }
 }

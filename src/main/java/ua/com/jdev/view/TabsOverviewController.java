@@ -20,6 +20,7 @@ public class TabsOverviewController {
     @FXML private TableColumn<ScheduleRecord, String> timeColumnSchedule;
     @FXML private TableColumn<ScheduleRecord, String> employeeColumnSchedule;
     @FXML private TableColumn<ScheduleRecord, String> clientColumnSchedule;
+    @FXML private TableColumn<ScheduleRecord, String> priceColumnSchedule;
     @FXML private Button editBtnSchedule;
     @FXML private Button deleteBtnSchedule;
 
@@ -78,6 +79,7 @@ public class TabsOverviewController {
         timeColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
         employeeColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().employeeProperty());
         clientColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
+        priceColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
         // Goods
         codeColumnGoods.setCellValueFactory(cellData -> cellData.getValue().codeProperty());
         nameColumnGoods.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -129,6 +131,7 @@ public class TabsOverviewController {
         scheduleRecord.setTime(controller.getTimeScheduleField().getText());
         scheduleRecord.setEmployee(controller.getEmployeeScheduleField().getText());
         scheduleRecord.setClient(controller.getClientScheduleField().getText());
+        scheduleRecord.setPrice(controller.getPriceScheduleField().getText());
     }
     private void editGoods(Goods goods, GoodsEditDialogController controller) {
         goods.setCode(controller.getCodeGoodsField().getText());
