@@ -41,7 +41,7 @@ public class MainApp extends Application {
 
     public MainApp() {
         scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
-        goodsData.add(new Goods("0154", "Краска для волос", "49.90"));
+        goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
         employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
         clientData.add(new Client("Olga", "Ivanovna", "Safronova", "380503219876"));
     }
