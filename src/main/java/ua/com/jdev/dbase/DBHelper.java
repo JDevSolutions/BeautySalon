@@ -1,3 +1,4 @@
+
 package ua.com.jdev.dbase;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
@@ -10,11 +11,13 @@ import ua.com.jdev.model.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+
 /**
  * Created by Yurii Mikhailichenko on 17.01.2016.
  *
  * @since 0.1.1
  */
+
 public class DBHelper {
     public static final String URL = "jdbc:mysql://localhost:3306";
     public static final String USER = "iris";
@@ -34,45 +37,7 @@ public class DBHelper {
     private static final String TABLE_CARDS = "cards";
 
 
-    @Deprecated
-    public static ObservableList<? extends Base> getData(WindowEntity entity) {
-        execute(entity);
-        return outcomingData;
-    }
-
-    public static void addBase(Base baseObject) {
-        if (baseObject instanceof Client) {
-            Client client = (Client) baseObject;
-            addClient(client);
-        } else if (baseObject instanceof Goods) {
-            Goods goods = (Goods) baseObject;
-            addGoods(goods);
-        } else if (baseObject instanceof Employee) {
-            Employee employee = (Employee) baseObject;
-            addEmployee(employee);
-        } else if (baseObject instanceof ScheduleRecord) {
-            ScheduleRecord record = (ScheduleRecord) baseObject;
-            addScheduleRecord(record);
-        }
-    }
-
-    public static void editBase(Base baseObject) {
-        if (baseObject instanceof Client) {
-            Client client = (Client) baseObject;
-            updateClient(client);
-        } else if (baseObject instanceof Goods) {
-            Goods goods = (Goods) baseObject;
-            updateGoods(goods);
-        } else if (baseObject instanceof Employee) {
-            Employee employee = (Employee) baseObject;
-            updateEmployee(employee);
-        } else if (baseObject instanceof ScheduleRecord) {
-            ScheduleRecord record = (ScheduleRecord) baseObject;
-            updateScheduleRecord(record);
-        }
-    }
-
-    private static void addClient(Client client) {
+    public static void insert(Client client) {
         StringBuilder query = new StringBuilder("INSERT INTO client (id, firstName, secondName, lastName, phone, cardNumber) VALUES (" +
                 appendRequiredField(client.getId()) + ", " + appendRequiredField(client.getFirstName()) + ", " +
                 appendField(client.getSecondName()) + ", " + appendRequiredField(client.getLastName()) + ", " +
@@ -80,15 +45,15 @@ public class DBHelper {
         executeUpdate(query.toString());
     }
 
-    private static void addGoods(Goods goods) {
+    public static void insert(Goods goods)  {
         StringBuilder query = new StringBuilder("INSERT INTO goods (id, code, name, price, amount) VALUES (" +
                 appendRequiredField(goods.getId()) + ", " + appendRequiredField(goods.getCode()) + ", " +
                 appendRequiredField(goods.getName()) + ", " + appendField(goods.getPrice()) + ", " +
-                appendField(goods.getAmount()) + ");");
+                appendField(goods.getAmount()));
         executeUpdate(query.toString());
     }
 
-    private static void addEmployee(Employee employee) {
+    public static void insert(Employee employee)  {
         StringBuilder query = new StringBuilder("INSERT INTO employees (id, firstName, secondName, lastName, phone, profession) VALUES (" +
                 appendRequiredField(employee.getId()) + ", " + appendRequiredField(employee.getFirstName()) + ", " +
                 appendField(employee.getSecondName()) + ", " + appendRequiredField(employee.getLastName()) + ", " +
@@ -96,40 +61,49 @@ public class DBHelper {
         executeUpdate(query.toString());
     }
 
-    private static void addScheduleRecord(ScheduleRecord record) {
+    public static void insert(ScheduleRecord record) {
         //not implemented
     }
 
-    private static void updateClient(Client client) {
+    public static void update(Client client) {
         StringBuilder query = new StringBuilder("UPDATE clients SET firstName = " + appendRequiredField(client.getFirstName()) +
                 ", secondName = " + appendField(client.getSecondName()) + ", lastName =  " +
                 appendRequiredField(client.getLastName()) + ", phone = " + appendField(client.getPhone()) +
                 ", cardNumber = " + appendRequiredField(client.getCardNumber()) + " WHERE id = " + client.getId() + ";");
+        executeUpdate(query.toString());
     }
 
-    private static void updateGoods(Goods goods) {
+    public static void update(Goods goods)  {
         StringBuilder query = new StringBuilder("UPDATE goods SET code = " + appendRequiredField(goods.getCode()) +
                 ", name = " + appendField(goods.getName()) + ", price =  " + appendField(goods.getPrice()) +
                 ", amount = " + appendField(goods.getAmount()) + ";");
+        executeUpdate(query.toString());
     }
 
-    private static void updateEmployee(Employee employee) {
+    public static void update(Employee employee) {
         StringBuilder query = new StringBuilder("UPDATE employees SET firstName = " + appendRequiredField(employee.getFirstName()) +
                 ", secondName = " + appendField(employee.getSecondName()) + ", lastName =  " +
                 appendRequiredField(employee.getLastName()) + ", phone = " + appendField(employee.getPhone()) +
                 ", profession = " + appendRequiredField(employee.getPosition()) + " WHERE id = " + employee.getId() + ";");
+        executeUpdate(query.toString());
     }
 
-    private static void updateScheduleRecord(ScheduleRecord record) {
+    public static void update(ScheduleRecord record) {
         //not implemented
     }
 
 
     private static String appendField(String param) {
+        /**
+         * Служебный метод для создания строк
+         */
         return !param.equals("") ? "'" + param + "'" : "NULL";
     }
 
     private static String appendRequiredField(String param) throws IllegalArgumentException {
+        /**
+         * Служебный метод для создания NOT NULL строк
+         */
         try {
             if (param.equals("")) throw new IllegalArgumentException("Illegal value on field!");
         } catch (NullPointerException npe) {
@@ -138,174 +112,43 @@ public class DBHelper {
         return "'" + param + "'";
     }
 
-    public static ObservableList<? extends Base> selectBase() {
-        return null;
-    }
-
-    public static void deleteBase(Base baseObject) {
-
-    }
-
-    private static void execute(Base baseObject) {
-
-    }
-
-    @Deprecated
-    public static void execute(WindowEntity entity) throws IllegalArgumentException {
-        /**
-         * @throws IllegalArgumentException
-         * @param = entity.getKeyWord()
-         */
-        switch (entity.getKeyWord().toUpperCase()) {
-            case "INSERT":
-                executeUpdate(createInsertQuery(entity));
-                break;
-            case "UPDATE":
-                executeUpdate(createUpdateQuery(entity));
-                break;
-            case "SELECT":
-                outcomingData = executeQuery(createSelectQuery(entity), entity.getTableName());
-                break;
-            case "DELETE":
-                //executeQuery(createDeleteQuery(entity));
-                break;
-            default:
-                throw new IllegalArgumentException("No find keyWord! (INSERT, UPDATE, SELECT, DELETE)");
-        }
-    }
-
     private static void executeUpdate(String query) {
         try {
-            try {
-                // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + "/" + DATABASE_NAME, USER, PASSWORD);
-
-            } catch (MySQLSyntaxErrorException ex) {
-                System.out.println("!!");
-                //if databases not found - create new database
-                //TODO: add log
-                createDatabase(DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + "/" + DATABASE_NAME, USER, PASSWORD);
-            }
+            // opening database connection to MySQL server
+            connection = DriverManager.getConnection(URL + "/" + DATABASE_NAME, USER, PASSWORD);
             // getting Statement object to execute query
             statement = connection.createStatement();
             statement.executeUpdate(query);
 
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
-            //TODO: add log
+            //TODO: insert log
         } finally {
-            try { connection.close(); } catch(SQLException se) { /*TODO: add log*/ }
-            try { statement.close(); } catch(SQLException se) { /*TODO: add log*/ }
+            try { connection.close(); } catch(SQLException se) { /*TODO: insert log*/ }
+            try { statement.close(); } catch(SQLException se) { /*TODO: insert log*/ }
         }
     }
 
     private static ObservableList<? extends Base> executeQuery(String query, String tableName) {
         ObservableList<? extends Base> dataList = null;
         try {
-            try {
-                // opening database connection to MySQL server
-                connection = getDBConnection();
-            } catch (MySQLSyntaxErrorException ex) {
-                //if databases not found - create new database
-                //TODO: add log
-                createDatabase(DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + "/" + DATABASE_NAME, USER, PASSWORD);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            connection = getDBConnection();
             // getting Statement object to execute query
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             dataList = getObservableList(resultSet, tableName);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
-            //TODO: add log
+            //TODO: insert log
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
-            try { resultSet.close(); } catch (SQLException se) { /*TODO: add log*/ }
-            try { connection.close(); } catch(SQLException se) { /*TODO: add log*/ }
-            try { statement.close(); } catch(SQLException se) { /*TODO: add log*/ }
+            try { resultSet.close(); } catch (SQLException se) { /*TODO: insert log*/ }
+            try { connection.close(); } catch(SQLException se) { /*TODO: insert log*/ }
+            try { statement.close(); } catch(SQLException se) { /*TODO: insert log*/  }
         }
         return dataList;
     }
-
-    @NotNull
-    @Deprecated
-    private static String createUpdateQuery(WindowEntity entity) {
-        /**
-         * Генератор запроса UPDATE
-         *
-         * @param entity
-         * @return UPDATE tableName SET labels.get(0) = values.get(0), /.../ labels.get(n) = values.get(n);
-         */
-        ArrayList<String> labels = entity.getLabels();
-        ArrayList<String> values = entity.getValues();
-        StringBuilder queryBuilder = new StringBuilder(entity.getKeyWord() + " " + entity.getTableName() + " SET ");
-        for (int i = 0; i < labels.size(); i++) {
-            queryBuilder.append(labels.get(i) + " = '" + values.get(i) + "'" +
-                    (i != labels.size() - 1 ? ", " : ";"));
-        }
-        return queryBuilder.toString();
-    }
-
-    @NotNull
-    @Deprecated
-    private static String createInsertQuery(WindowEntity entity) {
-        /**
-         * Генератор запроса INSERT.
-         *
-         * @param entity
-         * @return INSERT INTO tableName (labels.get(0), /.../ labels.get(n)) VALUES ('values.get(0)', /.../ 'values.get(n));
-         */
-        ArrayList<String> labels = entity.getLabels();
-        ArrayList<String> values = entity.getValues();
-        StringBuilder queryBuilder = new StringBuilder(entity.getKeyWord() + " INTO " + entity.getTableName() + " (");
-        for (int i = 0; i < labels.size(); i++) {
-            queryBuilder.append(labels.get(i) + (i != labels.size() - 1 ? ", " : ") VALUES ("));
-        }
-        for (int i = 0; i < labels.size(); i++) {
-            queryBuilder.append("'" + values.get(i) + "'" + (i != labels.size() - 1  ? ", " : ");" ));
-        }
-        return queryBuilder.toString();
-    }
-
-    @NotNull
-    @Deprecated
-    private static String createSelectQuery(WindowEntity entity) {
-        /**
-         * Генератор запроса SELECT
-         *
-         * @param entity
-         * @return SELECT labels.get(0), /.../ labels.get(n) FROM tableName WHERE values.get(0) /.../ values.get(n);
-         */
-        ArrayList<String> labels = entity.getLabels();
-        ArrayList<String> values = entity.getValues();
-        StringBuilder queryBuilder = new StringBuilder(entity.getKeyWord() + " * FROM " + entity.getTableName());
-/*
-        for (int i = 0; i < labels.size(); i++) {
-            queryBuilder.append(" " + labels.get(i) + (i != (labels.size() - 1) ? "," : " "));
-        }
-
-        queryBuilder.append("FROM " + entity.getTableName());
-        if (values.size() > 0) {
-            queryBuilder.append(" WHERE " + values.get(0));
-        }
-*/
-        return queryBuilder.toString();
-    }
-
-    @NotNull
-    private static String createDeleteQuery(WindowEntity entity) {
-        /**
-         * Генератор запроса DELETE
-         *
-         * @param entity
-         * @return UPDATE...
-         */
-        //return createUpdateQuery(entity);
-        return "";
-    }
-
 
     private static void createDatabase(String databaseName) {
         String Driver = "com.mysql.jdbc.Driver";
@@ -348,13 +191,17 @@ public class DBHelper {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            //TODO: add log
+            //TODO: insert log
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            //TODO: add log
+            //TODO: insert log
         } finally {
-            try {connection.close();} catch (SQLException e) {/*TODO: add log*/}
-            try {statement.close();} catch (SQLException e) {/*TODO: add log*/}
+            try {connection.close();} catch (SQLException e) {
+/*TODO: insert log*/
+}
+            try {statement.close();} catch (SQLException e) {
+/*TODO: insert log*/
+}
         }
     }
 
@@ -363,10 +210,12 @@ public class DBHelper {
         java.util.Properties properties = new java.util.Properties();
         properties.put("user", USER);
         properties.put("password", PASSWORD);
-        /*
+
+/*
           настройки указывающие о необходимости конвертировать данные из Unicode
 	  в UTF-8, который используется в нашей таблице для хранения данных
         */
+
         properties.setProperty("useUnicode", "true");
         properties.setProperty("characterEncoding", "UTF-8");
         return (DriverManager.getConnection("jdbc:mysql://localhost:3306/iris_db",
@@ -375,32 +224,25 @@ public class DBHelper {
 
 
     private static ObservableList<? extends Base> getObservableList(ResultSet set, String tableName) {
-        ObservableList<? extends Base> currentData = null;
-        ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
-        ObservableList<Goods> goodsData = FXCollections.observableArrayList();
-        ObservableList<Employee> employeeData = FXCollections.observableArrayList();
-        ObservableList<Client> clientData = FXCollections.observableArrayList();
         try {
             switch (tableName.toLowerCase()) {
                 case "clients":
-                    currentData = fillClients(set, clientData);
-                    break;
+                    ObservableList<Client> clientData = FXCollections.observableArrayList();
+                    return fillClients(set, clientData);
                 case "employees":
-                    currentData = fillEmployees(set, employeeData);
-                    break;
+                    ObservableList<Employee> employeeData = FXCollections.observableArrayList();
+                    return fillEmployees(set, employeeData);
                 case "goods":
-                    currentData = fillGoods(set, goodsData);
-                    break;
+                    ObservableList<Goods> goodsData = FXCollections.observableArrayList();
+                    return fillGoods(set, goodsData);
                 case "orders":
-                    currentData = fillRecords(set, scheduleRecordData);
-                    break;
-
+                    ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
+                    return fillRecords(set, scheduleRecordData);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return currentData;
-
+        throw new IllegalArgumentException();
     }
 
     private static ObservableList<ScheduleRecord> fillRecords(ResultSet set, ObservableList<ScheduleRecord> scheduleRecordData) throws SQLException {
@@ -433,3 +275,4 @@ public class DBHelper {
     }
 
 }
+
