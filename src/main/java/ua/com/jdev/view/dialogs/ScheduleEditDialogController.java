@@ -109,8 +109,15 @@ public class ScheduleEditDialogController {
         if (clientScheduleField.getText() == null || clientScheduleField.getText().length() == 0) {
             errorMessage += "Имя клиента содержит ошибку!\n";
         }
-        if (priceScheduleField.getText() == null || priceScheduleField.getText().length() == 0) {
-            errorMessage += "Цена услуг содержит ошибку!\n";
+        if (priceScheduleField.getText() != null || priceScheduleField.getText().length() != 0) {
+            try {
+                Double.parseDouble(priceScheduleField.getText());
+            } catch (NumberFormatException e) {
+                errorMessage += "Цена услуг содержит ошибку!\n";
+            }
+        }
+        if (paidScheduleCheckBox.isSelected() && (priceScheduleField.getText() == null || priceScheduleField.getText().length() == 0)) {
+            errorMessage += "Если улуга оплачена укажите цену!\n";
         }
 
         if (errorMessage.length() == 0) {
