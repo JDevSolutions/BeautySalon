@@ -1,15 +1,11 @@
 
 package ua.com.jdev.dbase;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.jetbrains.annotations.NotNull;
-import ua.com.jdev.entity.WindowEntity;
 import ua.com.jdev.model.*;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 
 /**
@@ -247,7 +243,7 @@ public class DBHelper {
 
     private static ObservableList<ScheduleRecord> fillRecords(ResultSet set, ObservableList<ScheduleRecord> scheduleRecordData) throws SQLException {
         while (set.next()) {
-            scheduleRecordData.add(new ScheduleRecord(set.getString(1), set.getString(2), set.getString(3)));
+            scheduleRecordData.add(new ScheduleRecord(set.getString(1), set.getString(2), set.getString(3), set.getString(4), set.getBoolean(5)));
         }
         return scheduleRecordData;
     }
