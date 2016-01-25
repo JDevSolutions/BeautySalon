@@ -73,18 +73,18 @@ public class DBHelper {
     }
 
     private static void addClient(Client client) {
-        StringBuilder query = "INSERT INTO client (id, firstName, secondName, lastName, phone, cardNumber) VALUES (" +
+        StringBuilder query = new StringBuilder("INSERT INTO client (id, firstName, secondName, lastName, phone, cardNumber) VALUES (" +
                 appendRequiredField(client.getId()) + ", " + appendRequiredField(client.getFirstName()) + ", " +
                 appendField(client.getSecondName()) + ", " + appendRequiredField(client.getLastName()) + ", " +
-                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ");";
+                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ");");
         executeUpdate(query.toString());
     }
 
     private static void addGoods(Goods goods) {
-        StringBuilder query = "INSERT INTO goods (id, code, name, price, amount) VALUES (" +
+        StringBuilder query = new StringBuilder("INSERT INTO goods (id, code, name, price, amount) VALUES (" +
                 appendRequiredField(goods.getId()) + ", " + appendRequiredField(goods.getCode()) + ", " +
                 appendRequiredField(goods.getName()) + ", " + appendField(goods.getPrice()) + ", " +
-                appendField(goods.getAmount());
+                appendField(goods.getAmount()) + ");");
         executeUpdate(query.toString());
     }
 
@@ -412,7 +412,7 @@ public class DBHelper {
 
     private static ObservableList<Goods> fillGoods(ResultSet set, ObservableList<Goods> goodsData) throws SQLException {
         while (set.next()) {
-            goodsData.add(new Goods(set.getString(1), set.getString(2), set.getString(3)));
+            goodsData.add(new Goods(set.getString(1), set.getString(2), set.getString(3), set.getString(4)));
         }
         return goodsData;
     }
