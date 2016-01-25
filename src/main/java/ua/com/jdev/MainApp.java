@@ -227,7 +227,6 @@ public class MainApp extends Application {
         }
     }
 
-
     public boolean showClientEditDialog(Client client) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
