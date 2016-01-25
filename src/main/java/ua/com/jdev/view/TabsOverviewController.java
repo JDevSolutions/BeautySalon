@@ -27,6 +27,7 @@ public class TabsOverviewController {
     @FXML private TableColumn<Goods, String> codeColumnGoods;
     @FXML private TableColumn<Goods, String> nameColumnGoods;
     @FXML private TableColumn<Goods, String> priceColumnGoods;
+    @FXML private TableColumn<Goods, String> amountColumnGoods;
     @FXML private Button editBtnGoods;
     @FXML private Button deleteBtnGoods;
 
@@ -81,6 +82,7 @@ public class TabsOverviewController {
         codeColumnGoods.setCellValueFactory(cellData -> cellData.getValue().codeProperty());
         nameColumnGoods.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         priceColumnGoods.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
+        amountColumnGoods.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
         // Employees
         firstNameColumnEmployee.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         secondNameColumnEmployee.setCellValueFactory(cellData -> cellData.getValue().secondNameProperty());
@@ -132,6 +134,7 @@ public class TabsOverviewController {
         goods.setCode(controller.getCodeGoodsField().getText());
         goods.setName(controller.getNameGoodsField().getText());
         goods.setPrice(controller.getPriceGoodsField().getText());
+        goods.setAmount(controller.getAmountGoodsField().getText());
     }
     private void editEmployee(Employee employee, EmployeeEditDialogController controller) {
         employee.setFirstName(controller.getFirstNameEmployeeField().getText());

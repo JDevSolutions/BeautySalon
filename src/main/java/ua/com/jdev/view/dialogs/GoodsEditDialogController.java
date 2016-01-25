@@ -15,6 +15,8 @@ public class GoodsEditDialogController {
     private TextField nameGoodsField;
     @FXML
     private TextField priceGoodsField;
+    @FXML
+    private TextField amountGoodsField;
 
     private Stage dialogStage;
     private Goods goods;
@@ -48,6 +50,7 @@ public class GoodsEditDialogController {
         codeGoodsField.setText(goods.getCode());
         nameGoodsField.setText(goods.getName());
         priceGoodsField.setText(goods.getPrice());
+        amountGoodsField.setText(goods.getAmount());
     }
 
     /**
@@ -68,6 +71,7 @@ public class GoodsEditDialogController {
             goods.setCode(codeGoodsField.getText());
             goods.setName(nameGoodsField.getText());
             goods.setPrice(priceGoodsField.getText());
+            goods.setAmount(amountGoodsField.getText());
 
             okClicked = true;
             dialogStage.close();
@@ -100,6 +104,18 @@ public class GoodsEditDialogController {
             errorMessage += "Цена товара содержит ошибку!\n";
         }
 
+        if (amountGoodsField.getText() == null || amountGoodsField.getText().length() == 0) {
+            errorMessage += "Количество товаров содержит ошибку\n";
+        } else {
+            // Проверка на наличие любых символов кроме цифр
+            try {
+                Integer.parseInt(amountGoodsField.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                errorMessage += "Количество товаров должно содержать только цифры!\n";
+            }
+        }
+
         if (errorMessage.length() == 0) {
             return true;
         } else {
@@ -126,5 +142,9 @@ public class GoodsEditDialogController {
 
     public TextField getPriceGoodsField() {
         return priceGoodsField;
+    }
+
+    public TextField getAmountGoodsField() {
+        return amountGoodsField;
     }
 }
