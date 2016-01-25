@@ -117,7 +117,7 @@ public class DBHelper {
         StringBuilder query = new StringBuilder("UPDATE employees SET firstName = " + appendRequiredField(employee.getFirstName()) +
                 ", secondName = " + appendField(employee.getSecondName()) + ", lastName =  " +
                 appendRequiredField(employee.getLastName()) + ", phone = " + appendField(employee.getPhone()) +
-                ", profession = " + appendRequiredField(employee.getPosition()) + " WHERE id = " + client.getId() + ";");
+                ", profession = " + appendRequiredField(employee.getPosition()) + " WHERE id = " + employee.getId() + ";");
     }
 
     private static void updateScheduleRecord(ScheduleRecord record) {
