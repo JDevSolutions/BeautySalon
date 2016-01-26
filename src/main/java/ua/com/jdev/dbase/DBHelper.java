@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import ua.com.jdev.model.*;
 
 import java.sql.*;
+import java.util.logging.Logger;
 
 
 /**
@@ -15,29 +16,38 @@ import java.sql.*;
  */
 
 public class DBHelper {
-    public static final String URL = "jdbc:mysql://localhost:3306";
-    public static final String USER = "iris";
-    public static final String PASSWORD = "1234qaz";
+    private static final String URL = "jdbc:mysql://localhost:3306";
+    private static final String USER = "iris";
+    private static final String PASSWORD = "1234qaz";
 
     private static Connection connection;
     private static Statement statement;
     private static ResultSet resultSet;
     private static ObservableList<? extends Base> outcomingData;
 
-    private static final String DATABASE_NAME = "iris_db";
-    private static final String TABLE_EMPLOYEES = "employees";
-    private static final String TABLE_ORDERS = "orders";
-    private static final String TABLE_PRODUCTS = "products";
-    private static final String TABLE_RENTERS = "renters";
-    private static final String TABLE_CLIENTS = "clients";
-    private static final String TABLE_CARDS = "cards";
+    private static Logger log = Logger.getLogger(DBHelper.class.getName());
 
+    public static final String DATABASE_NAME = "iris_db";
+    public static final String TABLE_EMPLOYEES = "employees";
+    public static final String TABLE_ORDERS = "orders";
+    public static final String TABLE_PRODUCTS = "products";
+    public static final String TABLE_RENTERS = "renters";
+    public static final String TABLE_CLIENTS = "clients";
+    public static final String TABLE_CARDS = "cards";
+
+    public static ObservableList<? extends Base> getData(String tableName) {
+        String query = "SELECT * FROM " + tableName + ";";
+        outcomingData = executeQuery(query, tableName);
+        return outcomingData;
+    }
 
     public static void insert(Client client) {
-        StringBuilder query = new StringBuilder("INSERT INTO client (id, firstName, secondName, lastName, phone, cardNumber) VALUES (" +
-                appendRequiredField(client.getId()) + ", " + appendRequiredField(client.getFirstName()) + ", " +
-                appendField(client.getSecondName()) + ", " + appendRequiredField(client.getLastName()) + ", " +
-                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ");");
+        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_CLIENTS + " (id, firstName, secondName, lastName, " +
+                "phone, cardNumber) VALUES (" + appendRequiredField(client.getId()) + ", " +
+                appendRequiredField(client.getFirstName()) + ", " + appendField(client.getSecondName()) + ", " +
+                appendRequiredField(client.getLastName()) + ", " + appendField(client.getPhone()) + ", " +
+                appendField(client.getCardNumber()) + ");");
+        log.info("build query " + query.toString());
         executeUpdate(query.toString());
     }
 
@@ -192,12 +202,8 @@ public class DBHelper {
             e.printStackTrace();
             //TODO: insert log
         } finally {
-            try {connection.close();} catch (SQLException e) {
-/*TODO: insert log*/
-}
-            try {statement.close();} catch (SQLException e) {
-/*TODO: insert log*/
-}
+            try {connection.close();} catch (SQLException e) { /*TODO: insert log*/ }
+            try {statement.close();} catch (SQLException e) { /*TODO: insert log*/ }
         }
     }
 
@@ -207,10 +213,8 @@ public class DBHelper {
         properties.put("user", USER);
         properties.put("password", PASSWORD);
 
-/*
-          настройки указывающие о необходимости конвертировать данные из Unicode
-	  в UTF-8, который используется в нашей таблице для хранения данных
-        */
+        /* настройки указывающие о необходимости конвертировать данные из Unicode
+	    в UTF-8, который используется в нашей таблице для хранения данных */
 
         properties.setProperty("useUnicode", "true");
         properties.setProperty("characterEncoding", "UTF-8");
@@ -243,7 +247,7 @@ public class DBHelper {
 
     private static ObservableList<ScheduleRecord> fillRecords(ResultSet set, ObservableList<ScheduleRecord> scheduleRecordData) throws SQLException {
         while (set.next()) {
-            scheduleRecordData.add(new ScheduleRecord(set.getString(1), set.getString(2), set.getString(3), set.getString(4), set.getBoolean(5)));
+            scheduleRecordData.add(new ScheduleRecord(set.getString(1), set.getString(2), set.getString(3)));
         }
         return scheduleRecordData;
     }
