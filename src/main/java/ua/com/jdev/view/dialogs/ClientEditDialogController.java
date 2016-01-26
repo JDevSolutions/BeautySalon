@@ -109,7 +109,7 @@ public class ClientEditDialogController {
         }
 
         if (phoneClientField.getText().length() != 10) {
-            errorMessage += "Номер телефона клиента должен состоять из 12 цифр!\n";
+            errorMessage += "Номер телефона клиента должен состоять из 10 цифр!\n";
         } else {
             // Проверка, что в поле только цифры
             try {
