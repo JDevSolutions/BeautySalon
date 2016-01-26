@@ -1,5 +1,6 @@
 package ua.com.jdev.dbase;
 
+import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.log4j.Level;
@@ -30,8 +31,13 @@ public class DBRepository {
 
     void executeUpdate(String query) {
         try {
-            // opening database connection to MySQL server
-            connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+            try {
+                // opening database connection to MySQL server
+                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+            } catch (SQLException ex) {
+                createDatabase(DBHelper.DATABASE_NAME);
+                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+            }
             // getting Statement object to execute query
             statement = connection.createStatement();
             statement.executeUpdate(query);
@@ -47,8 +53,13 @@ public class DBRepository {
     ObservableList<? extends Base> executeQuery(String query, String tableName) {
         ObservableList<? extends Base> dataList = null;
         try {
-            connection = getDBConnection();
-            // getting Statement object to execute query
+            try {
+                // opening database connection to MySQL server
+                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+            } catch (SQLException ex) {
+                createDatabase(DBHelper.DATABASE_NAME);
+                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+            }// getting Statement object to execute query
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             dataList = getObservableList(resultSet, tableName);
