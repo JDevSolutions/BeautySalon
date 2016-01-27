@@ -183,7 +183,6 @@ public class TabsOverviewController {
         boolean okClicked = mainApp.showScheduleEditDialog(tempRecord);
         if (okClicked) {
             scheduleRecordData.add(tempRecord);
-            DBHelper.insert(tempRecord);
         }
     }
 
