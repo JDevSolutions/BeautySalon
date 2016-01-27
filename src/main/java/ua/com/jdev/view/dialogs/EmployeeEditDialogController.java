@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Employee;
 
 public class EmployeeEditDialogController {
@@ -77,6 +78,8 @@ public class EmployeeEditDialogController {
             employee.setPhone(phoneEmployeeField.getText());
             employee.setPosition(positionEmployeeField.getText());
 
+            DBHelper.insert(employee);
+
             okClicked = true;
             dialogStage.close();
         }
@@ -107,18 +110,20 @@ public class EmployeeEditDialogController {
         if (lastNameEmployeeField.getText() == null || lastNameEmployeeField.getText().length() == 0) {
             errorMessage += "Фамилия сотрудника содержит ошибку!\n";
         }
-
-        if (phoneEmployeeField.getText().length() != 12) {
-            errorMessage += "Номер телефона сотрудника должен состоять из 12 цифр!\n";
+        if (phoneEmployeeField.getText() == null || phoneEmployeeField.getText().length() == 0) {
+            errorMessage += "Поле \"Телефон\" обязательно для заполнения!\n";
         } else {
-            // Проверка, что в поле только цифры
-            try {
-                Long.parseLong(phoneEmployeeField.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "Номер телефона должен состоять только из цифр!\n";
+            if (phoneEmployeeField.getText().length() != 10) {
+                errorMessage += "Номер телефона сотрудника должен состоять из 10 цифр!\n";
+            } else {
+                // Проверка, что в поле только цифры
+                try {
+                    Long.parseLong(phoneEmployeeField.getText());
+                } catch (NumberFormatException e) {
+                    errorMessage += "Номер телефона должен состоять только из цифр!\n";
+                }
             }
         }
-
         if (positionEmployeeField.getText() == null || positionEmployeeField.getText().equals("")) {
             errorMessage += "Введите должность сотрудника!\n";
         }
