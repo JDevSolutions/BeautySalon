@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.log4j.BasicConfigurator;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
@@ -51,6 +52,7 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         launch(args);
     }
 
