@@ -5,13 +5,15 @@ import javafx.beans.property.StringProperty;
 
 public abstract class Person extends Base {
 
-    private final StringProperty firstName;
-    private final StringProperty secondName;
-    private final StringProperty lastName;
-    private final StringProperty phone;
+    private StringProperty firstName;
+    private StringProperty secondName = new SimpleStringProperty();
+    private StringProperty lastName;
+    private StringProperty phone;
 
-    public Person() {
-        this(null, null, null, null);
+    public Person(String firstName, String lastName, String phone) {
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.phone = new SimpleStringProperty(phone);
     }
 
     public Person(String firstName, String secondName, String lastName, String phone) {
