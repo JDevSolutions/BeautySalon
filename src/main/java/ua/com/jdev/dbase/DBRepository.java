@@ -150,8 +150,8 @@ public class DBRepository {
                     ObservableList<Goods> goodsData = FXCollections.observableArrayList();
                     return fillGoods(set, goodsData);
                 case "orders":
-                    ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
-                    return fillRecords(set, scheduleRecordData);
+                    ObservableList<Order> orderData = FXCollections.observableArrayList();
+                    return fillRecords(set, orderData);
             }
         } catch (SQLException e) {
             log.log(Level.WARN, tableName, e);
@@ -159,9 +159,9 @@ public class DBRepository {
         throw new IllegalArgumentException();
     }
 
-    private static ObservableList<ScheduleRecord> fillRecords(ResultSet set, ObservableList<ScheduleRecord> scheduleRecordData) throws SQLException {
+    private static ObservableList<Order> fillRecords(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
         while (set.next()) {
-            scheduleRecordData.add(new ScheduleRecord(set.getString(1), set.getString(2), set.getString(3)));
+            scheduleRecordData.add(new Order(set.getString(1), set.getString(2), set.getString(3)));
         }
         return scheduleRecordData;
     }
