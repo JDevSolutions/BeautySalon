@@ -105,7 +105,7 @@ public class DBRepository {
                     "`client_id` INT NOT NULL, `employee_id` INT, `isPaid` BOOL, `price` DECIMAL(9,2), " +
                     "`date` TIMESTAMP, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_PRODUCTS + "` (`id` INT NOT NULL, " +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_GOODS + "` (`id` INT NOT NULL, " +
                     "`name` VARCHAR(45) NOT NULL, `price` DECIMAL(9,2), PRIMARY KEY (`id`)) CHARACTER SET 'utf8'" +
                     "COLLATE utf8_general_ci;");
 
