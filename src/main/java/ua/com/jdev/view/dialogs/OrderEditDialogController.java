@@ -7,24 +7,24 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ua.com.jdev.dbase.DBHelper;
-import ua.com.jdev.model.ScheduleRecord;
+import ua.com.jdev.model.Order;
 
-public class ScheduleEditDialogController {
+public class OrderEditDialogController {
 
     @FXML
-    private TextField timeScheduleField;
+    private TextField timeOrderField;
     @FXML
-    private TextField employeeScheduleField;
+    private TextField employeeOrderField;
     @FXML
-    private TextField clientScheduleField;
+    private TextField clientOrderField;
     @FXML
-    private TextField priceScheduleField;
+    private TextField priceOrderField;
     @FXML
-    private CheckBox paidScheduleCheckBox;
+    private CheckBox paidOrderCheckBox;
 
     private Stage dialogStage;
     // TODO: 22.01.2016  
-    private ScheduleRecord scheduleRecord;
+    private Order order;
     private boolean okClicked;
 
     /**
@@ -47,16 +47,16 @@ public class ScheduleEditDialogController {
     /**
      * Sets the record to be edited in the dialog.
      *
-     * @param scheduleRecord
+     * @param order
      */
-    public void setScheduleRecord(ScheduleRecord scheduleRecord) {
-        this.scheduleRecord = scheduleRecord;
+    public void setOrder(Order order) {
+        this.order = order;
 
-        timeScheduleField.setText(scheduleRecord.getTime());
-        employeeScheduleField.setText(scheduleRecord.getEmployee());
-        clientScheduleField.setText(scheduleRecord.getClient());
-        priceScheduleField.setText(scheduleRecord.getPrice());
-        paidScheduleCheckBox.setSelected(scheduleRecord.isPaid());
+        timeOrderField.setText(order.getTime());
+        employeeOrderField.setText(order.getEmployee());
+        clientOrderField.setText(order.getClient());
+        priceOrderField.setText(order.getPrice());
+        paidOrderCheckBox.setSelected(order.isPaid());
     }
 
     /**
@@ -74,18 +74,18 @@ public class ScheduleEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            scheduleRecord.setTime(timeScheduleField.getText());
-            scheduleRecord.setEmployee(employeeScheduleField.getText());
-            scheduleRecord.setClient(clientScheduleField.getText());
-            scheduleRecord.setPrice(priceScheduleField.getText());
-            scheduleRecord.setPaid(paidScheduleCheckBox.isSelected());
+            order.setTime(timeOrderField.getText());
+            order.setEmployee(employeeOrderField.getText());
+            order.setClient(clientOrderField.getText());
+            order.setPrice(priceOrderField.getText());
+            order.setPaid(paidOrderCheckBox.isSelected());
 
-            DBHelper.insert(scheduleRecord);
-//            DBHelper.insert(new ScheduleRecord(timeScheduleField.getText(),
-//                    employeeScheduleField.getText(),
-//                    clientScheduleField.getText(),
-//                    priceScheduleField.getText(),
-//                    paidScheduleCheckBox.isSelected()));
+            DBHelper.insert(order);
+//            DBHelper.insert(new Order(timeOrderField.getText(),
+//                    employeeOrderField.getText(),
+//                    clientOrderField.getText(),
+//                    priceOrderField.getText(),
+//                    paidOrderCheckBox.isSelected()));
 
             okClicked = true;
             dialogStage.close();
@@ -108,25 +108,25 @@ public class ScheduleEditDialogController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (timeScheduleField.getText() == null || timeScheduleField.getText().length() == 0) {
+        if (timeOrderField.getText() == null || timeOrderField.getText().length() == 0) {
             errorMessage += "Время записи содержит ошибку!\n";
         }
-        if (employeeScheduleField.getText() == null || employeeScheduleField.getText().length() == 0) {
+        if (employeeOrderField.getText() == null || employeeOrderField.getText().length() == 0) {
             errorMessage += "Имя мастера содержит ошибку!\n";
         }
-        if (clientScheduleField.getText() == null || clientScheduleField.getText().length() == 0) {
+        if (clientOrderField.getText() == null || clientOrderField.getText().length() == 0) {
             errorMessage += "Имя клиента содержит ошибку!\n";
         }
-        if (priceScheduleField.getText() == null || priceScheduleField.getText().length() != 0) {
-            priceScheduleField.setText("0.0");
+        if (priceOrderField.getText() == null || priceOrderField.getText().length() != 0) {
+            priceOrderField.setText("0.0");
         } else {
             try {
-                Double.parseDouble(priceScheduleField.getText());
+                Double.parseDouble(priceOrderField.getText());
             } catch (NumberFormatException e) {
                 errorMessage += "Цена услуг содержит ошибку!\n";
             }
         }
-        if (paidScheduleCheckBox.isSelected() && (priceScheduleField.getText() == null || priceScheduleField.getText().length() == 0)) {
+        if (paidOrderCheckBox.isSelected() && (priceOrderField.getText() == null || priceOrderField.getText().length() == 0)) {
             errorMessage += "Если улуга оплачена укажите цену!\n";
         }
 
@@ -146,23 +146,19 @@ public class ScheduleEditDialogController {
         }
     }
 
-    public TextField getTimeScheduleField() {
-        return timeScheduleField;
+    public TextField getTimeOrderField() {
+        return timeOrderField;
     }
 
-    public TextField getEmployeeScheduleField() {
-        return employeeScheduleField;
+    public TextField getEmployeeOrderField() {
+        return employeeOrderField;
     }
 
-    public TextField getClientScheduleField() {
-        return clientScheduleField;
+    public TextField getClientOrderField() {
+        return clientOrderField;
     }
 
-    public TextField getPriceScheduleField() {
-        return priceScheduleField;
-    }
-
-    public CheckBox getPaidScheduleCheckBox() {
-        return paidScheduleCheckBox;
+    public TextField getPriceOrderField() {
+        return priceOrderField;
     }
 }

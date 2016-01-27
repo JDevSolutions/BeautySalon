@@ -12,12 +12,12 @@ import javafx.stage.Stage;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
-import ua.com.jdev.model.ScheduleRecord;
+import ua.com.jdev.model.Order;
 import ua.com.jdev.view.TabsOverviewController;
 import ua.com.jdev.view.dialogs.ClientEditDialogController;
 import ua.com.jdev.view.dialogs.EmployeeEditDialogController;
 import ua.com.jdev.view.dialogs.GoodsEditDialogController;
-import ua.com.jdev.view.dialogs.ScheduleEditDialogController;
+import ua.com.jdev.view.dialogs.OrderEditDialogController;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
-    private ScheduleEditDialogController scheduleController;
+    private OrderEditDialogController scheduleController;
     private ClientEditDialogController clientController;
     private EmployeeEditDialogController employeeController;
     private GoodsEditDialogController goodsController;
@@ -34,14 +34,14 @@ public class MainApp extends Application {
     /**
      * The data as an observable list of Persons, Goods and Schedule.
      */
-    private ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
+    private ObservableList<Order> orderData = FXCollections.observableArrayList();
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
     private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
     private ObservableList<Client> clientData = FXCollections.observableArrayList();
 
     public MainApp() {
-/*        //scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
-        scheduleRecordData = (ObservableList<ScheduleRecord>) DBHelper.getData("orders");
+/*        //orderData.add(new Order("12:30", "Alina Antonenko", "Lilya Marchenko"));
+        orderData = (ObservableList<Order>) DBHelper.getData("orders");
         //goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
         goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
         //employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
@@ -114,8 +114,8 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
-    public ObservableList<ScheduleRecord> getScheduleRecordData() {
-        return scheduleRecordData;
+    public ObservableList<Order> getOrderData() {
+        return orderData;
     }
 
     public ObservableList<Goods> getGoodsData() {
@@ -135,14 +135,14 @@ public class MainApp extends Application {
      * clicks OK, the changes are saved into the provided person object and true
      * is returned.
      *
-     * @param scheduleRecord the person object to be edited
+     * @param order the person object to be edited
      * @return true if the user clicked OK, false otherwise.
      */
-    public boolean showScheduleEditDialog(ScheduleRecord scheduleRecord) {
+    public boolean showScheduleEditDialog(Order order) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/dialogs/ScheduleEditDialog.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/dialogs/OrderEditDialog.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage
@@ -156,7 +156,7 @@ public class MainApp extends Application {
             // Set the goods into the controller.
             scheduleController = loader.getController();
             scheduleController.setDialogStage(dialogStage);
-            scheduleController.setScheduleRecord(scheduleRecord);
+            scheduleController.setOrder(order);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -262,7 +262,7 @@ public class MainApp extends Application {
         }
     }
 
-    public ScheduleEditDialogController getScheduleController() {
+    public OrderEditDialogController getScheduleController() {
         return scheduleController;
     }
 

@@ -3,7 +3,7 @@ package ua.com.jdev.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ScheduleRecord extends Base {
+public class Order extends Base {
 
     private StringProperty time;
     private StringProperty employee;
@@ -11,25 +11,25 @@ public class ScheduleRecord extends Base {
     private StringProperty price;
     private boolean paid = false;
 
-    public ScheduleRecord() {
+    public Order() {
         this(null, null, null, null);
     }
 
-    public ScheduleRecord(String time, String employee, String client) {
+    public Order(String time, String employee, String client) {
         this.time = new SimpleStringProperty(time);
         this.employee = new SimpleStringProperty(employee);
         this.client = new SimpleStringProperty(client);
         this.price = new SimpleStringProperty("");
     }
 
-    public ScheduleRecord(String time, String employee, String client, String price) {
+    public Order(String time, String employee, String client, String price) {
         this.time = new SimpleStringProperty(time);
         this.employee = new SimpleStringProperty(employee);
         this.client = new SimpleStringProperty(client);
         this.price = new SimpleStringProperty(price);
     }
 
-    public ScheduleRecord(String time, String employee, String client, String price, boolean paid) {
+    public Order(String time, String employee, String client, String price, boolean paid) {
         this.time = new SimpleStringProperty(time);
         this.employee = new SimpleStringProperty(employee);
         this.client = new SimpleStringProperty(client);

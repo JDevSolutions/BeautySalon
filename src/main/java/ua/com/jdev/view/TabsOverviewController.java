@@ -11,19 +11,19 @@ import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
-import ua.com.jdev.model.ScheduleRecord;
+import ua.com.jdev.model.Order;
 import ua.com.jdev.view.dialogs.ClientEditDialogController;
 import ua.com.jdev.view.dialogs.EmployeeEditDialogController;
 import ua.com.jdev.view.dialogs.GoodsEditDialogController;
-import ua.com.jdev.view.dialogs.ScheduleEditDialogController;
+import ua.com.jdev.view.dialogs.OrderEditDialogController;
 
 public class TabsOverviewController {
 
-    @FXML private TableView<ScheduleRecord> scheduleTable;
-    @FXML private TableColumn<ScheduleRecord, String> timeColumnSchedule;
-    @FXML private TableColumn<ScheduleRecord, String> employeeColumnSchedule;
-    @FXML private TableColumn<ScheduleRecord, String> clientColumnSchedule;
-    @FXML private TableColumn<ScheduleRecord, String> priceColumnSchedule;
+    @FXML private TableView<Order> scheduleTable;
+    @FXML private TableColumn<Order, String> timeColumnSchedule;
+    @FXML private TableColumn<Order, String> employeeColumnSchedule;
+    @FXML private TableColumn<Order, String> clientColumnSchedule;
+    @FXML private TableColumn<Order, String> priceColumnSchedule;
     @FXML private Button editBtnSchedule;
     @FXML private Button deleteBtnSchedule;
 
@@ -54,7 +54,7 @@ public class TabsOverviewController {
     @FXML private Button deleteBtnClient;
 
     // ######### TEST ############
-    private ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
+    private ObservableList<Order> orderData = FXCollections.observableArrayList();
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
     private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
     private ObservableList<Client> clientData = FXCollections.observableArrayList();
@@ -67,8 +67,8 @@ public class TabsOverviewController {
      * The constructor is called before the initialize() method.
      */
     public TabsOverviewController() {
-        //scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
-        scheduleRecordData = (ObservableList<ScheduleRecord>) DBHelper.getData("orders");
+        //orderData.add(new Order("12:30", "Alina Antonenko", "Lilya Marchenko"));
+        orderData = (ObservableList<Order>) DBHelper.getData("orders");
         //goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
         goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
         //employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
@@ -137,18 +137,18 @@ public class TabsOverviewController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
 
-        scheduleTable.setItems(scheduleRecordData);
+        scheduleTable.setItems(orderData);
         goodsTable.setItems(goodsData);
         employeeTable.setItems(employeeData);
         clientTable.setItems(clientData);
     }
 
     // TODO: 21.01.2016 объединить эти методы
-    private void editScheduleRecord(ScheduleRecord scheduleRecord, ScheduleEditDialogController controller) {
-        scheduleRecord.setTime(controller.getTimeScheduleField().getText());
-        scheduleRecord.setEmployee(controller.getEmployeeScheduleField().getText());
-        scheduleRecord.setClient(controller.getClientScheduleField().getText());
-        scheduleRecord.setPrice(controller.getPriceScheduleField().getText());
+    private void editScheduleRecord(Order order, OrderEditDialogController controller) {
+        order.setTime(controller.getTimeOrderField().getText());
+        order.setEmployee(controller.getEmployeeOrderField().getText());
+        order.setClient(controller.getClientOrderField().getText());
+        order.setPrice(controller.getPriceOrderField().getText());
     }
     private void editGoods(Goods goods, GoodsEditDialogController controller) {
         goods.setCode(controller.getCodeGoodsField().getText());
@@ -179,10 +179,10 @@ public class TabsOverviewController {
      */
     @FXML
     private void handleNewScheduleRecord() {
-        ScheduleRecord tempRecord = new ScheduleRecord();
+        Order tempRecord = new Order();
         boolean okClicked = mainApp.showScheduleEditDialog(tempRecord);
         if (okClicked) {
-            scheduleRecordData.add(tempRecord);
+            orderData.add(tempRecord);
         }
     }
 
@@ -192,10 +192,10 @@ public class TabsOverviewController {
      */
     @FXML
     private void handleEditScheduleRecord() {
-        ScheduleRecord selectedRecord = scheduleTable.getSelectionModel().getSelectedItem();
+        Order selectedRecord = scheduleTable.getSelectionModel().getSelectedItem();
         //if (selectedRecord != null) {
         boolean okClicked = mainApp.showScheduleEditDialog(selectedRecord);
-        ScheduleEditDialogController controller = mainApp.getScheduleController();
+        OrderEditDialogController controller = mainApp.getScheduleController();
         if (okClicked) {
             editScheduleRecord(selectedRecord, controller);
         }

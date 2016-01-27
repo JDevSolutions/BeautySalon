@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.com.jdev.view.dialogs.ScheduleEditDialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.com.jdev.view.dialogs.OrderEditDialogController">
    <children>
       <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columnConstraints>
@@ -25,16 +25,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="timeSchedulLabel" text="Время" />
-            <Label fx:id="employeeScheduleLabel" text="Мастер" GridPane.rowIndex="1" />
-            <Label fx:id="clientScheduleLabel" text="Клиент" GridPane.rowIndex="2" />
-            <TextField fx:id="timeScheduleField" GridPane.columnIndex="1" />
-            <TextField fx:id="employeeScheduleField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="clientScheduleField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="priceScheduleLabel" text="Цена" GridPane.rowIndex="3" />
-            <Label fx:id="paidScheduleLabel" text="Оплачено" GridPane.rowIndex="4" />
-            <TextField fx:id="priceScheduleField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <CheckBox fx:id="paidScheduleCheckBox" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="timeOrderLabel" text="Время" />
+            <Label fx:id="employeeOrderLabel" text="Мастер" GridPane.rowIndex="1" />
+            <Label fx:id="clientOrderLabel" text="Клиент" GridPane.rowIndex="2" />
+            <TextField fx:id="timeOrderField" GridPane.columnIndex="1" />
+            <TextField fx:id="employeeOrderField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="clientOrderField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="priceOrderLabel" text="Цена" GridPane.rowIndex="3" />
+            <Label fx:id="paidOrderLabel" text="Оплачено" GridPane.rowIndex="4" />
+            <TextField fx:id="priceOrderField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <CheckBox fx:id="paidOrderCheckBox" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
