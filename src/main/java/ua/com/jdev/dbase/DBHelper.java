@@ -6,7 +6,7 @@ import ua.com.jdev.model.Base;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Goods;
 import ua.com.jdev.model.Employee;
-import ua.com.jdev.model.ScheduleRecord;
+import ua.com.jdev.model.Order;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
@@ -65,7 +65,7 @@ public class DBHelper {
         dbRep.executeUpdate(query.toString());
     }
 
-    public static void insert(ScheduleRecord record) {
+    public static void insert(Order order) {
         //not implemented
     }
 
@@ -95,7 +95,7 @@ public class DBHelper {
         dbRep.executeUpdate(query.toString());
     }
 
-    public static void update(ScheduleRecord record) {
+    public static void update(Order order) {
         //not implemented
     }
 
