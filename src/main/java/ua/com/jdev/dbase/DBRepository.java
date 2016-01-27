@@ -89,12 +89,9 @@ public class DBRepository {
             connection = DriverManager.getConnection(URL + "/" + databaseName, USER, PASSWORD);
             statement = connection.createStatement();
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CARDS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                    "`client_id` INT NOT NULL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
-
             statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CLIENTS + "`(`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
-                    "`phone` VARCHAR(10), PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
+                    "`phone` VARCHAR(10), `cardNumber` VARCHAR(7), PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
 
             statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_EMPLOYEES + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
