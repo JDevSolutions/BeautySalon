@@ -6,6 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.ScheduleRecord;
 
 public class ScheduleEditDialogController {
@@ -78,6 +79,13 @@ public class ScheduleEditDialogController {
             scheduleRecord.setClient(clientScheduleField.getText());
             scheduleRecord.setPrice(priceScheduleField.getText());
             scheduleRecord.setPaid(paidScheduleCheckBox.isSelected());
+
+            DBHelper.insert(scheduleRecord);
+//            DBHelper.insert(new ScheduleRecord(timeScheduleField.getText(),
+//                    employeeScheduleField.getText(),
+//                    clientScheduleField.getText(),
+//                    priceScheduleField.getText(),
+//                    paidScheduleCheckBox.isSelected()));
 
             okClicked = true;
             dialogStage.close();
