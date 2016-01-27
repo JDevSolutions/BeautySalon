@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 
 public class ClientEditDialogController {
@@ -77,6 +78,8 @@ public class ClientEditDialogController {
             client.setPhone(phoneClientField.getText());
             client.setCardNumber(cardNumberClientField.getText());
 
+            DBHelper.insert(client);
+
             okClicked = true;
             dialogStage.close();
         }
@@ -107,15 +110,18 @@ public class ClientEditDialogController {
         if (lastNameClientField.getText() == null || lastNameClientField.getText().length() == 0) {
             errorMessage += "Фамилия клиента содержит ошибку!\n";
         }
-
-        if (phoneClientField.getText().length() != 10) {
-            errorMessage += "Номер телефона клиента должен состоять из 10 цифр!\n";
+        if (phoneClientField.getText() == null || phoneClientField.getText().length() == 0) {
+            errorMessage += "Поле \"Телефон\" обязательно!\n";
         } else {
-            // Проверка, что в поле только цифры
-            try {
-                Long.parseLong(phoneClientField.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "Номер телефона должен состоять только из цифр!\n";
+            if (phoneClientField.getText().length() != 10) {
+                errorMessage += "Номер телефона клиента должен состоять из 10 цифр!\n";
+            } else {
+                // Проверка, что в поле только цифры
+                try {
+                    Long.parseLong(phoneClientField.getText());
+                } catch (NumberFormatException e) {
+                    errorMessage += "Номер телефона должен состоять только из цифр!\n";
+                }
             }
         }
 
