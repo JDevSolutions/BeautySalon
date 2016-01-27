@@ -51,6 +51,32 @@
             <version>1.2.17</version>
         </dependency>
 
+        <!-- Google Drive -->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-drive</artifactId>
+            <version>v2-rev201-1.21.0</version>
+        </dependency>
+
+        <!-- Google Drive client -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.20.0</version>
+        </dependency>
+
+
+        <!-- Google Drive auth -->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.20.0</version>
+        </dependency>
+
+
+
+
+
     </dependencies>
 
     <build>
