@@ -1,12 +1,15 @@
-
 package ua.com.jdev.dbase;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.log4j.Level;
-import ua.com.jdev.model.*;
+
+import ua.com.jdev.model.Base;
+import ua.com.jdev.model.Client;
+import ua.com.jdev.model.Goods;
+import ua.com.jdev.model.Employee;
+import ua.com.jdev.model.ScheduleRecord;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 
 /**
  * Created by Yurii Mikhailichenko on 17.01.2016.
@@ -54,10 +57,10 @@ public class DBHelper {
     }
 
     public static void insert(Employee employee)  {
-        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_GOODS + " (firstName, secondName, lastName, phone, " +
+        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_EMPLOYEES + " (firstName, secondName, lastName, phone, " +
                 "profession) VALUES (" + appendRequiredField(employee.getFirstName()) + ", " +
                 appendField(employee.getSecondName()) + ", " + appendRequiredField(employee.getLastName()) + ", " +
-                appendField(employee.getPhone()) + appendRequiredField(employee.getPosition()) + ");");
+                appendField(employee.getPhone()) + ", " + appendRequiredField(employee.getPosition()) + ");");
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
