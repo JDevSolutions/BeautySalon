@@ -37,27 +37,25 @@ public class DBHelper {
     }
 
     public static void insert(Client client) {
-        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_CLIENTS + " (id, firstName, secondName, lastName, " +
-                "phone, cardNumber) VALUES (" + appendRequiredField(client.getId()) + ", " +
-                appendRequiredField(client.getFirstName()) + ", " + appendField(client.getSecondName()) + ", " +
-                appendRequiredField(client.getLastName()) + ", " + appendField(client.getPhone()) + ", " +
-                appendField(client.getCardNumber()) + ");");
+        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_CLIENTS + " (firstName, secondName, lastName, " +
+                "phone, cardNumber) VALUES (" +  appendRequiredField(client.getFirstName()) + ", " +
+                appendField(client.getSecondName()) + ", " +  appendRequiredField(client.getLastName()) + ", " +
+                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ");");
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
     public static void insert(Goods goods)  {
-        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_GOODS + " (id, code, name, price, amount) VALUES (" +
-                appendRequiredField(goods.getId()) + ", " + appendRequiredField(goods.getCode()) + ", " +
-                appendRequiredField(goods.getName()) + ", " + appendField(goods.getPrice()) + ", " +
-                appendField(goods.getAmount()));
+        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_GOODS + " (code, name, price, amount) VALUES (" +
+                appendRequiredField(goods.getCode()) + ", " + appendRequiredField(goods.getName()) + ", " +
+                appendField(goods.getPrice()) + ", " + appendField(goods.getAmount()));
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
     public static void insert(Employee employee)  {
-        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_GOODS + " (id, firstName, secondName, lastName, phone, profession) VALUES (" +
-                appendRequiredField(employee.getId()) + ", " + appendRequiredField(employee.getFirstName()) + ", " +
+        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_GOODS + " (firstName, secondName, lastName, phone, " +
+                "profession) VALUES (" + appendRequiredField(employee.getFirstName()) + ", " +
                 appendField(employee.getSecondName()) + ", " + appendRequiredField(employee.getLastName()) + ", " +
                 appendField(employee.getPhone()) + appendRequiredField(employee.getPosition()) + ");");
         log.log(Level.INFO, query.toString());
