@@ -109,7 +109,9 @@ public class ScheduleEditDialogController {
         if (clientScheduleField.getText() == null || clientScheduleField.getText().length() == 0) {
             errorMessage += "Имя клиента содержит ошибку!\n";
         }
-        if (priceScheduleField.getText() != null || priceScheduleField.getText().length() != 0) {
+        if (priceScheduleField.getText() == null || priceScheduleField.getText().length() != 0) {
+            priceScheduleField.setText("0.0");
+        } else {
             try {
                 Double.parseDouble(priceScheduleField.getText());
             } catch (NumberFormatException e) {

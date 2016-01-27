@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
@@ -41,11 +40,14 @@ public class MainApp extends Application {
     private ObservableList<Client> clientData = FXCollections.observableArrayList();
 
     public MainApp() {
-        scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
-        goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
-        employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
+/*        //scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
+        scheduleRecordData = (ObservableList<ScheduleRecord>) DBHelper.getData("orders");
+        //goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
+        goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
+        //employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
+        employeeData = (ObservableList<Employee>) DBHelper.getData("employees");
         //clientData.add(new Client("Olga", "Ivanovna", "Safronova", "380503219876"));
-        clientData = (ObservableList<Client>) DBHelper.getData("clients");
+        clientData = (ObservableList<Client>) DBHelper.getData("clients");*/
     }
 
     public static void main(String[] args) {

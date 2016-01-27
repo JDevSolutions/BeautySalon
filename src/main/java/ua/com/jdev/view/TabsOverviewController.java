@@ -1,10 +1,13 @@
 package ua.com.jdev.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ua.com.jdev.MainApp;
+import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
@@ -50,6 +53,12 @@ public class TabsOverviewController {
     @FXML private Button editBtnClient;
     @FXML private Button deleteBtnClient;
 
+    // ######### TEST ############
+    private ObservableList<ScheduleRecord> scheduleRecordData = FXCollections.observableArrayList();
+    private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
+    private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
+    private ObservableList<Client> clientData = FXCollections.observableArrayList();
+
     // Reference to the main application.
     private MainApp mainApp;
 
@@ -58,6 +67,14 @@ public class TabsOverviewController {
      * The constructor is called before the initialize() method.
      */
     public TabsOverviewController() {
+        //scheduleRecordData.add(new ScheduleRecord("12:30", "Alina Antonenko", "Lilya Marchenko"));
+        scheduleRecordData = (ObservableList<ScheduleRecord>) DBHelper.getData("orders");
+        //goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
+        goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
+        //employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
+        employeeData = (ObservableList<Employee>) DBHelper.getData("employees");
+        //clientData.add(new Client("Olga", "Ivanovna", "Safronova", "380503219876"));
+        clientData = (ObservableList<Client>) DBHelper.getData("clients");
     }
 
     /**
@@ -120,10 +137,10 @@ public class TabsOverviewController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
 
-        scheduleTable.setItems(mainApp.getScheduleRecordData());
-        goodsTable.setItems(mainApp.getGoodsData());
-        employeeTable.setItems(mainApp.getEmployeeData());
-        clientTable.setItems(mainApp.getClientData());
+        scheduleTable.setItems(scheduleRecordData);
+        goodsTable.setItems(goodsData);
+        employeeTable.setItems(employeeData);
+        clientTable.setItems(clientData);
     }
 
     // TODO: 21.01.2016 объединить эти методы
@@ -165,7 +182,8 @@ public class TabsOverviewController {
         ScheduleRecord tempRecord = new ScheduleRecord();
         boolean okClicked = mainApp.showScheduleEditDialog(tempRecord);
         if (okClicked) {
-            mainApp.getScheduleRecordData().add(tempRecord);
+            scheduleRecordData.add(tempRecord);
+            DBHelper.insert(tempRecord);
         }
     }
 
@@ -202,7 +220,7 @@ public class TabsOverviewController {
         Goods tempGoods = new Goods();
         boolean okClicked = mainApp.showGoodsEditDialog(tempGoods);
         if (okClicked) {
-            mainApp.getGoodsData().add(tempGoods);
+            goodsData.add(tempGoods);
         }
     }
 
@@ -239,7 +257,7 @@ public class TabsOverviewController {
         Employee tempEmployee = new Employee();
         boolean okClicked = mainApp.showEmployeeEditDialog(tempEmployee);
         if (okClicked) {
-            mainApp.getEmployeeData().add(tempEmployee);
+            employeeData.add(tempEmployee);
         }
     }
 
@@ -276,7 +294,7 @@ public class TabsOverviewController {
         Client tempClient = new Client();
         boolean okClicked = mainApp.showClientEditDialog(tempClient);
         if (okClicked) {
-            mainApp.getClientData().add(tempClient);
+            clientData.add(tempClient);
         }
     }
 
