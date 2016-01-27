@@ -3,22 +3,12 @@ package ua.com.jdev.excel;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import ua.com.jdev.entity.DBEntity;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CreateXlsFile {
-
-    public static void generateFile(DBEntity entity) {
-
-    }
-
-    public static void generateFile(DBEntity entity, String path) {
-
-    }
-
 
     public static void testFileCreate(String path) {
         try {
