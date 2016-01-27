@@ -89,27 +89,27 @@ public class DBRepository {
             connection = DriverManager.getConnection(URL + "/" + databaseName, USER, PASSWORD);
             statement = connection.createStatement();
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CARDS + "` (`id` INT NOT NULL, " +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CARDS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`client_id` INT NOT NULL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CLIENTS + "`(`id` INT NOT NULL, " +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CLIENTS + "`(`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
                     "`phone` VARCHAR(10), PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_EMPLOYEES + "` (`id` INT NOT NULL, " +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_EMPLOYEES + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
                     "`phone` VARCHAR(10), `profession` VARCHAR(45) NOT NULL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' " +
                     "COLLATE utf8_general_ci;");
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_ORDERS + "` (`id` INT NOT NULL, " +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_ORDERS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`client_id` INT NOT NULL, `employee_id` INT, `isPaid` BOOL, `price` DECIMAL(9,2), " +
                     "`date` TIMESTAMP, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_GOODS + "` (`id` INT NOT NULL, " +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_GOODS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
                     "`name` VARCHAR(45) NOT NULL, `price` DECIMAL(9,2), PRIMARY KEY (`id`)) CHARACTER SET 'utf8'" +
                     "COLLATE utf8_general_ci;");
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_RENTERS + "` (`id` INT NOT NULL," +
+            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_RENTERS + "` (`id` INT NOT NULL AUTO_INCREMENT," +
                     " `firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
                     "`phone` VARCHAR(10), `rent` DECIMAL(9,2), PRIMARY KEY (`id`)) CHARACTER SET 'utf8' " +
                     "COLLATE utf8_general_ci;");
