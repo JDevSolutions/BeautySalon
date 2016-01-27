@@ -4,7 +4,7 @@ import javafx.beans.property.StringProperty;
 
 public abstract class Base {
 
-    private StringProperty id;
+    protected StringProperty id;
 
     public String getId() {
         return id.get();
