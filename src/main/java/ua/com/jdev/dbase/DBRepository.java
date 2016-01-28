@@ -32,10 +32,10 @@ public class DBRepository {
         try {
             try {
                 // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                connection = DriverManager.getConnection(URL + "/Peoples?autoReconnect=true&useSSL=false/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
             } catch (SQLException ex) {
                 createDatabase(DBHelper.DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                connection = DriverManager.getConnection(URL + "/Peoples?autoReconnect=true&useSSL=false/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
             }
             // getting Statement object to execute query
             statement = connection.createStatement();
@@ -54,7 +54,7 @@ public class DBRepository {
         try {
             try {
                 // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                connection = DriverManager.getConnection(URL + "/Peoples?autoReconnect=true&useSSL=false/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
             } catch (SQLException ex) {
                 createDatabase(DBHelper.DATABASE_NAME);
                 connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);

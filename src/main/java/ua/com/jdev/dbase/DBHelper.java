@@ -99,6 +99,22 @@ public class DBHelper {
         //not implemented
     }
 
+    public static void delete(Client client) {
+        //not imlemented
+    }
+
+    public static void delete(Goods goods)  {
+        //not imlemented
+    }
+
+    public static void delete(Employee employee)  {
+        //not imlemented
+    }
+
+    public static void delete(Order order) {
+        //not implemented
+    }
+
 
     private static String appendField(String param) {
         /**
