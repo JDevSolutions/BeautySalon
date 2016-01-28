@@ -16,7 +16,7 @@
                     <content>
                         <AnchorPane fx:id="scheduleView" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
                             <children>
-                                <TableView fx:id="scheduleTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <TableView fx:id="orderTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
                                         <TableColumn fx:id="timeColumnSchedule" maxWidth="200.0" minWidth="100.0" prefWidth="125.0" text="Время" />
                                         <TableColumn fx:id="employeeColumnSchedule" minWidth="200.0" prefWidth="75.0" text="Мастер" />
@@ -29,9 +29,9 @@
                                 </TableView>
                                 <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                     <children>
-                                        <Button fx:id="addBtnSchedule" mnemonicParsing="false" onAction="#handleNewScheduleRecord" prefWidth="70.0" text="Добавить" />
-                                        <Button fx:id="editBtnSchedule" mnemonicParsing="false" onAction="#handleEditScheduleRecord" prefWidth="70.0" text="Изменить" />
-                                        <Button fx:id="deleteBtnSchedule" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteScheduleRecord" prefWidth="70.0" text="Удалить" />
+                                        <Button fx:id="addBtnOrder" mnemonicParsing="false" onAction="#handleNewOrder" prefWidth="70.0" text="Добавить" />
+                                        <Button fx:id="editBtnOrder" mnemonicParsing="false" onAction="#handleEditOrder" prefWidth="70.0" text="Изменить" />
+                                        <Button fx:id="deleteBtnOrder" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteOrder" prefWidth="70.0" text="Удалить" />
                                     </children>
                                 </HBox>
                             </children>

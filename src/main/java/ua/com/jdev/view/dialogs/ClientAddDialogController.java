@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 
-public class ClientEditDialogController {
+public class ClientAddDialogController {
 
     @FXML
     private TextField firstNameClientField;
@@ -78,7 +78,7 @@ public class ClientEditDialogController {
             client.setPhone(phoneClientField.getText());
             client.setCardNumber(cardNumberClientField.getText());
 
-            DBHelper.update(client);
+            DBHelper.insert(client);
 
             okClicked = true;
             dialogStage.close();

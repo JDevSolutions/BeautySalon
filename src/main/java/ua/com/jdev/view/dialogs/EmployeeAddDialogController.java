@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Employee;
 
-public class EmployeeEditDialogController {
+public class EmployeeAddDialogController {
 
     @FXML
     private TextField firstNameEmployeeField;
@@ -78,7 +78,7 @@ public class EmployeeEditDialogController {
             employee.setPhone(phoneEmployeeField.getText());
             employee.setPosition(positionEmployeeField.getText());
 
-            DBHelper.update(employee);
+            DBHelper.insert(employee);
 
             okClicked = true;
             dialogStage.close();

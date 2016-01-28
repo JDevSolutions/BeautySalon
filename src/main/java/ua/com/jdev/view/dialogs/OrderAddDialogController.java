@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Order;
 
-public class OrderEditDialogController {
+public class OrderAddDialogController {
 
     @FXML
     private TextField timeOrderField;
@@ -80,7 +80,7 @@ public class OrderEditDialogController {
             order.setPrice(priceOrderField.getText());
             order.setPaid(paidOrderCheckBox.isSelected());
 
-            DBHelper.update(order);
+            DBHelper.insert(order);
 
             okClicked = true;
             dialogStage.close();

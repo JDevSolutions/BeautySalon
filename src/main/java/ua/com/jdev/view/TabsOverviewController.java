@@ -19,13 +19,14 @@ import ua.com.jdev.view.dialogs.OrderEditDialogController;
 
 public class TabsOverviewController {
 
-    @FXML private TableView<Order> scheduleTable;
+    @FXML private TableView<Order> orderTable;
     @FXML private TableColumn<Order, String> timeColumnSchedule;
     @FXML private TableColumn<Order, String> employeeColumnSchedule;
     @FXML private TableColumn<Order, String> clientColumnSchedule;
     @FXML private TableColumn<Order, String> priceColumnSchedule;
-    @FXML private Button editBtnSchedule;
-    @FXML private Button deleteBtnSchedule;
+    @FXML private Button addBtnOrder;
+    @FXML private Button editBtnOrder;
+    @FXML private Button deleteBtnOrder;
 
     @FXML private TableView<Goods> goodsTable;
     @FXML private TableColumn<Goods, String> codeColumnGoods;
@@ -67,13 +68,9 @@ public class TabsOverviewController {
      * The constructor is called before the initialize() method.
      */
     public TabsOverviewController() {
-        //orderData.add(new Order("12:30", "Alina Antonenko", "Lilya Marchenko"));
         orderData = (ObservableList<Order>) DBHelper.getData("orders");
-        //goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
         goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
-        //employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
         employeeData = (ObservableList<Employee>) DBHelper.getData("employees");
-        //clientData.add(new Client("Olga", "Ivanovna", "Safronova", "380503219876"));
         clientData = (ObservableList<Client>) DBHelper.getData("clients");
     }
 
@@ -83,8 +80,8 @@ public class TabsOverviewController {
      */
     @FXML
     private void initialize() {
-        editBtnSchedule.setDisable(true);
-        deleteBtnSchedule.setDisable(true);
+        editBtnOrder.setDisable(true);
+        deleteBtnOrder.setDisable(true);
         editBtnGoods.setDisable(true);
         deleteBtnGoods.setDisable(true);
         editBtnEmployee.setDisable(true);
@@ -116,8 +113,9 @@ public class TabsOverviewController {
         cardNumberColumnClient.setCellValueFactory(cellData -> cellData.getValue().cardNumberProperty());
 
         // Listen for selection changes and show the person details when changed.
-        scheduleTable.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {editBtnSchedule.setDisable(false); deleteBtnSchedule.setDisable(false);})
+        orderTable.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> {
+                    editBtnOrder.setDisable(false); deleteBtnOrder.setDisable(false);})
         );
         goodsTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> {editBtnGoods.setDisable(false); deleteBtnGoods.setDisable(false);})
@@ -137,7 +135,7 @@ public class TabsOverviewController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
 
-        scheduleTable.setItems(orderData);
+        orderTable.setItems(orderData);
         goodsTable.setItems(goodsData);
         employeeTable.setItems(employeeData);
         clientTable.setItems(clientData);
@@ -178,11 +176,11 @@ public class TabsOverviewController {
      * details for a new schedule record.
      */
     @FXML
-    private void handleNewScheduleRecord() {
-        Order tempRecord = new Order();
-        boolean okClicked = mainApp.showScheduleEditDialog(tempRecord);
+    private void handleNewOrder() {
+        Order tempOrder = new Order();
+        boolean okClicked = mainApp.showOrderAddDialog(tempOrder);
         if (okClicked) {
-            orderData.add(tempRecord);
+            orderData.add(tempOrder);
         }
     }
 
@@ -191,22 +189,24 @@ public class TabsOverviewController {
      * details for the selected schedule record.
      */
     @FXML
-    private void handleEditScheduleRecord() {
-        Order selectedRecord = scheduleTable.getSelectionModel().getSelectedItem();
-        //if (selectedRecord != null) {
-        boolean okClicked = mainApp.showScheduleEditDialog(selectedRecord);
-        OrderEditDialogController controller = mainApp.getScheduleController();
+    private void handleEditOrder() {
+        Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
+        //if (selectedOrder != null) {
+        boolean okClicked = mainApp.showOrderEditDialog(selectedOrder);
+        OrderEditDialogController controller = mainApp.getOrderEditController();
         if (okClicked) {
-            editScheduleRecord(selectedRecord, controller);
+            editScheduleRecord(selectedOrder, controller);
         }
     }
     @FXML
-    private void handleDeleteScheduleRecord() {
-        int selectedIndex = scheduleTable.getSelectionModel().getSelectedIndex();
-        scheduleTable.getItems().remove(selectedIndex);
-        if (scheduleTable.getItems().size() == 0) {
-            editBtnSchedule.setDisable(true);
-            deleteBtnSchedule.setDisable(true);
+    private void handleDeleteOrder() {
+        int selectedIndex = orderTable.getSelectionModel().getSelectedIndex();
+        orderTable.getItems().remove(selectedIndex);
+        Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
+        DBHelper.delete(selectedOrder);
+        if (orderTable.getItems().size() == 0) {
+            editBtnOrder.setDisable(true);
+            deleteBtnOrder.setDisable(true);
         }
     }
 
@@ -217,7 +217,7 @@ public class TabsOverviewController {
     @FXML
     private void handleNewGoods() {
         Goods tempGoods = new Goods();
-        boolean okClicked = mainApp.showGoodsEditDialog(tempGoods);
+        boolean okClicked = mainApp.showGoodsAddDialog(tempGoods);
         if (okClicked) {
             goodsData.add(tempGoods);
         }
@@ -232,7 +232,7 @@ public class TabsOverviewController {
         Goods selectedGoods = goodsTable.getSelectionModel().getSelectedItem();
         //if (selectedGoods != null) {
         boolean okClicked = mainApp.showGoodsEditDialog(selectedGoods);
-        GoodsEditDialogController controller = mainApp.getGoodsController();
+        GoodsEditDialogController controller = mainApp.getGoodsEditController();
         if (okClicked) {
             editGoods(selectedGoods, controller);
         }
@@ -241,6 +241,8 @@ public class TabsOverviewController {
     private void handleDeleteGoods() {
         int selectedIndex = goodsTable.getSelectionModel().getSelectedIndex();
         goodsTable.getItems().remove(selectedIndex);
+        Goods selectedGoods = goodsTable.getSelectionModel().getSelectedItem();
+        DBHelper.delete(selectedGoods);
         if (goodsTable.getItems().size() == 0) {
             editBtnGoods.setDisable(true);
             deleteBtnGoods.setDisable(true);
@@ -254,7 +256,7 @@ public class TabsOverviewController {
     @FXML
     private void handleNewEmployee() {
         Employee tempEmployee = new Employee();
-        boolean okClicked = mainApp.showEmployeeEditDialog(tempEmployee);
+        boolean okClicked = mainApp.showEmployeeAddDialog(tempEmployee);
         if (okClicked) {
             employeeData.add(tempEmployee);
         }
@@ -269,7 +271,7 @@ public class TabsOverviewController {
         Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
         //if (selectedEmployee != null) {
         boolean okClicked = mainApp.showEmployeeEditDialog(selectedEmployee);
-        EmployeeEditDialogController controller = mainApp.getEmployeeController();
+        EmployeeEditDialogController controller = mainApp.getEmployeeEditController();
         if (okClicked) {
             editEmployee(selectedEmployee, controller);
         }
@@ -278,6 +280,8 @@ public class TabsOverviewController {
     private void handleDeleteEmployee() {
         int selectedIndex = employeeTable.getSelectionModel().getSelectedIndex();
         employeeTable.getItems().remove(selectedIndex);
+        Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+        DBHelper.delete(selectedEmployee);
         if (employeeTable.getItems().size() == 0) {
             editBtnEmployee.setDisable(true);
             deleteBtnEmployee.setDisable(true);
@@ -291,7 +295,7 @@ public class TabsOverviewController {
     @FXML
     private void handleNewClient() {
         Client tempClient = new Client();
-        boolean okClicked = mainApp.showClientEditDialog(tempClient);
+        boolean okClicked = mainApp.showClientAddDialog(tempClient);
         if (okClicked) {
             clientData.add(tempClient);
         }
@@ -306,7 +310,7 @@ public class TabsOverviewController {
         Client selectedClient = clientTable.getSelectionModel().getSelectedItem();
         //if (selectedClient != null) {
             boolean okClicked = mainApp.showClientEditDialog(selectedClient);
-        ClientEditDialogController controller = mainApp.getClientController();
+        ClientEditDialogController controller = mainApp.getClientEditController();
             if (okClicked) {
                 editClient(selectedClient, controller);
             }
@@ -316,6 +320,8 @@ public class TabsOverviewController {
     private void handleDeleteClient() {
         int selectedIndex = clientTable.getSelectionModel().getSelectedIndex();
         clientTable.getItems().remove(selectedIndex);
+        Client selectedClient = clientTable.getSelectionModel().getSelectedItem();
+        DBHelper.delete(selectedClient);
         if (clientTable.getItems().size() == 0) {
             editBtnClient.setDisable(true);
             deleteBtnClient.setDisable(true);

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Goods;
 
-public class GoodsEditDialogController {
+public class GoodsAddDialogController {
 
     @FXML
     private TextField codeGoodsField;
@@ -74,7 +74,7 @@ public class GoodsEditDialogController {
             goods.setPrice(priceGoodsField.getText());
             goods.setAmount(amountGoodsField.getText());
 
-            DBHelper.update(goods);
+            DBHelper.insert(goods);
 
             okClicked = true;
             dialogStage.close();
