@@ -5,6 +5,7 @@ import javafx.beans.property.StringProperty;
 
 public class Client extends Person {
 
+    private StringProperty id;
     private StringProperty cardNumber;
 
     public Client(String firstName, String lastName, String phone) {
@@ -36,5 +37,17 @@ public class Client extends Person {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber.set(cardNumber);
+    }
+
+    public String getId() {
+        return id.get();
+    }
+
+    public StringProperty idProperty() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id.set(id);
     }
 }
