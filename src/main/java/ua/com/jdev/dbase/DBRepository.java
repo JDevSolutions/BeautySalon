@@ -188,7 +188,7 @@ public class DBRepository {
 
     private static ObservableList<Client> fillClients(ResultSet set, ObservableList<Client> clientData) throws SQLException {
         while (set.next()) {
-            Client client = new Client(set.getString(2), set.getString(3), set.getString(4), set.getString(5));
+            Client client = new Client(set.getString(2), set.getString(3), set.getString(4), set.getString(5), set.getString(6));
             client.setId(set.getString(1));
             clientData.add(client);
         }
