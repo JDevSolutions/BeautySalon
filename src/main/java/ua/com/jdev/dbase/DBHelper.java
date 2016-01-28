@@ -81,7 +81,7 @@ public class DBHelper {
     public static void update(Goods goods)  {
         StringBuilder query = new StringBuilder("UPDATE " + TABLE_GOODS + " SET code = " + appendRequiredField(goods.getCode()) +
                 ", name = " + appendField(goods.getName()) + ", price =  " + appendField(goods.getPrice()) +
-                ", amount = " + appendField(goods.getAmount()) + ";");
+                ", amount = " + appendField(goods.getAmount()) + " WHERE id = " + goods.getId() + ";");
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }

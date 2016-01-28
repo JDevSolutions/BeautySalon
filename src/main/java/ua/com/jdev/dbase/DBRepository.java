@@ -150,7 +150,7 @@ public class DBRepository {
                     return fillGoods(set, goodsData);
                 case "orders":
                     ObservableList<Order> orderData = FXCollections.observableArrayList();
-                    return fillRecords(set, orderData);
+                    return fillOrders(set, orderData);
             }
         } catch (SQLException e) {
             log.log(Level.WARN, tableName, e);
@@ -158,31 +158,39 @@ public class DBRepository {
         throw new IllegalArgumentException();
     }
 
-    private static ObservableList<Order> fillRecords(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
+    private static ObservableList<Order> fillOrders(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
         while (set.next()) {
-            scheduleRecordData.add(new Order(set.getString(1), set.getString(2), set.getString(3)));
+            Order order = new Order(set.getString(1), set.getString(2), set.getString(3));
+            order.setId(set.getString(1));
+            scheduleRecordData.add(order);
         }
         return scheduleRecordData;
     }
 
     private static ObservableList<Goods> fillGoods(ResultSet set, ObservableList<Goods> goodsData) throws SQLException {
         while (set.next()) {
-            goodsData.add(new Goods(set.getString(1), set.getString(2), set.getString(3), set.getString(4)));
+            Goods goods = new Goods(set.getString(1), set.getString(2), set.getString(3), set.getString(4));
+            goods.setId(set.getString(1));
+            goodsData.add(goods);
         }
         return goodsData;
     }
 
     private static ObservableList<Employee> fillEmployees(ResultSet set, ObservableList<Employee> employeeData) throws SQLException {
         while (set.next()) {
-            employeeData.add(new Employee(set.getString(2), set.getString(3), set.getString(4), set.getString(5),
-                    set.getString(6)));
+            Employee employee = new Employee(set.getString(2), set.getString(3), set.getString(4), set.getString(5),
+                    set.getString(6));
+            employee.setId(set.getString(1));
+            employeeData.add(employee);
         }
         return employeeData;
     }
 
     private static ObservableList<Client> fillClients(ResultSet set, ObservableList<Client> clientData) throws SQLException {
         while (set.next()) {
-            clientData.add(new Client(set.getString(2), set.getString(3), set.getString(4), set.getString(5)));
+            Client client = new Client(set.getString(2), set.getString(3), set.getString(4), set.getString(5));
+            client.setId(set.getString(1));
+            clientData.add(client);
         }
         return clientData;
     }
