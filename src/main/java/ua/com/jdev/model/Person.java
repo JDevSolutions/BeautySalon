@@ -6,12 +6,13 @@ import javafx.beans.property.StringProperty;
 public abstract class Person extends BaseClass {
 
     private StringProperty firstName;
-    private StringProperty secondName = new SimpleStringProperty();
+    private StringProperty secondName;
     private StringProperty lastName;
     private StringProperty phone;
 
     public Person(String firstName, String lastName, String phone) {
         this.firstName = new SimpleStringProperty(firstName);
+        this.secondName = new SimpleStringProperty("");
         this.lastName = new SimpleStringProperty(lastName);
         this.phone = new SimpleStringProperty(phone);
     }
