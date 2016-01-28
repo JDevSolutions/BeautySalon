@@ -1,6 +1,5 @@
 package ua.com.jdev.dbase;
 
-import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.log4j.Level;
@@ -50,8 +49,8 @@ public class DBRepository {
         }
     }
 
-    ObservableList<? extends Base> executeQuery(String query, String tableName) {
-        ObservableList<? extends Base> dataList = null;
+    ObservableList<? extends BaseClass> executeQuery(String query, String tableName) {
+        ObservableList<? extends BaseClass> dataList = null;
         try {
             try {
                 // opening database connection to MySQL server
@@ -137,7 +136,7 @@ public class DBRepository {
     }
 
 
-    private static ObservableList<? extends Base> getObservableList(ResultSet set, String tableName) {
+    private static ObservableList<? extends BaseClass> getObservableList(ResultSet set, String tableName) {
         try {
             switch (tableName.toLowerCase()) {
                 case "clients":

@@ -2,7 +2,7 @@ package ua.com.jdev.model;
 
 import javafx.beans.property.StringProperty;
 
-public abstract class Base {
+public abstract class BaseClass {
 
     protected StringProperty id;
 

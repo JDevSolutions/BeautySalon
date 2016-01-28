@@ -2,7 +2,7 @@ package ua.com.jdev.dbase;
 
 import javafx.collections.ObservableList;
 
-import ua.com.jdev.model.Base;
+import ua.com.jdev.model.BaseClass;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Goods;
 import ua.com.jdev.model.Employee;
@@ -21,7 +21,7 @@ public class DBHelper {
 
     private static DBRepository dbRep = new DBRepository();
 
-    private static ObservableList<? extends Base> outcomingData;
+    private static ObservableList<? extends BaseClass> outcomingData;
 
     public static final String DATABASE_NAME = "iris_db";
     public static final String TABLE_EMPLOYEES = "employees";
@@ -33,7 +33,7 @@ public class DBHelper {
 
     private final static Logger log = Logger.getLogger(DBHelper.class);
 
-    public static ObservableList<? extends Base> getData(String tableName) {
+    public static ObservableList<? extends BaseClass> getData(String tableName) {
         String query = "SELECT * FROM " + tableName + ";";
         outcomingData = dbRep.executeQuery(query, tableName);
         return outcomingData;

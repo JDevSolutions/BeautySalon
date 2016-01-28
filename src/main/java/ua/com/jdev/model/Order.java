@@ -3,7 +3,7 @@ package ua.com.jdev.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Order extends Base {
+public class Order extends BaseClass {
 
     private StringProperty time;
     private StringProperty employee;
