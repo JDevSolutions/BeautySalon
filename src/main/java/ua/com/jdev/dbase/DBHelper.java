@@ -34,16 +34,16 @@ public class DBHelper {
     private final static Logger log = Logger.getLogger(DBHelper.class);
 
     public static ObservableList<? extends BaseClass> getData(String tableName) {
-        String query = "SELECT * FROM " + tableName + ";";
+        String query = "SELECT * FROM " + tableName + " WHERE isActive = true;";
         outcomingData = dbRep.executeQuery(query, tableName);
         return outcomingData;
     }
 
     public static void insert(Client client) {
         StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_CLIENTS + " (firstName, secondName, lastName, " +
-                "phone, cardNumber) VALUES (" +  appendRequiredField(client.getFirstName()) + ", " +
+                "phone, cardNumber, isActive) VALUES (" +  appendRequiredField(client.getFirstName()) + ", " +
                 appendField(client.getSecondName()) + ", " +  appendRequiredField(client.getLastName()) + ", " +
-                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ");");
+                appendField(client.getPhone()) + ", " + appendField(client.getCardNumber()) + ", '1');");
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
@@ -58,9 +58,9 @@ public class DBHelper {
 
     public static void insert(Employee employee)  {
         StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_EMPLOYEES + " (firstName, secondName, lastName, phone, " +
-                "profession) VALUES (" + appendRequiredField(employee.getFirstName()) + ", " +
+                "profession, isActive) VALUES (" + appendRequiredField(employee.getFirstName()) + ", " +
                 appendField(employee.getSecondName()) + ", " + appendRequiredField(employee.getLastName()) + ", " +
-                appendField(employee.getPhone()) + ", " + appendRequiredField(employee.getPosition()) + ");");
+                appendField(employee.getPhone()) + ", " + appendRequiredField(employee.getPosition()) + ", '1');");
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
@@ -100,19 +100,23 @@ public class DBHelper {
     }
 
     public static void delete(Client client) {
-        //not imlemented
+        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = 0;";
+        dbRep.executeUpdate(query);
     }
 
     public static void delete(Goods goods)  {
-        //not imlemented
+        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = 0;";
+        dbRep.executeUpdate(query);
     }
 
     public static void delete(Employee employee)  {
-        //not imlemented
+        String query = "UPDATE " + TABLE_EMPLOYEES + " SET isActive = '0';";
+        dbRep.executeUpdate(query);
     }
 
     public static void delete(Order order) {
-        //not implemented
+        String query = "UPDATE " + TABLE_ORDERS + " SET isActive = '0';";
+        dbRep.executeUpdate(query);
     }
 
 
@@ -120,7 +124,7 @@ public class DBHelper {
         /**
          * Служебный метод для создания строк
          */
-        return !param.equals("") ? "'" + param + "'" : "NULL";
+        return !param.trim().equals("") ? "'" + param.trim() + "'" : "NULL";
     }
 
     private static String appendRequiredField(String param) throws IllegalArgumentException {
@@ -128,11 +132,11 @@ public class DBHelper {
          * Служебный метод для создания NOT NULL строк
          */
         try {
-            if (param.equals("")) throw new IllegalArgumentException("Illegal value on field!");
+            if (param.trim().equals("")) throw new IllegalArgumentException("Illegal value on field!");
         } catch (NullPointerException npe) {
             throw new IllegalArgumentException("Illegal value on field!");
         }
-        return "'" + param + "'";
+        return "'" + param.trim() + "'";
     }
 
 
