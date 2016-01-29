@@ -51,7 +51,7 @@ public class DBHelper {
     public static void insert(Goods goods)  {
         StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_GOODS + " (code, name, price, amount) VALUES (" +
                 appendRequiredField(goods.getCode()) + ", " + appendRequiredField(goods.getName()) + ", " +
-                appendField(goods.getPrice()) + ", " + appendField(goods.getAmount()));
+                appendField(goods.getPrice()) + ", " + appendField(goods.getAmount()) + ");");
         log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }

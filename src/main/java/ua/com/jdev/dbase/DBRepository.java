@@ -22,7 +22,7 @@ public class DBRepository {
     private static Statement statement;
     private static ResultSet resultSet;
 
-    private static final String URL = "jdbc:mysql://localhost:3306";
+    private static final String URL = "jdbc:mysql://localhost:3306/";
     private static final String USER = "iris";
     private static final String PASSWORD = "1234qaz";
 
@@ -32,10 +32,10 @@ public class DBRepository {
         try {
             try {
                 // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
             } catch (SQLException ex) {
-                createDatabase(DBHelper.DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                createDatabaseSchema(DBHelper.DATABASE_NAME);
+                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
             }
             // getting Statement object to execute query
             statement = connection.createStatement();
@@ -54,10 +54,10 @@ public class DBRepository {
         try {
             try {
                 // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
             } catch (SQLException ex) {
-                createDatabase(DBHelper.DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + "/" + DBHelper.DATABASE_NAME, USER, PASSWORD);
+                createDatabaseSchema(DBHelper.DATABASE_NAME);
+                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
             }// getting Statement object to execute query
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
@@ -74,10 +74,9 @@ public class DBRepository {
         return dataList;
     }
 
-    private static void createDatabase(String databaseName) {
-        String Driver = "com.mysql.jdbc.Driver";
+    private static void createDatabaseSchema(String databaseName) {
         try {
-            Class.forName(Driver);
+            Class.forName(Constants.DRIVER);
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
             String query = "CREATE DATABASE " + databaseName + " CHARACTER SET utf8 COLLATE utf8_general_ci;";
@@ -85,33 +84,17 @@ public class DBRepository {
             statement = connection.createStatement();
             statement.executeUpdate(query);
 
-            connection = DriverManager.getConnection(URL + "/" + databaseName, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL + databaseName, USER, PASSWORD);
             statement = connection.createStatement();
 
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_CLIENTS + "`(`id` INT NOT NULL AUTO_INCREMENT, " +
-                    "`firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
-                    "`phone` VARCHAR(10), `cardNumber` VARCHAR(7), `isActive` BOOL, PRIMARY KEY (`id`)) " +
-                    "CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
-
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_EMPLOYEES + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                    "`firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
-                    "`phone` VARCHAR(10), `profession` VARCHAR(45) NOT NULL, `isActive` BOOL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' " +
-                    "COLLATE utf8_general_ci;");
-
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_ORDERS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                    "`client_id` INT NOT NULL, `employee_id` INT NOT NULL, `isPaid` BOOL, `price` DECIMAL(9,2), " +
-                    "`date` TIMESTAMP, `isActive` BOOL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
-
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_GOODS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                    "`name` VARCHAR(45) NOT NULL, `price` DECIMAL(9,2), `isActive` BOOL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8'" +
-                    "COLLATE utf8_general_ci;");
-
-            statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_RENTERS + "` (`id` INT NOT NULL AUTO_INCREMENT," +
-                    " `firstName` VARCHAR(45) NOT NULL, `secondName` VARCHAR(45), `lastName` VARCHAR(45) NOT NULL, " +
-                    "`phone` VARCHAR(10), `rent` DECIMAL(9,2), `isActive` BOOL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' " +
-                    "COLLATE utf8_general_ci;");
+            createTable(Constants.TABLE_CLIENTS, Constants.TABLE_CLIENTS_COLUMNS, Constants.TABLE_CLIENTS_PRIMARY_KEY);
+            createTable(Constants.TABLE_EMPLOYEES, Constants.TABLE_EMPLOYEES_COLUMNS, Constants.TABLE_EMPLOYEES_PRIMARY_KEY);
+            createTable(Constants.TABLE_GOODS, Constants.TABLE_GOODS_COLUMNS, Constants.TABLE_GOODS_PRIMARY_KEY);
+            createTable(Constants.TABLE_ORDERS, Constants.TABLE_ORDERS_COLUMNS, Constants.TABLE_ORDERS_PRIMARY_KEY);
+            createTable(Constants.TABLE_RENTERS, Constants.TABLE_RENTER_COLUMNS, Constants.TABLE_RENTERS_PRIMARY_KEY);
 
         } catch (SQLException ex) {
+            ex.printStackTrace();
             log.log(Level.WARN, databaseName, ex);
         } catch (ClassNotFoundException e) {
             log.log(Level.WARN, e);
@@ -132,8 +115,18 @@ public class DBRepository {
 
         properties.setProperty("useUnicode", "true");
         properties.setProperty("characterEncoding", "UTF-8");
-        return (DriverManager.getConnection("jdbc:mysql://localhost:3306/iris_db",
+        return (DriverManager.getConnection(URL + Constants.DATABASE_NAME,
                 properties));
+    }
+
+    private static void createTable (String tableName, String[] columns, String primaryKey) throws SQLException {
+        StringBuilder query = new StringBuilder("CREATE TABLE `" + tableName + "` (");
+        for (String s : columns) {
+            query.append(s + ", ");
+        }
+        query.append("PRIMARY KEY (`" + primaryKey + "`)) ");
+        query.append(Constants.CHARACTER_SET + ";");
+        statement.executeUpdate(query.toString());
     }
 
 

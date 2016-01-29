@@ -4,6 +4,8 @@ package ua.com.jdev.dbase;
  * Created by Ларочка on 24.01.2016.
  */
 public class Constants {
+    static final String DRIVER = "com.mysql.jdbc.Driver";
+
     static final String DATABASE_NAME = "iris_db";
 
     static final String TABLE_EMPLOYEES = "employees";
@@ -31,7 +33,7 @@ public class Constants {
     static final String TABLE_ORDERS_PRIMARY_KEY = "id";
 
     static final String TABLE_GOODS = "goods";
-    static final String[] TABLE_PRODUCTS_COLUMNS = {
+    static final String[] TABLE_GOODS_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`code` VARCHAR(10)",
             "`name` VARCHAR(45) NOT NULL",
@@ -63,5 +65,7 @@ public class Constants {
             "`isActive` BOOL"
     };
     static final String TABLE_CLIENTS_PRIMARY_KEY = "id";
+
+    static final String CHARACTER_SET = "CHARACTER SET 'utf8' COLLATE utf8_general_ci";
 
 }
