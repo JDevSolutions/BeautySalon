@@ -100,12 +100,12 @@ public class DBHelper {
     }
 
     public static void delete(Client client) {
-        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = 0;";
+        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = '0';";
         dbRep.executeUpdate(query);
     }
 
     public static void delete(Goods goods)  {
-        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = 0;";
+        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = '0';";
         dbRep.executeUpdate(query);
     }
 
@@ -116,6 +116,26 @@ public class DBHelper {
 
     public static void delete(Order order) {
         String query = "UPDATE " + TABLE_ORDERS + " SET isActive = '0';";
+        dbRep.executeUpdate(query);
+    }
+
+    public static void restore(Client client) {
+        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = '1';";
+        dbRep.executeUpdate(query);
+    }
+
+    public static void restore(Goods goods)  {
+        String query = "UPDATE " + TABLE_CLIENTS + " SET isActive = '1';";
+        dbRep.executeUpdate(query);
+    }
+
+    public static void restore(Employee employee)  {
+        String query = "UPDATE " + TABLE_EMPLOYEES + " SET isActive = '1';";
+        dbRep.executeUpdate(query);
+    }
+
+    public static void restore(Order order) {
+        String query = "UPDATE " + TABLE_ORDERS + " SET isActive = '1';";
         dbRep.executeUpdate(query);
     }
 
