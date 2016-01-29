@@ -5,6 +5,9 @@ package ua.com.jdev.dbase;
  */
 public class Constants {
     static final String DRIVER = "com.mysql.jdbc.Driver";
+    static final String URL = "jdbc:mysql://localhost:3306/";
+    static final String USER = "iris";
+    static final String PASSWORD = "1234qaz";
 
     static final String DATABASE_NAME = "iris_db";
 
@@ -28,7 +31,7 @@ public class Constants {
             "`isPaid` BOOL",
             "`date` TIMESTAMP",
             "`price` DECIMAL(9,2)",
-            "`isActive` BOOL"
+            "`isActive` BOOL DEFAULT '1'"
     };
     static final String TABLE_ORDERS_PRIMARY_KEY = "id";
 
@@ -38,7 +41,8 @@ public class Constants {
             "`code` VARCHAR(10)",
             "`name` VARCHAR(45) NOT NULL",
             "`price` DECIMAL(9,2)",
-            "`amount` INT NOT NULL"
+            "`amount` INT NOT NULL",
+            "`isActive` BOOL DEFAULT '1'"
     };
     static final String TABLE_GOODS_PRIMARY_KEY = "id";
 
@@ -50,7 +54,7 @@ public class Constants {
             "`lastName` VARCHAR(45) NOT NULL",
             "`phone` VARCHAR(10)",
             "`rent` DECIMAL(9,2)",
-            "`isActive` BOOL",
+            "`isActive` BOOL DEFAULT '1'"
     };
     static final String TABLE_RENTERS_PRIMARY_KEY = "id";
 
@@ -62,10 +66,9 @@ public class Constants {
             "`lastName` VARCHAR(45) NOT NULL",
             "`phone` VARCHAR(13)",
             "`cardNumber` VARCHAR(7)",
-            "`isActive` BOOL"
+            "`isActive` BOOL DEFAULT '1'"
     };
     static final String TABLE_CLIENTS_PRIMARY_KEY = "id";
 
     static final String CHARACTER_SET = "CHARACTER SET 'utf8' COLLATE utf8_general_ci";
-
 }

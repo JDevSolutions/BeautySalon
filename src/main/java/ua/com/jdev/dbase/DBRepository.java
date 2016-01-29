@@ -22,113 +22,83 @@ public class DBRepository {
     private static Statement statement;
     private static ResultSet resultSet;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/";
-    private static final String USER = "iris";
-    private static final String PASSWORD = "1234qaz";
-
     private static final Logger log = Logger.getLogger(DBRepository.class);
 
     void executeUpdate(String query) {
         try {
-            try {
-                // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
-            } catch (SQLException ex) {
-                createDatabaseSchema(DBHelper.DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
-            }
-            // getting Statement object to execute query
-            statement = connection.createStatement();
+            connection = getDBConnection();
+            createStatement();
             statement.executeUpdate(query);
-
-        } catch (SQLException sqlEx) {
-            log.log(Level.WARN, query, sqlEx);
-        } finally {
-            try { connection.close(); } catch(SQLException se) { log.log(Level.WARN, connection.toString(), se); }
-            try { statement.close(); } catch(SQLException se) { log.log(Level.WARN, statement.toString(), se); }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        closer(new AutoCloseable[]{statement, connection});
     }
 
     ObservableList<? extends BaseClass> executeQuery(String query, String tableName) {
         ObservableList<? extends BaseClass> dataList = null;
         try {
-            try {
-                // opening database connection to MySQL server
-                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
-            } catch (SQLException ex) {
-                createDatabaseSchema(DBHelper.DATABASE_NAME);
-                connection = DriverManager.getConnection(URL + DBHelper.DATABASE_NAME, USER, PASSWORD);
-            }// getting Statement object to execute query
-            statement = connection.createStatement();
+            connection = getDBConnection();
+            createStatement();
             resultSet = statement.executeQuery(query);
-            dataList = getObservableList(resultSet, tableName);
-        } catch (SQLException sqlEx) {
-            log.log(Level.WARN, query + ", tableName: " + tableName, sqlEx);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try { resultSet.close(); } catch (SQLException se) { log.log(Level.WARN, resultSet.toString(), se); }
-            try { connection.close(); } catch(SQLException se) { log.log(Level.WARN, connection.toString(), se); }
-            try { statement.close(); } catch(SQLException se) { log.log(Level.WARN, statement.toString(), se);  }
         }
+        dataList = getObservableList(resultSet, tableName);
+        closer(new AutoCloseable[]{resultSet, statement, connection});
         return dataList;
     }
 
     private static void createDatabaseSchema(String databaseName) {
         try {
-            Class.forName(Constants.DRIVER);
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-
-            String query = "CREATE DATABASE " + databaseName + " CHARACTER SET utf8 COLLATE utf8_general_ci;";
-
+            connection = getDBConnection();
             statement = connection.createStatement();
-            statement.executeUpdate(query);
-
-            connection = DriverManager.getConnection(URL + databaseName, USER, PASSWORD);
-            statement = connection.createStatement();
-
-            createTable(Constants.TABLE_CLIENTS, Constants.TABLE_CLIENTS_COLUMNS, Constants.TABLE_CLIENTS_PRIMARY_KEY);
-            createTable(Constants.TABLE_EMPLOYEES, Constants.TABLE_EMPLOYEES_COLUMNS, Constants.TABLE_EMPLOYEES_PRIMARY_KEY);
-            createTable(Constants.TABLE_GOODS, Constants.TABLE_GOODS_COLUMNS, Constants.TABLE_GOODS_PRIMARY_KEY);
-            createTable(Constants.TABLE_ORDERS, Constants.TABLE_ORDERS_COLUMNS, Constants.TABLE_ORDERS_PRIMARY_KEY);
-            createTable(Constants.TABLE_RENTERS, Constants.TABLE_RENTER_COLUMNS, Constants.TABLE_RENTERS_PRIMARY_KEY);
-
+            statement.executeUpdate("CREATE DATABASE " + databaseName + " CHARACTER SET utf8 COLLATE utf8_general_ci;");
+            statement.executeUpdate("USE " + databaseName);
+            createTables();
         } catch (SQLException ex) {
             ex.printStackTrace();
             log.log(Level.WARN, databaseName, ex);
-        } catch (ClassNotFoundException e) {
-            log.log(Level.WARN, e);
+        } catch (Exception e) {
+            log.log(Level.WARN, databaseName, e);
         } finally {
-            try {connection.close();} catch (SQLException e) { log.log(Level.WARN, connection.toString(), e); }
-            try {statement.close();} catch (SQLException e) { log.log(Level.WARN, statement.toString(), e); }
+            closer(new AutoCloseable[]{statement, connection});
         }
     }
 
-    private static Connection getDBConnection()throws Exception {
-        Class.forName("com.mysql.jdbc.Driver");
+    private static void createTables() throws SQLException {
+        createTable(Constants.TABLE_CLIENTS, Constants.TABLE_CLIENTS_COLUMNS, Constants.TABLE_CLIENTS_PRIMARY_KEY);
+        createTable(Constants.TABLE_EMPLOYEES, Constants.TABLE_EMPLOYEES_COLUMNS, Constants.TABLE_EMPLOYEES_PRIMARY_KEY);
+        createTable(Constants.TABLE_GOODS, Constants.TABLE_GOODS_COLUMNS, Constants.TABLE_GOODS_PRIMARY_KEY);
+        createTable(Constants.TABLE_ORDERS, Constants.TABLE_ORDERS_COLUMNS, Constants.TABLE_ORDERS_PRIMARY_KEY);
+        createTable(Constants.TABLE_RENTERS, Constants.TABLE_RENTER_COLUMNS, Constants.TABLE_RENTERS_PRIMARY_KEY);
+    }
+
+    private static Connection getDBConnection() throws Exception {
+        Class.forName(Constants.DRIVER);
         java.util.Properties properties = new java.util.Properties();
-        properties.put("user", USER);
-        properties.put("password", PASSWORD);
-
-        /* настройки указывающие о необходимости конвертировать данные из Unicode
-	    в UTF-8, который используется в нашей таблице для хранения данных */
-
+        properties.put("user", Constants.USER);
+        properties.put("password", Constants.PASSWORD);
         properties.setProperty("useUnicode", "true");
         properties.setProperty("characterEncoding", "UTF-8");
-        return (DriverManager.getConnection(URL + Constants.DATABASE_NAME,
+        return (DriverManager.getConnection(Constants.URL,
                 properties));
+    }
+
+    private static void createStatement() throws SQLException {
+        statement = connection.createStatement();
+        statement.executeUpdate("USE " + Constants.DATABASE_NAME);
     }
 
     private static void createTable (String tableName, String[] columns, String primaryKey) throws SQLException {
         StringBuilder query = new StringBuilder("CREATE TABLE `" + tableName + "` (");
         for (String s : columns) {
-            query.append(s + ", ");
+            query.append(s).append(", ");
         }
-        query.append("PRIMARY KEY (`" + primaryKey + "`)) ");
+        query.append("PRIMARY KEY (`").append(primaryKey).append("`)) ");
         query.append(Constants.CHARACTER_SET + ";");
         statement.executeUpdate(query.toString());
     }
-
 
     private static ObservableList<? extends BaseClass> getObservableList(ResultSet set, String tableName) {
         try {
@@ -150,6 +120,16 @@ public class DBRepository {
             log.log(Level.WARN, tableName, e);
         }
         throw new IllegalArgumentException();
+    }
+
+    private static void closer(AutoCloseable[] closeables) {
+        for (AutoCloseable auc : closeables) {
+            try {
+                auc.close();
+            } catch (Exception e) {
+                log.log(Level.WARN, auc.toString(), e);
+            }
+        }
     }
 
     private static ObservableList<Order> fillOrders(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
@@ -187,5 +167,9 @@ public class DBRepository {
             clientData.add(client);
         }
         return clientData;
+    }
+
+    public static void main(String[] args) {
+        createDatabaseSchema(Constants.DATABASE_NAME);
     }
 }
