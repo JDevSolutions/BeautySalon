@@ -66,7 +66,14 @@ public class DBHelper {
     }
 
     public static void insert(Order order) {
-        //not implemented
+/*
+        StringBuilder query = new StringBuilder("INSERT INTO " + TABLE_ORDERS + " (client_id, employee_id, isPaid, price," +
+                " date, isActive) VALUES (" + appendRequiredField(order.getClient().getId()) + ", " +
+                appendRequiredField(order.getEmployee().getId()) + ", " + (order.isPaid() ? "'1'" : "'0'") + ", " +
+                order.getPrice() + ", " + order.getTime() + ", '1');");
+        log.log(Level.INFO, query.toString());
+        dbRep.executeUpdate(query.toString());
+*/
     }
 
     public static void update(Client client) {
@@ -96,7 +103,15 @@ public class DBHelper {
     }
 
     public static void update(Order order) {
-        //not implemented
+/*
+        StringBuilder query = new StringBuilder("UPDATE " + TABLE_ORDERS + " SET (client_id = " +
+                appendRequiredField(order.getClient().getId()) + ", employee_id = " +
+                appendRequiredField(order.getEmployee().getId()) + ", isPaid = " + (order.isPaid() ? "'1'" : "'0'") +
+                ", price = " + appendField(order.getPrice()) + " date = " + appendField(order.getTime()) +
+                " WHERE id = " + order.getId());
+        log.log(Level.INFO, query.toString());
+        dbRep.executeUpdate(query.toString());
+*/
     }
 
     public static void delete(Client client) {

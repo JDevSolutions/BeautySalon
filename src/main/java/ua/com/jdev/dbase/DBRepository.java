@@ -99,7 +99,7 @@ public class DBRepository {
                     "COLLATE utf8_general_ci;");
 
             statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_ORDERS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                    "`client_id` INT NOT NULL, `employee_id` INT, `isPaid` BOOL, `price` DECIMAL(9,2), " +
+                    "`client_id` INT NOT NULL, `employee_id` INT NOT NULL, `isPaid` BOOL, `price` DECIMAL(9,2), " +
                     "`date` TIMESTAMP, `isActive` BOOL, PRIMARY KEY (`id`)) CHARACTER SET 'utf8' COLLATE utf8_general_ci;");
 
             statement.executeUpdate("CREATE TABLE `" + DBHelper.TABLE_GOODS + "` (`id` INT NOT NULL AUTO_INCREMENT, " +
