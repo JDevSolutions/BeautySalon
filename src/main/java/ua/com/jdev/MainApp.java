@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
@@ -41,14 +42,10 @@ public class MainApp extends Application {
     private ObservableList<Client> clientData = FXCollections.observableArrayList();
 
     public MainApp() {
-/*        //orderData.add(new Order("12:30", "Alina Antonenko", "Lilya Marchenko"));
         orderData = (ObservableList<Order>) DBHelper.getData("orders");
-        //goodsData.add(new Goods("0154", "Краска для волос", "49.90", "1"));
         goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
-        //employeeData.add(new Employee("Anna", "Petrovna", "Ivanova", "380671597535", "Administrator"));
         employeeData = (ObservableList<Employee>) DBHelper.getData("employees");
-        //clientData.add(new Client("Olga", "Ivanovna", "Safronova", "380503219876"));
-        clientData = (ObservableList<Client>) DBHelper.getData("clients");*/
+        clientData = (ObservableList<Client>) DBHelper.getData("clients");
     }
 
     public static void main(String[] args) {
@@ -155,6 +152,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the goods into the controller.
             orderAddController = loader.getController();
@@ -186,6 +184,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the goods into the controller.
             orderEditController = loader.getController();
@@ -217,6 +216,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the goods into the controller.
             goodsAddController = loader.getController();
@@ -248,6 +248,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the goods into the controller.
             goodsEditController = loader.getController();
@@ -279,6 +280,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the employee into the controller.
             employeeAddController = loader.getController();
@@ -310,6 +312,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the employee into the controller.
             employeeEditController = loader.getController();
@@ -341,6 +344,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the client into the controller.
             clientAddController = loader.getController();
@@ -372,6 +376,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
 
             // Set the client into the controller.
             clientEditController = loader.getController();
@@ -389,32 +394,16 @@ public class MainApp extends Application {
         }
     }
 
-    public OrderAddDialogController getOrderAddController() {
-        return orderAddController;
-    }
-
     public OrderEditDialogController getOrderEditController() {
         return orderEditController;
-    }
-
-    public ClientAddDialogController getClientAddController() {
-        return clientAddController;
     }
 
     public ClientEditDialogController getClientEditController() {
         return clientEditController;
     }
 
-    public EmployeeAddDialogController getEmployeeAddController() {
-        return employeeAddController;
-    }
-
     public EmployeeEditDialogController getEmployeeEditController() {
         return employeeEditController;
-    }
-
-    public GoodsAddDialogController getGoodsAddController() {
-        return goodsAddController;
     }
 
     public GoodsEditDialogController getGoodsEditController() {

@@ -1,7 +1,5 @@
 package ua.com.jdev.view;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -54,12 +52,6 @@ public class TabsOverviewController {
     @FXML private Button editBtnClient;
     @FXML private Button deleteBtnClient;
 
-    // ######### TEST ############
-    private ObservableList<Order> orderData = FXCollections.observableArrayList();
-    private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
-    private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
-    private ObservableList<Client> clientData = FXCollections.observableArrayList();
-
     // Reference to the main application.
     private MainApp mainApp;
 
@@ -68,10 +60,6 @@ public class TabsOverviewController {
      * The constructor is called before the initialize() method.
      */
     public TabsOverviewController() {
-        orderData = (ObservableList<Order>) DBHelper.getData("orders");
-        goodsData = (ObservableList<Goods>) DBHelper.getData("goods");
-        employeeData = (ObservableList<Employee>) DBHelper.getData("employees");
-        clientData = (ObservableList<Client>) DBHelper.getData("clients");
     }
 
     /**
@@ -135,10 +123,10 @@ public class TabsOverviewController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
 
-        orderTable.setItems(orderData);
-        goodsTable.setItems(goodsData);
-        employeeTable.setItems(employeeData);
-        clientTable.setItems(clientData);
+        orderTable.setItems(mainApp.getOrderData());
+        goodsTable.setItems(mainApp.getGoodsData());
+        employeeTable.setItems(mainApp.getEmployeeData());
+        clientTable.setItems(mainApp.getClientData());
     }
 
     // TODO: 21.01.2016 объединить эти методы
@@ -180,7 +168,7 @@ public class TabsOverviewController {
         Order tempOrder = new Order();
         boolean okClicked = mainApp.showOrderAddDialog(tempOrder);
         if (okClicked) {
-            orderData.add(tempOrder);
+            mainApp.getOrderData().add(tempOrder);
         }
     }
 
@@ -219,7 +207,7 @@ public class TabsOverviewController {
         Goods tempGoods = new Goods();
         boolean okClicked = mainApp.showGoodsAddDialog(tempGoods);
         if (okClicked) {
-            goodsData.add(tempGoods);
+            mainApp.getGoodsData().add(tempGoods);
         }
     }
 
@@ -258,7 +246,7 @@ public class TabsOverviewController {
         Employee tempEmployee = new Employee();
         boolean okClicked = mainApp.showEmployeeAddDialog(tempEmployee);
         if (okClicked) {
-            employeeData.add(tempEmployee);
+            mainApp.getEmployeeData().add(tempEmployee);
         }
     }
 
@@ -297,7 +285,7 @@ public class TabsOverviewController {
         Client tempClient = new Client();
         boolean okClicked = mainApp.showClientAddDialog(tempClient);
         if (okClicked) {
-            clientData.add(tempClient);
+            mainApp.getClientData().add(tempClient);
         }
     }
 
