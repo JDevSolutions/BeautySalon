@@ -1,10 +1,12 @@
 package ua.com.jdev.view;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ua.com.jdev.MainApp;
+import ua.com.jdev.adapter.PersonMaker;
 import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
@@ -19,18 +21,17 @@ public class TabsOverviewController {
 
     @FXML private TableView<Order> orderTable;
     @FXML private TableColumn<Order, String> timeColumnSchedule;
-    @FXML private TableColumn<Order, String> employeeColumnSchedule;
-    @FXML private TableColumn<Order, String> clientColumnSchedule;
-    @FXML private TableColumn<Order, String> priceColumnSchedule;
-    @FXML private Button addBtnOrder;
+    @FXML private TableColumn<Order, Employee> employeeColumnSchedule;
+    @FXML private TableColumn<Order, Client> clientColumnSchedule;
+    @FXML private TableColumn<Order, Double> priceColumnSchedule;
     @FXML private Button editBtnOrder;
     @FXML private Button deleteBtnOrder;
 
     @FXML private TableView<Goods> goodsTable;
     @FXML private TableColumn<Goods, String> codeColumnGoods;
     @FXML private TableColumn<Goods, String> nameColumnGoods;
-    @FXML private TableColumn<Goods, String> priceColumnGoods;
-    @FXML private TableColumn<Goods, String> amountColumnGoods;
+    @FXML private TableColumn<Goods, Double> priceColumnGoods;
+    @FXML private TableColumn<Goods, Integer> amountColumnGoods;
     @FXML private Button editBtnGoods;
     @FXML private Button deleteBtnGoods;
 
@@ -81,12 +82,12 @@ public class TabsOverviewController {
         timeColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
         employeeColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().employeeProperty());
         clientColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
-        priceColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
+        priceColumnSchedule.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
         // Goods
         codeColumnGoods.setCellValueFactory(cellData -> cellData.getValue().codeProperty());
         nameColumnGoods.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        priceColumnGoods.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
-        amountColumnGoods.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
+        priceColumnGoods.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+        amountColumnGoods.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAmount()));
         // Employees
         firstNameColumnEmployee.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         secondNameColumnEmployee.setCellValueFactory(cellData -> cellData.getValue().secondNameProperty());
@@ -130,17 +131,17 @@ public class TabsOverviewController {
     }
 
     // TODO: 21.01.2016 объединить эти методы
-    private void editScheduleRecord(Order order, OrderEditDialogController controller) {
+    private void editOrder(Order order, OrderEditDialogController controller) {
         order.setTime(controller.getTimeOrderField().getText());
-        order.setEmployee(controller.getEmployeeOrderField().getText());
-        order.setClient(controller.getClientOrderField().getText());
-        order.setPrice(controller.getPriceOrderField().getText());
+        order.setEmployee(PersonMaker.makeEmployee(controller.getEmployeeOrderField().getText()));
+        order.setClient(PersonMaker.makeClient(controller.getClientOrderField().getText()));
+        order.setPrice(Integer.parseInt(controller.getPriceOrderField().getText()));
     }
     private void editGoods(Goods goods, GoodsEditDialogController controller) {
         goods.setCode(controller.getCodeGoodsField().getText());
         goods.setName(controller.getNameGoodsField().getText());
-        goods.setPrice(controller.getPriceGoodsField().getText());
-        goods.setAmount(controller.getAmountGoodsField().getText());
+        goods.setPrice(Double.parseDouble(controller.getPriceGoodsField().getText()));
+        goods.setAmount(Integer.parseInt(controller.getAmountGoodsField().getText()));
     }
     private void editEmployee(Employee employee, EmployeeEditDialogController controller) {
         employee.setFirstName(controller.getFirstNameEmployeeField().getText());
@@ -183,7 +184,7 @@ public class TabsOverviewController {
         boolean okClicked = mainApp.showOrderEditDialog(selectedOrder);
         OrderEditDialogController controller = mainApp.getOrderEditController();
         if (okClicked) {
-            editScheduleRecord(selectedOrder, controller);
+            editOrder(selectedOrder, controller);
         }
     }
     @FXML

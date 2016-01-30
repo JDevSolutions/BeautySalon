@@ -50,8 +50,8 @@ public class GoodsAddDialogController {
 
         codeGoodsField.setText(goods.getCode());
         nameGoodsField.setText(goods.getName());
-        priceGoodsField.setText(goods.getPrice());
-        amountGoodsField.setText(goods.getAmount());
+        priceGoodsField.setText(String.valueOf(goods.getPrice()));
+        amountGoodsField.setText(String.valueOf(goods.getAmount()));
     }
 
     /**
@@ -71,8 +71,8 @@ public class GoodsAddDialogController {
         if (isInputValid()) {
             goods.setCode(codeGoodsField.getText());
             goods.setName(nameGoodsField.getText());
-            goods.setPrice(priceGoodsField.getText());
-            goods.setAmount(amountGoodsField.getText());
+            goods.setPrice(Double.parseDouble(priceGoodsField.getText()));
+            goods.setAmount(Integer.parseInt(amountGoodsField.getText()));
 
             DBHelper.insert(goods);
 

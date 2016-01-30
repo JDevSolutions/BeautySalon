@@ -6,6 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ua.com.jdev.adapter.PersonMaker;
 import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.Order;
 
@@ -53,9 +54,9 @@ public class OrderEditDialogController {
         this.order = order;
 
         timeOrderField.setText(order.getTime());
-        employeeOrderField.setText(order.getEmployee());
-        clientOrderField.setText(order.getClient());
-        priceOrderField.setText(order.getPrice());
+        employeeOrderField.setText(order.getEmployee().toString());
+        clientOrderField.setText(order.getClient().toString());
+        priceOrderField.setText(String.valueOf(order.getPrice()));
         paidOrderCheckBox.setSelected(order.isPaid());
     }
 
@@ -75,9 +76,9 @@ public class OrderEditDialogController {
     private void handleOk() {
         if (isInputValid()) {
             order.setTime(timeOrderField.getText());
-            order.setEmployee(employeeOrderField.getText());
-            order.setClient(clientOrderField.getText());
-            order.setPrice(priceOrderField.getText());
+            order.setEmployee(PersonMaker.makeEmployee(employeeOrderField.getText()));
+            order.setClient(PersonMaker.makeClient(clientOrderField.getText()));
+            order.setPrice(Integer.parseInt(priceOrderField.getText()));
             order.setPaid(paidOrderCheckBox.isSelected());
 
             DBHelper.update(order);
