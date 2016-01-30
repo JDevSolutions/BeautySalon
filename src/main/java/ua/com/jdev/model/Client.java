@@ -7,9 +7,8 @@ public class Client extends Person {
 
     private StringProperty cardNumber;
 
-    public Client(String firstName, String lastName, String phone) {
-        super(firstName, lastName, phone);
-        this.cardNumber = new SimpleStringProperty("");
+    public Client(String firstName, String secondName, String lastName) {
+        super(firstName, secondName, lastName);
     }
 
     public Client(String firstName, String secondName, String lastName, String phone) {
