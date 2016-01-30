@@ -29,7 +29,8 @@ public class Constants {
             "`client_id` INT NOT NULL",
             "`employee_id` INT NOT NULL",
             "`isPaid` BOOL",
-            "`date` TIMESTAMP",
+            "`date` VARCHAR(10)", //TODO: Change to DATE
+            "`time` VARCHAR(10)", //TODO: Change to TIME
             "`price` DECIMAL(9,2)",
             "`isActive` BOOL NOT NULL DEFAULT '1'"
     };

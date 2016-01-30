@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 
 /**
- * Created by Jurimik on 26.01.2016.
+ * Created by Yurik Mikhailichenko on 26.01.2016.
  */
 public class DBRepository {
 
@@ -47,6 +47,21 @@ public class DBRepository {
         dataList = getObservableList(resultSet, tableName);
         closer(new AutoCloseable[]{resultSet, statement, connection});
         return dataList;
+    }
+
+    String getLastId(String tableName) {
+        String lastId = "";
+        try {
+            connection = getDBConnection();
+            createStatement();
+            resultSet = statement.executeQuery("SELECT MAX(id) FROM " + tableName);
+            while (resultSet.next()) {
+                lastId = resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastId;
     }
 
     private static void createDatabaseSchema(String databaseName) {
@@ -132,6 +147,13 @@ public class DBRepository {
         }
     }
 
+    private static ResultSet searchPerson(String search) throws SQLException {
+        StringBuilder query = new StringBuilder("SELECT CONCAT (lastName, ' ', firstName, ' ', secondName) AS fullName " +
+                "FROM clients WHERE CONCAT (lastName, ' ', firstName, ' ', secondName) LIKE '%");
+        query.append(search).append("%';");
+        return statement.executeQuery(query.toString());
+    }
+
     private static ObservableList<Order> fillOrders(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
         while (set.next()) {
             Order order = new Order(set.getString(1), set.getString(2), set.getString(3));
@@ -169,7 +191,19 @@ public class DBRepository {
         return clientData;
     }
 
-    public static void main(String[] args) {
-        createDatabaseSchema(Constants.DATABASE_NAME);
+    public static void main(String[] args) throws Exception {
+        connection = getDBConnection();
+        statement = connection.createStatement();
+        statement.executeUpdate("USE iris_db");
+        String search = "kone";
+        for (int i = 1; i <= 4; i++) {
+            ResultSet set = searchPerson(search.substring(0, i));
+            System.out.println("Search: " + search.substring(0, i));
+            while (set.next()) {
+                System.out.println(set.getString(1));
+            }
+            System.out.println();
+        }
+        //createDatabaseSchema(Constants.DATABASE_NAME);
     }
 }
