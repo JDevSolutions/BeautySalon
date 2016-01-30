@@ -5,16 +5,15 @@ import javafx.beans.property.StringProperty;
 
 public abstract class Person extends BaseClass {
 
-    private StringProperty firstName;
-    private StringProperty secondName;
-    private StringProperty lastName;
-    private StringProperty phone;
+    protected StringProperty firstName;
+    protected StringProperty secondName;
+    protected StringProperty lastName;
+    protected StringProperty phone;
 
-    public Person(String firstName, String lastName, String phone) {
+    public Person(String firstName, String secondName, String lastName) {
         this.firstName = new SimpleStringProperty(firstName);
-        this.secondName = new SimpleStringProperty("");
+        this.secondName = new SimpleStringProperty(secondName);
         this.lastName = new SimpleStringProperty(lastName);
-        this.phone = new SimpleStringProperty(phone);
     }
 
     public Person(String firstName, String secondName, String lastName, String phone) {
@@ -70,5 +69,10 @@ public abstract class Person extends BaseClass {
 
     public void setPhone(String phone) {
         this.phone.set(phone);
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + secondName + " " + lastName;
     }
 }
