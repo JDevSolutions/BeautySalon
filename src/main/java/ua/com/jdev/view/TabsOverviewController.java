@@ -135,7 +135,7 @@ public class TabsOverviewController {
         order.setTime(controller.getTimeOrderField().getText());
         order.setEmployee(PersonMaker.makeEmployee(controller.getEmployeeOrderField().getText()));
         order.setClient(PersonMaker.makeClient(controller.getClientOrderField().getText()));
-        order.setPrice(Integer.parseInt(controller.getPriceOrderField().getText()));
+        order.setPrice(Double.parseDouble(controller.getPriceOrderField().getText()));
     }
     private void editGoods(Goods goods, GoodsEditDialogController controller) {
         goods.setCode(controller.getCodeGoodsField().getText());

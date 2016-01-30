@@ -73,6 +73,6 @@ public abstract class Person extends BaseClass {
 
     @Override
     public String toString() {
-        return firstName + " " + secondName + " " + lastName;
+        return getFirstName() + " " + getSecondName() + " " + getLastName();
     }
 }
