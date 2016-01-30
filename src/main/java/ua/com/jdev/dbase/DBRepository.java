@@ -156,18 +156,22 @@ public class DBRepository {
 
     private static ObservableList<Order> fillOrders(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
         while (set.next()) {
+/*
             Order order = new Order(set.getString(1), set.getString(2), set.getString(3));
             order.setId(set.getString(1));
             scheduleRecordData.add(order);
+*/
         }
         return scheduleRecordData;
     }
 
     private static ObservableList<Goods> fillGoods(ResultSet set, ObservableList<Goods> goodsData) throws SQLException {
         while (set.next()) {
+/*
             Goods goods = new Goods(set.getString(1), set.getString(2), set.getString(3), set.getString(4));
             goods.setId(set.getString(1));
             goodsData.add(goods);
+*/
         }
         return goodsData;
     }

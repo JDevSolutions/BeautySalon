@@ -50,8 +50,8 @@ public class DBHelper {
                 append(" (code, name, price, amount) VALUES (").
                 append(appendRequiredField(goods.getCode())).append(", ").
                 append(appendRequiredField(goods.getName())).append(", ").
-                append(appendField(goods.getPrice())).append(", ").
-                append(appendField(goods.getAmount())).append(");");
+                append(appendField(String.valueOf(goods.getPrice()))).append(", ").
+                append(appendField(String.valueOf(goods.getAmount()))).append(");");
         //log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
         goods.setId(dbRep.getLastId(Constants.TABLE_GOODS));
@@ -104,8 +104,8 @@ public class DBHelper {
         query.append(Constants.TABLE_GOODS).
                 append(" SET code = ").append(appendRequiredField(goods.getCode())).
                 append(", name = ").append(appendField(goods.getName())).
-                append(", price =  ").append(appendField(goods.getPrice())).
-                append(", amount = ").append(appendField(goods.getAmount())).
+                append(", price =  ").append(appendField(String.valueOf(goods.getPrice()))).
+                append(", amount = ").append(appendField(String.valueOf(goods.getAmount()))).
                 append(" WHERE id = ").append(goods.getId()).append(";");
         //    log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
