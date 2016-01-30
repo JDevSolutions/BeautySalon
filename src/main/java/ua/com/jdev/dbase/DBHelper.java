@@ -22,7 +22,7 @@ public class DBHelper {
     private static DBRepository dbRep = new DBRepository();
     private static ObservableList<? extends BaseClass> outcomingData;
 
-    private final static Logger log = Logger.getLogger(DBHelper.class);
+    //private final static Logger log = Logger.getLogger(DBHelper.class);
 
     public static ObservableList<? extends BaseClass> getData(String tableName) {
         String query = "SELECT * FROM " + tableName + " WHERE isActive = true;";
@@ -39,7 +39,7 @@ public class DBHelper {
                 append(appendRequiredField(client.getLastName())).append(", ").
                 append(appendField(client.getPhone())).append(", ").
                 append(appendField(client.getCardNumber())).append(");");
-        log.log(Level.INFO, query.toString());
+      //  log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
@@ -51,7 +51,7 @@ public class DBHelper {
                 append(appendRequiredField(goods.getName())).append(", ").
                 append(appendField(goods.getPrice())).append(", ").
                 append(appendField(goods.getAmount())).append(");");
-        log.log(Level.INFO, query.toString());
+        //log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
@@ -63,7 +63,7 @@ public class DBHelper {
                 append(appendRequiredField(employee.getLastName())).append(", ").
                 append(appendField(employee.getPhone())).append(", ").
                 append(appendRequiredField(employee.getPosition())).append(");");
-        log.log(Level.INFO, query.toString());
+//        log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
@@ -91,7 +91,7 @@ public class DBHelper {
                 append(", phone = ").append(appendField(client.getPhone())).
                 append(", cardNumber = ").append(appendRequiredField(client.getCardNumber())).
                 append(" WHERE id = ").append(client.getId()).append(";");
-        log.log(Level.INFO, query.toString());
+  //      log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
@@ -103,7 +103,7 @@ public class DBHelper {
                 append(", price =  ").append(appendField(goods.getPrice())).
                 append(", amount = ").append(appendField(goods.getAmount())).
                 append(" WHERE id = ").append(goods.getId()).append(";");
-        log.log(Level.INFO, query.toString());
+    //    log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 
@@ -116,7 +116,7 @@ public class DBHelper {
                 append(", phone = ").append(appendField(employee.getPhone())).
                 append(", profession = ").append(appendRequiredField(employee.getPosition())).
                 append(" WHERE id = ").append(employee.getId()).append(";");
-        log.log(Level.INFO, query.toString());
+      //  log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
 

@@ -22,7 +22,7 @@ public class DBRepository {
     private static Statement statement;
     private static ResultSet resultSet;
 
-    private static final Logger log = Logger.getLogger(DBRepository.class);
+//    private static final Logger log = Logger.getLogger(DBRepository.class);
 
     void executeUpdate(String query) {
         try {
@@ -56,11 +56,9 @@ public class DBRepository {
             statement.executeUpdate("CREATE DATABASE " + databaseName + " CHARACTER SET utf8 COLLATE utf8_general_ci;");
             statement.executeUpdate("USE " + databaseName);
             createTables();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            log.log(Level.WARN, databaseName, ex);
         } catch (Exception e) {
-            log.log(Level.WARN, databaseName, e);
+            e.printStackTrace();
+    //        log.log(Level.WARN, databaseName, e);
         } finally {
             closer(new AutoCloseable[]{statement, connection});
         }
@@ -117,7 +115,8 @@ public class DBRepository {
                     return fillOrders(set, orderData);
             }
         } catch (SQLException e) {
-            log.log(Level.WARN, tableName, e);
+            e.printStackTrace();
+      //      log.log(Level.WARN, tableName, e);
         }
         throw new IllegalArgumentException();
     }
@@ -127,7 +126,8 @@ public class DBRepository {
             try {
                 auc.close();
             } catch (Exception e) {
-                log.log(Level.WARN, auc.toString(), e);
+                e.printStackTrace();
+        //        log.log(Level.WARN, auc.toString(), e);
             }
         }
     }
