@@ -203,7 +203,7 @@ public class DBHelper {
         /**
          * Служебный метод для создания строк
          */
-        return !param.trim().equals("") ? "'" + param.trim() + "'" : "NULL";
+        return !param.trim().equals("") ? '\'' + param.trim() + '\'' : "NULL";
     }
 
     private static String appendRequiredField(String param) throws IllegalArgumentException {
@@ -215,6 +215,11 @@ public class DBHelper {
         } catch (NullPointerException npe) {
             throw new IllegalArgumentException("Illegal value on field!");
         }
-        return "'" + param.trim() + "'";
+        return '\'' + param.trim() + '\'';
+    }
+
+    public static void main(String[] args) {
+        Goods goods = new Goods("11", "jh", "6", "7");
+        insert(goods);
     }
 }

@@ -19,7 +19,7 @@ public class Constants {
             "`lastName` VARCHAR(45) NOT NULL",
             "`phone` VARCHAR(10)",
             "`profession` VARCHAR(45) NOT NULL",
-            "`isActive` BOOL"
+            "`isActive` BOOL NOT NULL DEFAULT '1'"
     };
     static final String TABLE_EMPLOYEES_PRIMARY_KEY = "id";
 
@@ -31,7 +31,7 @@ public class Constants {
             "`isPaid` BOOL",
             "`date` TIMESTAMP",
             "`price` DECIMAL(9,2)",
-            "`isActive` BOOL DEFAULT '1'"
+            "`isActive` BOOL NOT NULL DEFAULT '1'"
     };
     static final String TABLE_ORDERS_PRIMARY_KEY = "id";
 
@@ -42,7 +42,7 @@ public class Constants {
             "`name` VARCHAR(45) NOT NULL",
             "`price` DECIMAL(9,2)",
             "`amount` INT NOT NULL",
-            "`isActive` BOOL DEFAULT '1'"
+            "`isActive` BOOL NOT NULL DEFAULT '1'"
     };
     static final String TABLE_GOODS_PRIMARY_KEY = "id";
 
@@ -54,7 +54,7 @@ public class Constants {
             "`lastName` VARCHAR(45) NOT NULL",
             "`phone` VARCHAR(10)",
             "`rent` DECIMAL(9,2)",
-            "`isActive` BOOL DEFAULT '1'"
+            "`isActive` BOOL NOT NULL DEFAULT '1'"
     };
     static final String TABLE_RENTERS_PRIMARY_KEY = "id";
 
@@ -66,7 +66,7 @@ public class Constants {
             "`lastName` VARCHAR(45) NOT NULL",
             "`phone` VARCHAR(13)",
             "`cardNumber` VARCHAR(7)",
-            "`isActive` BOOL DEFAULT '1'"
+            "`isActive` BOOL NOT NULL DEFAULT '1'"
     };
     static final String TABLE_CLIENTS_PRIMARY_KEY = "id";
 
