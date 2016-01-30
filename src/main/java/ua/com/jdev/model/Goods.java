@@ -1,24 +1,23 @@
 package ua.com.jdev.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class Goods extends BaseClass {
 
     private StringProperty code;
     private StringProperty name;
-    private StringProperty price;
-    private StringProperty amount;
+    private DoubleProperty price;
+    private IntegerProperty amount;
 
     public Goods() {
-        this(null, null, null, null);
+        this(null, null, 0.0, 0);
     }
 
-    public Goods(String code, String name, String price, String amount) {
+    public Goods(String code, String name, double price, int amount) {
         this.code = new SimpleStringProperty(code);
         this.name = new SimpleStringProperty(name);
-        this.price = new SimpleStringProperty(price);
-        this.amount = new SimpleStringProperty(amount);
+        this.price = new SimpleDoubleProperty(price);
+        this.amount = new SimpleIntegerProperty(amount);
     }
 
     public String getCode() {
@@ -45,27 +44,27 @@ public class Goods extends BaseClass {
         this.name.set(name);
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price.get();
     }
 
-    public StringProperty priceProperty() {
+    public DoubleProperty priceProperty() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price.set(price);
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount.get();
     }
 
-    public StringProperty amountProperty() {
+    public IntegerProperty amountProperty() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount.set(amount);
     }
 }

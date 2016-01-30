@@ -1,40 +1,24 @@
 package ua.com.jdev.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class Order extends BaseClass {
 
     private StringProperty time;
-    private StringProperty employee;
-    private StringProperty client;
-    private StringProperty price;
+    private ObjectProperty employee;
+    private ObjectProperty client;
+    private DoubleProperty price;
     private boolean paid = false;
 
     public Order() {
-        this(null, null, null, null);
+        this(null, null, null);
     }
 
-    public Order(String time, String employee, String client) {
+    public Order(String time, Employee employee, Client client) {
         this.time = new SimpleStringProperty(time);
-        this.employee = new SimpleStringProperty(employee);
-        this.client = new SimpleStringProperty(client);
-        this.price = new SimpleStringProperty("");
-    }
-
-    public Order(String time, String employee, String client, String price) {
-        this.time = new SimpleStringProperty(time);
-        this.employee = new SimpleStringProperty(employee);
-        this.client = new SimpleStringProperty(client);
-        this.price = new SimpleStringProperty(price);
-    }
-
-    public Order(String time, String employee, String client, String price, boolean paid) {
-        this.time = new SimpleStringProperty(time);
-        this.employee = new SimpleStringProperty(employee);
-        this.client = new SimpleStringProperty(client);
-        this.price = new SimpleStringProperty(price);
-        this.paid = paid;
+        this.employee = new SimpleObjectProperty(employee);
+        this.client = new SimpleObjectProperty(client);
+        this.price = new SimpleDoubleProperty(0.0);
     }
 
     public String getTime() {
@@ -49,39 +33,39 @@ public class Order extends BaseClass {
         this.time.set(time);
     }
 
-    public String getEmployee() {
-        return employee.get();
+    public Employee getEmployee() {
+        return (Employee) employee.get();
     }
 
-    public StringProperty employeeProperty() {
+    public ObjectProperty employeeProperty() {
         return employee;
     }
 
-    public void setEmployee(String employee) {
+    public void setEmployee(Employee employee) {
         this.employee.set(employee);
     }
 
-    public String getClient() {
-        return client.get();
+    public Client getClient() {
+        return (Client) client.get();
     }
 
-    public StringProperty clientProperty() {
+    public ObjectProperty clientProperty() {
         return client;
     }
 
-    public void setClient(String client) {
+    public void setClient(Client client) {
         this.client.set(client);
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price.get();
     }
 
-    public StringProperty priceProperty() {
+    public DoubleProperty priceProperty() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price.set(price);
     }
 
