@@ -44,49 +44,33 @@ public class Client extends Person {
 
     @Override
     public String getInsertQuery() {
-        StringBuilder query = new StringBuilder("INSERT INTO ");
-        query.append(tableName).
-                append(" (firstName, secondName, lastName, phone, cardNumber) VALUES (").
-                append(getFirstName()).append(", ").
-                append(getSecondName()).append(", ").
-                append(getLastName()).append(", ").
-                append(getPhone()).append(", ").
-                append(getCardNumber()).append(");");
-        //  log.log(Level.INFO, query.toString());
-        return query.toString();
+        return "INSERT INTO " + tableName + " (firstName, secondName, lastName, phone, cardNumber) VALUES (" +
+                createRequiredField(getFirstName()) + ", " +
+                createField(getSecondName()) + ", " +
+                createRequiredField(getLastName()) + ", " +
+                createField(getPhone()) + ", " +
+                createField(getCardNumber()) + ");";
     }
 
     @Override
     public String getUpdateQuery() {
-        StringBuilder query = new StringBuilder("UPDATE ");
-        query.append(tableName).
-                append(" SET firstName = ").append(getFirstName()).
-                append(", secondName = ").append(getSecondName()).
-                append(", lastName =  ").append(getLastName()).
-                append(", phone = ").append(getPhone()).
-                append(", cardNumber = ").append(getCardNumber()).
-                append(" WHERE id = ").append(getId()).
-                append(";");
-        //      log.log(Level.INFO, query.toString());
-        return query.toString();
+        return "UPDATE " + tableName +
+                " SET firstName = " + createRequiredField(getFirstName()) +
+                ", secondName = " + createField(getSecondName()) +
+                ", lastName =  " + createRequiredField(getLastName()) +
+                ", phone = " + createField(getPhone()) +
+                ", cardNumber = " + createField(getCardNumber()) +
+                " WHERE id = " + getId() + ";";
     }
 
     @Override
     public String getDeleteQuery() {
-        StringBuilder query = new StringBuilder("UPDATE ");
-        query.append(tableName).
-                append(" SET isActive = '0' WHERE id = ").
-                append(getId()).append(";");
-        return query.toString();
+        return "UPDATE " + tableName + " SET isActive = '0' WHERE id = " + getId() + ";";
     }
 
     @Override
     public String getRestoreQuery() {
-        StringBuilder query = new StringBuilder("UPDATE ");
-        query.append(tableName).
-                append(" SET isActive = '1' WHERE id = ").
-                append(getId());
-        return query.toString();
+        return "UPDATE " + tableName + " SET isActive = '1' WHERE id = " + getId() + ";";
     }
 
     @Override

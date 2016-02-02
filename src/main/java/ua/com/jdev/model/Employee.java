@@ -10,7 +10,7 @@ public class Employee extends Person {
     // private int percent;
 
     {
-        tableName = Constants.TABLE_EMPLOYEES;
+        this.tableName = Constants.TABLE_EMPLOYEES;
     }
 
     public Employee() {
@@ -41,38 +41,34 @@ public class Employee extends Person {
 
     @Override
     public String getInsertQuery() {
-        return "INSERT INTO " + tableName +
-                " (firstName, secondName, lastName, phone, profession) VALUES (" +
-                getFirstName() + ", " +
-                getSecondName() + ", " +
-                getLastName() + ", " +
-                getPhone() + ", " +
-                getPosition() + ");";
+        return "INSERT INTO " + tableName + " (firstName, secondName, lastName, phone, " + "profession) VALUES (" +
+                createRequiredField(getFirstName()) + ", " +
+                createField(getSecondName()) + ", " +
+                createRequiredField(getLastName()) + ", " +
+                createField(getPhone()) + ", " +
+                createRequiredField(getPosition()) + ");";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE " + Constants.TABLE_EMPLOYEES +
-                " SET firstName = " + getFirstName() +
-                ", secondName = " + getSecondName() +
-                ", lastName =  " + getLastName() +
-                ", phone = " + getPhone() +
-                ", profession = " + getPosition() +
+        return "UPDATE " + tableName +
+                " SET firstName = " + createRequiredField(getFirstName()) +
+                ", secondName = " + createField(getSecondName()) +
+                ", lastName =  " + createRequiredField(getLastName()) +
+                ", phone = " + createField(getPhone()) +
+                ", profession = " + createRequiredField(getPosition()) +
                 " WHERE id = " + getId() + ";";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "UPDATE " + Constants.TABLE_EMPLOYEES +
-                " SET isActive = '0' WHERE id = " +
-                getId() + ";";
+        return "UPDATE " + tableName +
+                " SET isActive = '0' WHERE id = " + getId() + ";";
     }
 
     @Override
     public String getRestoreQuery() {
-        return "UPDATE " + Constants.TABLE_EMPLOYEES +
-                " SET isActive = '1' WHERE id = " +
-                getId() + ";";
+        return "UPDATE " + tableName + " SET isActive = '1' WHERE id = " + getId() + ";";
     }
 
     @Override
