@@ -8,9 +8,6 @@ import ua.com.jdev.model.Goods;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Order;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
-
 /**
  * Created by Yurii Mikhailichenko on 17.01.2016.
  *
@@ -30,115 +27,137 @@ public class DBHelper {
         return outcomingData;
     }
 
+    public static void insert(BaseClass model) {
+        String query = model.getInsertQuery();
+        dbRep.executeUpdate(query);
+        model.setId(dbRep.getLastId(model.getTableName()));
+    }
+
+    public static void update(BaseClass model) {
+        String query = model.getUpdateQuery();
+        dbRep.executeUpdate(query);
+    }
+
+    public static void delete(BaseClass model) {
+        String query = model.getDeleteQuery();
+        dbRep.executeUpdate(query);
+    }
+
+    public static void restore(BaseClass model) {
+        String query = model.getRestoreQuery();
+        dbRep.executeUpdate(query);
+    }
+
+    public static void sale(BaseClass model) {
+        String query = model.getSaleQuery();
+        dbRep.executeUpdate(query);
+    }
+    @Deprecated
     public static void insert(Client client) {
         StringBuilder query = new StringBuilder("INSERT INTO ");
         query.append(Constants.TABLE_CLIENTS).
                 append(" (firstName, secondName, lastName, phone, cardNumber) VALUES (").
-                append(appendRequiredField(client.getFirstName())).append(", ").
-                append(appendField(client.getSecondName())).append(", ").
-                append(appendRequiredField(client.getLastName())).append(", ").
-                append(appendField(client.getPhone())).append(", ").
-                append(appendField(client.getCardNumber())).append(");");
+                append(createRequiredField(client.getFirstName())).append(", ").
+                append(createField(client.getSecondName())).append(", ").
+                append(createRequiredField(client.getLastName())).append(", ").
+                append(createField(client.getPhone())).append(", ").
+                append(createField(client.getCardNumber())).append(");");
         //  log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
         client.setId(dbRep.getLastId(Constants.TABLE_CLIENTS));
     }
-
+    @Deprecated
     public static void insert(Goods goods) {
         StringBuilder query = new StringBuilder("INSERT INTO ");
         query.append(Constants.TABLE_GOODS).
                 append(" (code, name, price, amount) VALUES (").
-                append(appendRequiredField(goods.getCode())).append(", ").
-                append(appendRequiredField(goods.getName())).append(", ").
-                append(appendField(String.valueOf(goods.getPrice()))).append(", ").
-                append(appendField(String.valueOf(goods.getAmount()))).append(");");
+                append(createRequiredField(goods.getCode())).append(", ").
+                append(createRequiredField(goods.getName())).append(", ").
+                append(createField(String.valueOf(goods.getPrice()))).append(", ").
+                append(createField(String.valueOf(goods.getAmount()))).append(");");
         //log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
         goods.setId(dbRep.getLastId(Constants.TABLE_GOODS));
     }
-
+    @Deprecated
     public static void insert(Employee employee) {
         StringBuilder query = new StringBuilder("INSERT INTO ");
         query.append(Constants.TABLE_EMPLOYEES).append(" (firstName, secondName, lastName, phone, ").append("profession) VALUES (").
-                append(appendRequiredField(employee.getFirstName())).append(", ").
-                append(appendField(employee.getSecondName())).append(", ").
-                append(appendRequiredField(employee.getLastName())).append(", ").
-                append(appendField(employee.getPhone())).append(", ").
-                append(appendRequiredField(employee.getPosition())).append(");");
+                append(createRequiredField(employee.getFirstName())).append(", ").
+                append(createField(employee.getSecondName())).append(", ").
+                append(createRequiredField(employee.getLastName())).append(", ").
+                append(createField(employee.getPhone())).append(", ").
+                append(createRequiredField(employee.getPosition())).append(");");
 //        log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
         employee.setId(dbRep.getLastId(Constants.TABLE_EMPLOYEES));
     }
-
+    @Deprecated
     public static void insert(Order order) {
-/*
         StringBuilder query = new StringBuilder("INSERT INTO ");
         query.append(Constants.TABLE_ORDERS).
                 append(" (client_id, employee_id, isPaid, price, date) VALUES (").
-                append(appendRequiredField(order.getClient().getId())).append(", ").
-                append(appendRequiredField(order.getEmployee().getId())).append(", ").
+                append(createRequiredField(order.getClient().getId())).append(", ").
+                append(createRequiredField(order.getEmployee().getId())).append(", ").
                 append(order.isPaid() ? "'1'" : "'0'").append(", ").
-                append(appendField(order.getPrice())).append(", ").
-                append(appendField(order.getTime())).append(");");
-        log.log(Level.INFO, query.toString());
+                append(createField(String.valueOf(order.getPrice()))).append(", ").
+                append(createField(order.getTime())).append(");");
+//        log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
         order.setId(dbRep.getLastId(Constants.TABLE_ORDERS));
-*/
     }
-
+    @Deprecated
     public static void update(Client client) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_CLIENTS).
-                append(" SET firstName = ").append(appendRequiredField(client.getFirstName())).
-                append(", secondName = ").append(appendField(client.getSecondName())).
-                append(", lastName =  ").append(appendRequiredField(client.getLastName())).
-                append(", phone = ").append(appendField(client.getPhone())).
-                append(", cardNumber = ").append(appendRequiredField(client.getCardNumber())).
+                append(" SET firstName = ").append(createRequiredField(client.getFirstName())).
+                append(", secondName = ").append(createField(client.getSecondName())).
+                append(", lastName =  ").append(createRequiredField(client.getLastName())).
+                append(", phone = ").append(createField(client.getPhone())).
+                append(", cardNumber = ").append(createRequiredField(client.getCardNumber())).
                 append(" WHERE id = ").append(client.getId()).append(";");
         //      log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void update(Goods goods) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_GOODS).
-                append(" SET code = ").append(appendRequiredField(goods.getCode())).
-                append(", name = ").append(appendField(goods.getName())).
-                append(", price =  ").append(appendField(String.valueOf(goods.getPrice()))).
-                append(", amount = ").append(appendField(String.valueOf(goods.getAmount()))).
+                append(" SET code = ").append(createRequiredField(goods.getCode())).
+                append(", name = ").append(createField(goods.getName())).
+                append(", price =  ").append(createField(String.valueOf(goods.getPrice()))).
+                append(", amount = ").append(createField(String.valueOf(goods.getAmount()))).
                 append(" WHERE id = ").append(goods.getId()).append(";");
         //    log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void update(Employee employee) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_EMPLOYEES).
-                append(" SET firstName = ").append(appendRequiredField(employee.getFirstName())).
-                append(", secondName = ").append(appendField(employee.getSecondName())).
-                append(", lastName =  ").append(appendRequiredField(employee.getLastName())).
-                append(", phone = ").append(appendField(employee.getPhone())).
-                append(", profession = ").append(appendRequiredField(employee.getPosition())).
+                append(" SET firstName = ").append(createRequiredField(employee.getFirstName())).
+                append(", secondName = ").append(createField(employee.getSecondName())).
+                append(", lastName =  ").append(createRequiredField(employee.getLastName())).
+                append(", phone = ").append(createField(employee.getPhone())).
+                append(", profession = ").append(createRequiredField(employee.getPosition())).
                 append(" WHERE id = ").append(employee.getId()).append(";");
         //  log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void update(Order order) {
-/*
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_ORDERS).
-                append(" SET (client_id = ").append(appendRequiredField(order.getClient().getId())).
-                append(", employee_id = ").append(appendRequiredField(order.getEmployee().getId())).
+                append(" SET (client_id = ").append(createRequiredField(order.getClient().getId())).
+                append(", employee_id = ").append(createRequiredField(order.getEmployee().getId())).
                 append(", isPaid = ").append(order.isPaid() ? "'1'" : "'0'").
-                append(", price = ").append(appendField(order.getPrice())).
-                append(" date = ").append(appendField(order.getTime())).
+                append(", price = ").append(createField(String.valueOf(order.getPrice()))).
+                append(" date = ").append(createField(order.getTime())).
                 append(" WHERE id = ").append(order.getId()).append(";");
-        log.log(Level.INFO, query.toString());
+//        log.log(Level.INFO, query.toString());
         dbRep.executeUpdate(query.toString());
-*/
     }
-
+    @Deprecated
     public static void delete(Client client) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_CLIENTS).
@@ -146,7 +165,7 @@ public class DBHelper {
                 append(client.getId()).append(";");
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void delete(Goods goods) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_CLIENTS).
@@ -154,7 +173,7 @@ public class DBHelper {
                 append(goods.getId()).append(";");
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void delete(Employee employee) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_EMPLOYEES).
@@ -162,7 +181,7 @@ public class DBHelper {
                 append(employee.getId()).append(";");
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void delete(Order order) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_ORDERS).
@@ -170,7 +189,7 @@ public class DBHelper {
                 append(order.getId()).append(";");
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void restore(Client client) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_CLIENTS).
@@ -178,7 +197,7 @@ public class DBHelper {
                 append(client.getId());
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void restore(Goods goods) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_CLIENTS).
@@ -186,7 +205,7 @@ public class DBHelper {
                 append(goods.getId()).append(";");
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void restore(Employee employee) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_EMPLOYEES).
@@ -194,7 +213,7 @@ public class DBHelper {
                 append(employee.getId()).append(";");
         dbRep.executeUpdate(query.toString());
     }
-
+    @Deprecated
     public static void restore(Order order) {
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(Constants.TABLE_ORDERS).
@@ -203,14 +222,14 @@ public class DBHelper {
         dbRep.executeUpdate(query.toString());
     }
 
-    private static String appendField(String param) {
+    public static String createField(String param) {
         /**
          * Служебный метод для создания строк
          */
         return !param.trim().equals("") ? '\'' + param.trim() + '\'' : "NULL";
     }
 
-    private static String appendRequiredField(String param) throws IllegalArgumentException {
+    public static String createRequiredField(String param) throws IllegalArgumentException {
         /**
          * Служебный метод для создания NOT NULL строк
          */

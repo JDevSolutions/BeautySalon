@@ -49,7 +49,7 @@ public class DBRepository {
         return dataList;
     }
 
-    String getLastId(String tableName) {
+    public String getLastId(String tableName) {
         String lastId = "";
         try {
             connection = getDBConnection();
