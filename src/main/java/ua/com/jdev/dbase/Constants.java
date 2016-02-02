@@ -11,7 +11,7 @@ public class Constants {
 
     static final String DATABASE_NAME = "iris_db";
 
-    static final String TABLE_EMPLOYEES = "employees";
+    public static final String TABLE_EMPLOYEES = "employees";
     static final String[] TABLE_EMPLOYEES_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`firstName` VARCHAR(45) NOT NULL",
@@ -59,7 +59,7 @@ public class Constants {
     };
     static final String TABLE_RENTERS_PRIMARY_KEY = "id";
 
-    static final String TABLE_CLIENTS = "clients";
+    public static final String TABLE_CLIENTS = "clients";
     static final String[] TABLE_CLIENTS_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`firstName` VARCHAR(45) NOT NULL",

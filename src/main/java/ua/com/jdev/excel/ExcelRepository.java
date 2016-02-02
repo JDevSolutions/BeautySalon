@@ -30,7 +30,7 @@ public class ExcelRepository {
                 Cell price = row.getCell(6);
                 try {
                     //TODO: Реаализовать проверку на сущесттвующий товар по коду товара
-//                    DBHelper.insert(new Goods(code.toString(), name.toString(), price.toString(), amount.toString()));
+//                    DBHelper.getInsertQuery(new Goods(code.toString(), name.toString(), price.toString(), amount.toString()));
 //                   System.out.println(goods.getName() + ", код: " + goods.getCode() + ", есть в наличии: "
                     //                         + goods.getAmount() + ", цена: " + goods.getPrice());
                 } catch (NullPointerException npe) {
