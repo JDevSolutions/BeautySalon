@@ -85,6 +85,7 @@ public class DBRepository {
         createTable(Constants.TABLE_GOODS, Constants.TABLE_GOODS_COLUMNS, Constants.TABLE_GOODS_PRIMARY_KEY);
         createTable(Constants.TABLE_ORDERS, Constants.TABLE_ORDERS_COLUMNS, Constants.TABLE_ORDERS_PRIMARY_KEY);
         createTable(Constants.TABLE_RENTERS, Constants.TABLE_RENTER_COLUMNS, Constants.TABLE_RENTERS_PRIMARY_KEY);
+        createTable(Constants.TABLE_SALES, Constants.TABLE_SALES_COLUMNS, Constants.TABLE_SALES_PRIMARY_KEY);
     }
 
     private static Connection getDBConnection() throws Exception {

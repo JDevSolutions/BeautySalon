@@ -71,5 +71,17 @@ public class Constants {
     };
     static final String TABLE_CLIENTS_PRIMARY_KEY = "id";
 
+    static final String TABLE_SALES = "sales";
+    static final String[] TABLE_SALES_COLUMNS = {
+            "`id` INT NOT NULL AUTO_INCREMENT",
+            "`goods_id` INT NOT NULL",
+            "`employee_id` INT NOT NULL",
+            "`date` VARCHAR(10)", //TODO: Change to DATE
+            "`time` VARCHAR(10)", //TODO: Change to TIME
+            "`price` DECIMAL(9,2)",
+            "`count` DECIMAL(9,2)",
+    };
+    static final String TABLE_SALES_PRIMARY_KEY = "id";
+
     static final String CHARACTER_SET = "CHARACTER SET 'utf8' COLLATE utf8_general_ci";
 }
