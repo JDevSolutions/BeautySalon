@@ -10,5 +10,5 @@ public interface ModelRepository {
     String getUpdateQuery();
     String getDeleteQuery();
     String getRestoreQuery();
-    String getSaleQuery();
+   // String getSaleQuery();
 }

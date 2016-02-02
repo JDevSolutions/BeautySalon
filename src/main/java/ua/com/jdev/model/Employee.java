@@ -70,9 +70,4 @@ public class Employee extends Person {
     public String getRestoreQuery() {
         return "UPDATE " + tableName + " SET isActive = '1' WHERE id = " + getId() + ";";
     }
-
-    @Override
-    public String getSaleQuery() {
-        return null;
-    }
 }

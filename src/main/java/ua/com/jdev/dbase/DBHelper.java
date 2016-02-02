@@ -48,8 +48,8 @@ public class DBHelper {
         dbRep.executeUpdate(query);
     }
 
-    public static void sale(BaseClass model) {
-        String query = model.getSaleQuery();
+    public static void sale(Goods goods) {
+        String query = goods.getSaleQuery();
         dbRep.executeUpdate(query);
     }
 
