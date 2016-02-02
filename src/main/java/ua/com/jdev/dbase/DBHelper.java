@@ -47,12 +47,6 @@ public class DBHelper {
         String query = model.getRestoreQuery();
         dbRep.executeUpdate(query);
     }
-
-    public static void sale(Goods goods) {
-        String query = goods.getSaleQuery();
-        dbRep.executeUpdate(query);
-    }
-
     public static String createField(String param) {
         /**
          * Служебный метод для создания строк
