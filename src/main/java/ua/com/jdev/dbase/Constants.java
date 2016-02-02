@@ -23,7 +23,7 @@ public class Constants {
     };
     static final String TABLE_EMPLOYEES_PRIMARY_KEY = "id";
 
-    static final String TABLE_ORDERS = "orders";
+    public static final String TABLE_ORDERS = "orders";
     static final String[] TABLE_ORDERS_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`client_id` INT NOT NULL",
@@ -36,7 +36,7 @@ public class Constants {
     };
     static final String TABLE_ORDERS_PRIMARY_KEY = "id";
 
-    static final String TABLE_GOODS = "goods";
+    public static final String TABLE_GOODS = "goods";
     static final String[] TABLE_GOODS_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`code` VARCHAR(10)",
@@ -47,7 +47,7 @@ public class Constants {
     };
     static final String TABLE_GOODS_PRIMARY_KEY = "id";
 
-    static final String TABLE_RENTERS = "renters";
+    public static final String TABLE_RENTERS = "renters";
     static final String[] TABLE_RENTER_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`firstName` VARCHAR(45) NOT NULL",
@@ -71,7 +71,7 @@ public class Constants {
     };
     static final String TABLE_CLIENTS_PRIMARY_KEY = "id";
 
-    static final String TABLE_SALES = "sales";
+    public static final String TABLE_SALES = "sales";
     static final String[] TABLE_SALES_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`goods_id` INT NOT NULL",
