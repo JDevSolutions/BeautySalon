@@ -190,8 +190,8 @@ public class TabsOverviewController {
     @FXML
     private void handleDeleteOrder() {
         int selectedIndex = orderTable.getSelectionModel().getSelectedIndex();
-        orderTable.getItems().remove(selectedIndex);
         Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
+        orderTable.getItems().remove(selectedIndex);
         DBHelper.delete(selectedOrder);
         if (orderTable.getItems().size() == 0) {
             editBtnOrder.setDisable(true);
@@ -229,8 +229,8 @@ public class TabsOverviewController {
     @FXML
     private void handleDeleteGoods() {
         int selectedIndex = goodsTable.getSelectionModel().getSelectedIndex();
-        goodsTable.getItems().remove(selectedIndex);
         Goods selectedGoods = goodsTable.getSelectionModel().getSelectedItem();
+        goodsTable.getItems().remove(selectedIndex);
         DBHelper.delete(selectedGoods);
         if (goodsTable.getItems().size() == 0) {
             editBtnGoods.setDisable(true);
@@ -268,8 +268,8 @@ public class TabsOverviewController {
     @FXML
     private void handleDeleteEmployee() {
         int selectedIndex = employeeTable.getSelectionModel().getSelectedIndex();
-        employeeTable.getItems().remove(selectedIndex);
         Employee selectedEmployee = employeeTable.getSelectionModel().getSelectedItem();
+        employeeTable.getItems().remove(selectedIndex);
         DBHelper.delete(selectedEmployee);
         if (employeeTable.getItems().size() == 0) {
             editBtnEmployee.setDisable(true);
@@ -308,8 +308,8 @@ public class TabsOverviewController {
     @FXML
     private void handleDeleteClient() {
         int selectedIndex = clientTable.getSelectionModel().getSelectedIndex();
-        clientTable.getItems().remove(selectedIndex);
         Client selectedClient = clientTable.getSelectionModel().getSelectedItem();
+        clientTable.getItems().remove(selectedIndex);
         DBHelper.delete(selectedClient);
         if (clientTable.getItems().size() == 0) {
             editBtnClient.setDisable(true);
