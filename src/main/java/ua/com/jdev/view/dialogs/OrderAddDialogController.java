@@ -54,8 +54,8 @@ public class OrderAddDialogController {
         this.order = order;
 
         timeOrderField.setText(order.getTime());
-        employeeOrderField.setText(order.getEmployee().toString());
-        clientOrderField.setText(order.getClient().toString());
+        employeeOrderField.setText((order.getEmployee() == null) ? "" : order.getEmployee().toString());
+        clientOrderField.setText((order.getClient() == null) ? "" : order.getClient().toString());
         priceOrderField.setText(String.valueOf(order.getPrice()));
         paidOrderCheckBox.setSelected(order.isPaid());
     }
@@ -76,9 +76,9 @@ public class OrderAddDialogController {
     private void handleOk() {
         if (isInputValid()) {
             order.setTime(timeOrderField.getText());
-            order.setEmployee(PersonMaker.makeEmployee(employeeOrderField.getText()));
-            order.setClient(PersonMaker.makeClient(clientOrderField.getText()));
-            order.setPrice(Integer.parseInt(priceOrderField.getText()));
+            order.setEmployee(PersonMaker.makeEmployee(employeeOrderField.getText().trim()));
+            order.setClient(PersonMaker.makeClient(clientOrderField.getText().trim()));
+            order.setPrice(Double.parseDouble(priceOrderField.getText()));
             order.setPaid(paidOrderCheckBox.isSelected());
 
             DBHelper.insert(order);

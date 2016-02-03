@@ -78,7 +78,7 @@ public class OrderEditDialogController {
             order.setTime(timeOrderField.getText());
             order.setEmployee(PersonMaker.makeEmployee(employeeOrderField.getText()));
             order.setClient(PersonMaker.makeClient(clientOrderField.getText()));
-            order.setPrice(Integer.parseInt(priceOrderField.getText()));
+            order.setPrice(Double.parseDouble(priceOrderField.getText()));
             order.setPaid(paidOrderCheckBox.isSelected());
 
             DBHelper.update(order);
