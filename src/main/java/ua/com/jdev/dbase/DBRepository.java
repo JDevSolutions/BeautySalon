@@ -37,13 +37,7 @@ public class DBRepository {
 
     ObservableList<? extends BaseClass> executeQuery(String query, String tableName) {
         ObservableList<? extends BaseClass> dataList = null;
-        try {
-            connection = getDBConnection();
-            createStatement();
-            resultSet = statement.executeQuery(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connector(query);
         dataList = getObservableList(resultSet, tableName);
         closer(new AutoCloseable[]{resultSet, statement, connection});
         return dataList;
@@ -51,16 +45,13 @@ public class DBRepository {
 
     public String getLastId(String tableName) {
         String lastId = "";
+        connector("SELECT MAX(id) FROM " + tableName);
         try {
-            connection = getDBConnection();
-            createStatement();
-            resultSet = statement.executeQuery("SELECT MAX(id) FROM " + tableName);
-            while (resultSet.next()) {
-                lastId = resultSet.getString(1);
-            }
-        } catch (Exception e) {
+            lastId = resultSet.getString(1);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        closer(new AutoCloseable[]{connection, statement, resultSet});
         return lastId;
     }
 
@@ -192,57 +183,51 @@ public class DBRepository {
         return clientData;
     }
 
-    private static Employee getEmployeeById(String string) throws SQLException {
+    private static Employee getEmployeeById(String id) throws SQLException {
         String query = "SELECT firstName, secondName, lastNamed, phone, position FROM " + Constants.TABLE_EMPLOYEES +
-                " WHERE id = " + string + ";";
-        try {
-            connection = getDBConnection();
-            createStatement();
-            resultSet = statement.executeQuery(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                " WHERE id = " + id + ";";
+        connector(query);
         Employee employee = new Employee(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
                 resultSet.getString(4), resultSet.getString(5));
+        employee.setId(id);
         closer(new AutoCloseable[]{connection, statement, resultSet});
         return employee;
     }
 
-    private static Client getClientById(String string) throws SQLException {
+    private static Client getClientById(String id) throws SQLException {
         String query = "SELECT firstName, secondName, lastName, phone, cardNumber FROM " + Constants.TABLE_CLIENTS +
-                " WHERE id = " + string + ";";
-        try {
-            connection = getDBConnection();
-            createStatement();
-            resultSet = statement.executeQuery(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                " WHERE id = " + id + ";";
         Client client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
                 resultSet.getString(4), resultSet.getString(5));
+        client.setId(id);
         closer(new AutoCloseable[]{connection, statement, resultSet});
         return client;
     }
 
-    private static Goods getGoodsById(String string) throws SQLException {
+    private static Goods getGoodsById(String id) throws SQLException {
         String query = "SELECT code, name, price, amount FROM " + Constants.TABLE_GOODS +
-                " WHERE id = " + string + ";";
-        try {
-            connection = getDBConnection();
-            createStatement();
-            resultSet = statement.executeQuery(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        /*Goods goods = new Goods(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
-                resultSet.getString(4), resultSet.getString(5))
-        */closer(new AutoCloseable[]{connection, statement, resultSet});
+                " WHERE id = " + id + ";";
+        connector(query);
+        Goods goods = new Goods(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3),
+                resultSet.getInt(4));
+        goods.setId(id);
+        closer(new AutoCloseable[]{connection, statement, resultSet});
         return new Goods();
     }
 
-    private static Order getOrderById(String string) throws SQLException {
-        String query = "SELECT firstName, secondName, lastName, phone, cardNumber FROM " + Constants.TABLE_CLIENTS +
-                " WHERE id = " + string + ";";
+    private static Order getOrderById(String id) throws SQLException {
+        String query = "SELECT  FROM " + Constants.TABLE_CLIENTS +
+                " WHERE id = " + id + ";";
+        connector(query);
+        String time = resultSet.getString(1);
+        int empl_id = resultSet.getInt(2);
+        int client_id = resultSet.getInt(3);
+        closer(new AutoCloseable[]{connection, statement, resultSet});
+        Order order = new Order(time, getEmployeeById(String.valueOf(empl_id)), getClientById(String.valueOf(client_id)));
+        return order;
+    }
+
+    private static void connector(String query) {
         try {
             connection = getDBConnection();
             createStatement();
@@ -250,8 +235,6 @@ public class DBRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closer(new AutoCloseable[]{connection, statement, resultSet});
-        return new Order();
     }
 
 
