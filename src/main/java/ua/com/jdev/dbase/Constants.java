@@ -76,8 +76,7 @@ public class Constants {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`goods_id` INT NOT NULL",
             "`employee_id` INT NOT NULL",
-            "`date` VARCHAR(10)", //TODO: Change to DATE
-            "`time` VARCHAR(10)", //TODO: Change to TIME
+            "`datetime` DATETIME",
             "`price` DECIMAL(9,2)",
             "`count` DECIMAL(9,2)",
     };

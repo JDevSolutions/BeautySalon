@@ -48,10 +48,10 @@ public class CreateXlsFile {
             fileOut.close();
             System.out.println("Excel file has been created!");
         } catch (FileNotFoundException fEx) {
-            //TODO: insert log
+            //TODO: getInsertQuery log
             System.out.println("Неверно указан путь к файлу!");
         } catch (IOException ex) {
-            //TODO: insert log
+            //TODO: getInsertQuery log
             System.out.println("Error! " + ex.toString());
         }
     }

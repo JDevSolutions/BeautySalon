@@ -1,7 +1,9 @@
 package ua.com.jdev.model;
 
 import javafx.beans.property.*;
+import sun.util.calendar.LocalGregorianCalendar;
 import ua.com.jdev.dbase.Constants;
+import ua.com.jdev.dbase.DBHelper;
 
 public class Goods extends BaseClass {
 
@@ -100,5 +102,15 @@ public class Goods extends BaseClass {
     @Override
     public String getRestoreQuery() {
         return "UPDATE " + tableName + " SET isActive = '1' WHERE id = " + getId() + ";";
+    }
+
+    public String getSaleQuery(int count, double price) {
+        String firstQuery = "UPDATE " + tableName + " SET amount = (amount - " + count + " WHERE id = " + getId() + ";";
+        String secondQuery = "INSERT INTO sales (goods_id, datetime, price, count) VALUES (" +
+                createRequiredField(getId()) + ", " +
+                ", current_timestamp, " +
+                createRequiredField(String.valueOf(price)) + ", " +
+                createRequiredField(String.valueOf(count)) + ";";
+        return firstQuery + "\n" + secondQuery;
     }
 }

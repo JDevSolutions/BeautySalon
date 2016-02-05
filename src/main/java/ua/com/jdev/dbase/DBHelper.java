@@ -16,7 +16,7 @@ import ua.com.jdev.model.Order;
 
 public class DBHelper {
 
-    private static DBRepository dbRep = new DBRepository();
+    public static DBRepository dbRep = new DBRepository();
     private static ObservableList<? extends BaseClass> outcomingData;
 
     //private final static Logger log = Logger.getLogger(DBHelper.class);
@@ -64,5 +64,11 @@ public class DBHelper {
             throw new IllegalArgumentException("Illegal value on field!");
         }
         return '\'' + param.trim() + '\'';
+    }
+
+    public static void main(String[] args) {
+        Goods g = new Goods("56", "Боты", 432.4, 69);
+        String s = g.getSaleQuery(34, 432.4);
+        dbRep.executeUpdate(s);
     }
 }

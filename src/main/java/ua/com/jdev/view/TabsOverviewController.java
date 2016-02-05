@@ -161,7 +161,7 @@ public class TabsOverviewController {
     // ############################### BUTTONS HANDLING ##############################
 
     /**
-     * Called when the user clicks the new button. Opens a dialog to update
+     * Called when the user clicks the new button. Opens a dialog to getUpdateQuery
      * details for a new schedule record.
      */
     @FXML
@@ -174,7 +174,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the update button. Opens a dialog to update
+     * Called when the user clicks the getUpdateQuery button. Opens a dialog to getUpdateQuery
      * details for the selected schedule record.
      */
     @FXML
@@ -200,7 +200,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the new button. Opens a dialog to update
+     * Called when the user clicks the new button. Opens a dialog to getUpdateQuery
      * details for a new goods.
      */
     @FXML
@@ -213,7 +213,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the update button. Opens a dialog to update
+     * Called when the user clicks the getUpdateQuery button. Opens a dialog to getUpdateQuery
      * details for the selected goods.
      */
     @FXML
@@ -239,7 +239,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the new button. Opens a dialog to update
+     * Called when the user clicks the new button. Opens a dialog to getUpdateQuery
      * details for a new employee.
      */
     @FXML
@@ -252,7 +252,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the update button. Opens a dialog to update
+     * Called when the user clicks the getUpdateQuery button. Opens a dialog to getUpdateQuery
      * details for the selected employee.
      */
     @FXML
@@ -278,7 +278,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the new button. Opens a dialog to update
+     * Called when the user clicks the new button. Opens a dialog to getUpdateQuery
      * details for a new client.
      */
     @FXML
@@ -291,7 +291,7 @@ public class TabsOverviewController {
     }
 
     /**
-     * Called when the user clicks the update button. Opens a dialog to update
+     * Called when the user clicks the getUpdateQuery button. Opens a dialog to getUpdateQuery
      * details for the selected client.
      */
     @FXML

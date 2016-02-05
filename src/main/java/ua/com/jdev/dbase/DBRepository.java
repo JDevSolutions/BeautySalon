@@ -197,7 +197,7 @@ public class DBRepository {
     }
 
     public static void main(String[] args) throws Exception {
-        connection = getDBConnection();
+        /*connection = getDBConnection();
         statement = connection.createStatement();
         statement.executeUpdate("USE iris_db");
         String search = "kone";
@@ -208,7 +208,7 @@ public class DBRepository {
                 System.out.println(set.getString(1));
             }
             System.out.println();
-        }
-        //createDatabaseSchema(Constants.DATABASE_NAME);
+        }*/
+        createDatabaseSchema(Constants.DATABASE_NAME);
     }
 }
