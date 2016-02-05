@@ -23,6 +23,8 @@ public abstract class Person extends BaseClass {
         this.phone = new SimpleStringProperty(phone);
     }
 
+    protected Person() {}
+
     public String getFirstName() {
         return firstName.get();
     }

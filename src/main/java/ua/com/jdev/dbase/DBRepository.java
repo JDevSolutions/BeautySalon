@@ -157,11 +157,9 @@ public class DBRepository {
 
     private static ObservableList<Order> fillOrders(ResultSet set, ObservableList<Order> scheduleRecordData) throws SQLException {
         while (set.next()) {
-/*
-            Order order = new Order(set.getString(1), set.getString(2), set.getString(3));
+            Order order = new Order(set.getString(1), getEmployeeById(set.getString(2)), getClientById(set.getString(3)));
             order.setId(set.getString(1));
             scheduleRecordData.add(order);
-*/
         }
         return scheduleRecordData;
     }
@@ -193,6 +191,69 @@ public class DBRepository {
         }
         return clientData;
     }
+
+    private static Employee getEmployeeById(String string) throws SQLException {
+        String query = "SELECT firstName, secondName, lastNamed, phone, position FROM " + Constants.TABLE_EMPLOYEES +
+                " WHERE id = " + string + ";";
+        try {
+            connection = getDBConnection();
+            createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Employee employee = new Employee(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
+                resultSet.getString(4), resultSet.getString(5));
+        closer(new AutoCloseable[]{connection, statement, resultSet});
+        return employee;
+    }
+
+    private static Client getClientById(String string) throws SQLException {
+        String query = "SELECT firstName, secondName, lastName, phone, cardNumber FROM " + Constants.TABLE_CLIENTS +
+                " WHERE id = " + string + ";";
+        try {
+            connection = getDBConnection();
+            createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Client client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
+                resultSet.getString(4), resultSet.getString(5));
+        closer(new AutoCloseable[]{connection, statement, resultSet});
+        return client;
+    }
+
+    private static Goods getGoodsById(String string) throws SQLException {
+        String query = "SELECT code, name, price, amount FROM " + Constants.TABLE_GOODS +
+                " WHERE id = " + string + ";";
+        try {
+            connection = getDBConnection();
+            createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /*Goods goods = new Goods(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
+                resultSet.getString(4), resultSet.getString(5))
+        */closer(new AutoCloseable[]{connection, statement, resultSet});
+        return new Goods();
+    }
+
+    private static Order getOrderById(String string) throws SQLException {
+        String query = "SELECT firstName, secondName, lastName, phone, cardNumber FROM " + Constants.TABLE_CLIENTS +
+                " WHERE id = " + string + ";";
+        try {
+            connection = getDBConnection();
+            createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closer(new AutoCloseable[]{connection, statement, resultSet});
+        return new Order();
+    }
+
 
     public static void main(String[] args) throws Exception {
         /*connection = getDBConnection();

@@ -27,6 +27,15 @@ public class Employee extends Person {
         this.position = new SimpleStringProperty(position);
     }
 
+    /**
+     * Constructor for get instance by ID
+     * @param id
+     */
+    private Employee(int id) {
+        super();
+
+    }
+
     public String getPosition() {
         return position.get();
     }
