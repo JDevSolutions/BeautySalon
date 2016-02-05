@@ -47,28 +47,17 @@ public class DBHelper {
         String query = model.getRestoreQuery();
         dbRep.executeUpdate(query);
     }
-    public static String createField(String param) {
-        /**
-         * Служебный метод для создания строк
-         */
-        return !param.trim().equals("") ? '\'' + param.trim() + '\'' : "NULL";
-    }
 
-    public static String createRequiredField(String param) throws IllegalArgumentException {
-        /**
-         * Служебный метод для создания NOT NULL строк
-         */
-        try {
-            if (param.trim().equals("")) throw new IllegalArgumentException("Illegal value on field!");
-        } catch (NullPointerException npe) {
-            throw new IllegalArgumentException("Illegal value on field!");
+    public static void sale(Goods goods, int amount, double price) {
+        String[] sale = goods.getSaleQuery(amount, price);
+        for (String s : sale) {
+            dbRep.executeUpdate(s);
         }
-        return '\'' + param.trim() + '\'';
     }
 
-    public static void main(String[] args) {
-        Goods g = new Goods("56", "Боты", 432.4, 69);
-        String s = g.getSaleQuery(34, 432.4);
-        dbRep.executeUpdate(s);
-    }
+/*    public static void main(String[] args) {
+        Goods g = new Goods("53", "Шузы", 354.4, 71);
+        insert(g);
+        sale(g, 7, 67);
+    }*/
 }

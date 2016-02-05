@@ -1,6 +1,7 @@
 package ua.com.jdev.model;
 
 import javafx.beans.property.*;
+import org.apache.poi.ss.formula.functions.T;
 import sun.util.calendar.LocalGregorianCalendar;
 import ua.com.jdev.dbase.Constants;
 import ua.com.jdev.dbase.DBHelper;
@@ -104,13 +105,13 @@ public class Goods extends BaseClass {
         return "UPDATE " + tableName + " SET isActive = '1' WHERE id = " + getId() + ";";
     }
 
-    public String getSaleQuery(int count, double price) {
-        String firstQuery = "UPDATE " + tableName + " SET amount = (amount - " + count + " WHERE id = " + getId() + ";";
+    public String[] getSaleQuery(int count, double price) {
+        String firstQuery = "UPDATE " + tableName + " SET amount = (amount - " + count + ") WHERE id = " + getId() + ";";
         String secondQuery = "INSERT INTO sales (goods_id, datetime, price, count) VALUES (" +
-                createRequiredField(getId()) + ", " +
-                ", current_timestamp, " +
-                createRequiredField(String.valueOf(price)) + ", " +
-                createRequiredField(String.valueOf(count)) + ";";
-        return firstQuery + "\n" + secondQuery;
+                getId() + ", " +
+                "current_timestamp, " +
+                price + ", " +
+                count + ");";
+        return new String[]{firstQuery, secondQuery};
     }
 }
