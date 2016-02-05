@@ -168,11 +168,9 @@ public class DBRepository {
 
     private static ObservableList<Goods> fillGoods(ResultSet set, ObservableList<Goods> goodsData) throws SQLException {
         while (set.next()) {
-/*
-            Goods goods = new Goods(set.getString(1), set.getString(2), set.getString(3), set.getString(4));
+            Goods goods = new Goods(set.getString(2), set.getString(3), set.getDouble(4), set.getInt(5));
             goods.setId(set.getString(1));
             goodsData.add(goods);
-*/
         }
         return goodsData;
     }
