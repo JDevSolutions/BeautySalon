@@ -75,7 +75,6 @@ public class Constants {
     static final String[] TABLE_SALES_COLUMNS = {
             "`id` INT NOT NULL AUTO_INCREMENT",
             "`goods_id` INT NOT NULL",
-            "`employee_id` INT",
             "`datetime` DATETIME",
             "`price` DECIMAL(9,2)",
             "`count` DECIMAL(9,2)",
