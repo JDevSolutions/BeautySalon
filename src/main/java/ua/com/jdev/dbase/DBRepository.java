@@ -47,7 +47,9 @@ public class DBRepository {
         String lastId = "";
         connector("SELECT MAX(id) FROM " + tableName);
         try {
-            lastId = resultSet.getString(1);
+            while (resultSet.next()) {
+                lastId = resultSet.getString(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
