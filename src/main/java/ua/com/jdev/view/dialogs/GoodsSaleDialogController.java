@@ -51,9 +51,9 @@ public class GoodsSaleDialogController {
         this.goods = goods;
 
         codeGoodsField.setText(goods.getCode());
-        codeGoodsField.setEditable(false);
+        codeGoodsField.setEditable(false);// not working
         nameGoodsField.setText(goods.getName());
-        nameGoodsField.setEditable(false);
+        nameGoodsField.setEditable(false);// not working
         priceGoodsField.setText(String.valueOf(goods.getPrice()));
         amountGoodsField.setText(String.valueOf(goods.getAmount()));
         totalGoodsField.setText(String.valueOf(goods.getPrice() * goods.getAmount()));
