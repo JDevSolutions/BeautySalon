@@ -4,14 +4,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import ua.com.jdev.MainApp;
 import ua.com.jdev.adapter.PersonMaker;
 import ua.com.jdev.dbase.DBHelper;
-import ua.com.jdev.model.Client;
-import ua.com.jdev.model.Employee;
-import ua.com.jdev.model.Goods;
-import ua.com.jdev.model.Order;
+import ua.com.jdev.model.*;
 import ua.com.jdev.view.dialogs.ClientEditDialogController;
 import ua.com.jdev.view.dialogs.EmployeeEditDialogController;
 import ua.com.jdev.view.dialogs.GoodsEditDialogController;
@@ -103,8 +101,7 @@ public class TabsOverviewController {
 
         // Listen for selection changes and show the person details when changed.
         orderTable.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {
-                    editBtnOrder.setDisable(false); deleteBtnOrder.setDisable(false);})
+                ((observable, oldValue, newValue) -> {editBtnOrder.setDisable(false); deleteBtnOrder.setDisable(false);})
         );
         goodsTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> {editBtnGoods.setDisable(false); deleteBtnGoods.setDisable(false);})
@@ -115,6 +112,64 @@ public class TabsOverviewController {
         clientTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> {editBtnClient.setDisable(false); deleteBtnClient.setDisable(false);})
         );
+
+        // Listen double-click on row
+        orderTable.setRowFactory(tv -> {
+            TableRow<Order> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Order rowData = row.getItem();
+                    showDoubleClickDetails(rowData);
+                }
+            });
+            return row;
+        });
+        goodsTable.setRowFactory(tv -> {
+            TableRow<Goods> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Goods rowData = row.getItem();
+                    showDoubleClickDetails(rowData);
+                }
+            });
+            return row;
+        });
+        employeeTable.setRowFactory(tv -> {
+            TableRow<Employee> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Employee rowData = row.getItem();
+                    showDoubleClickDetails(rowData);
+                }
+            });
+            return row;
+        });
+        clientTable.setRowFactory(tv -> {
+            TableRow<Client> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Client rowData = row.getItem();
+                    showDoubleClickDetails(rowData);
+                }
+            });
+            return row;
+        });
+    }
+
+    // show handleEditObject if been double-click on row
+    private void showDoubleClickDetails(BaseClass object) {
+        if (object instanceof Order) {
+            handleEditOrder();
+        }
+        if (object instanceof Client) {
+            handleEditClient();
+        }
+        if (object instanceof Goods) {
+            handleEditGoods();
+        }
+        if (object instanceof Employee) {
+            handleEditEmployee();
+        }
     }
 
     /**
@@ -265,6 +320,7 @@ public class TabsOverviewController {
             editEmployee(selectedEmployee, controller);
         }
     }
+
     @FXML
     private void handleDeleteEmployee() {
         int selectedIndex = employeeTable.getSelectionModel().getSelectedIndex();
