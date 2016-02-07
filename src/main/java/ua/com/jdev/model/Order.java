@@ -85,12 +85,11 @@ public class Order extends BaseClass {
     @Override
     public String getInsertQuery() {
         return "INSERT INTO " + tableName +
-                " (client_id, employee_id, isPaid, price, date) VALUES (" +
+                " (client_id, employee_id, isPaid, price) VALUES (" +
                 createRequiredField(getClient().getId()) + ", " +
                 createRequiredField(getEmployee().getId()) + ", " +
                 (isPaid() ? "'1'" : "'0'") + ", " +
-                createField(String.valueOf(getPrice())) + ", " +
-                createField(getTime()) + ");";
+                createField(String.valueOf(getPrice())) + ");";
     }
 
     @Override
@@ -100,7 +99,6 @@ public class Order extends BaseClass {
                 ", employee_id = " + createRequiredField(getEmployee().getId()) +
                 ", isPaid = " + (isPaid() ? "'1'" : "'0'") +
                 ", price = " + createField(String.valueOf(getPrice())) +
-                " date = " + createField(getTime()) +
                 " WHERE id = " + getId() + ";";
     }
 
