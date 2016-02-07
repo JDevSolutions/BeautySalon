@@ -12,10 +12,7 @@ import ua.com.jdev.model.Client;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Goods;
 import ua.com.jdev.model.Order;
-import ua.com.jdev.view.dialogs.ClientEditDialogController;
-import ua.com.jdev.view.dialogs.EmployeeEditDialogController;
-import ua.com.jdev.view.dialogs.GoodsEditDialogController;
-import ua.com.jdev.view.dialogs.OrderEditDialogController;
+import ua.com.jdev.view.dialogs.*;
 
 public class TabsOverviewController {
 
@@ -32,6 +29,7 @@ public class TabsOverviewController {
     @FXML private TableColumn<Goods, String> nameColumnGoods;
     @FXML private TableColumn<Goods, Double> priceColumnGoods;
     @FXML private TableColumn<Goods, Integer> amountColumnGoods;
+    @FXML private Button saleBtnGoods;
     @FXML private Button editBtnGoods;
     @FXML private Button deleteBtnGoods;
 
@@ -71,6 +69,7 @@ public class TabsOverviewController {
     private void initialize() {
         editBtnOrder.setDisable(true);
         deleteBtnOrder.setDisable(true);
+        saleBtnGoods.setDisable(true);
         editBtnGoods.setDisable(true);
         deleteBtnGoods.setDisable(true);
         editBtnEmployee.setDisable(true);
@@ -107,13 +106,16 @@ public class TabsOverviewController {
                     editBtnOrder.setDisable(false); deleteBtnOrder.setDisable(false);})
         );
         goodsTable.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {editBtnGoods.setDisable(false); deleteBtnGoods.setDisable(false);})
+                ((observable, oldValue, newValue) -> {
+                    saleBtnGoods.setDisable(false); editBtnGoods.setDisable(false); deleteBtnGoods.setDisable(false);})
         );
         employeeTable.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {editBtnEmployee.setDisable(false); deleteBtnEmployee.setDisable(false);})
+                ((observable, oldValue, newValue) -> {
+                    editBtnEmployee.setDisable(false); deleteBtnEmployee.setDisable(false);})
         );
         clientTable.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {editBtnClient.setDisable(false); deleteBtnClient.setDisable(false);})
+                ((observable, oldValue, newValue) -> {
+                    editBtnClient.setDisable(false); deleteBtnClient.setDisable(false);})
         );
     }
 
@@ -138,6 +140,12 @@ public class TabsOverviewController {
         order.setPrice(Double.parseDouble(controller.getPriceOrderField().getText()));
     }
     private void editGoods(Goods goods, GoodsEditDialogController controller) {
+        goods.setCode(controller.getCodeGoodsField().getText());
+        goods.setName(controller.getNameGoodsField().getText());
+        goods.setPrice(Double.parseDouble(controller.getPriceGoodsField().getText()));
+        goods.setAmount(Integer.parseInt(controller.getAmountGoodsField().getText()));
+    }
+    private void editGoods(Goods goods, GoodsSaleDialogController controller) {
         goods.setCode(controller.getCodeGoodsField().getText());
         goods.setName(controller.getNameGoodsField().getText());
         goods.setPrice(Double.parseDouble(controller.getPriceGoodsField().getText()));
@@ -235,6 +243,16 @@ public class TabsOverviewController {
         if (goodsTable.getItems().size() == 0) {
             editBtnGoods.setDisable(true);
             deleteBtnGoods.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void handleSaleGoods() {
+        Goods selectedGoods = goodsTable.getSelectionModel().getSelectedItem();
+        boolean okClicked = mainApp.showGoodsSaleDialog(selectedGoods);
+        GoodsSaleDialogController controller = mainApp.getGoodsSaleController();
+        if (okClicked) {
+            editGoods(selectedGoods, controller);
         }
     }
 

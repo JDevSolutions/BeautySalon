@@ -32,6 +32,7 @@ public class MainApp extends Application {
     private EmployeeEditDialogController employeeEditController;
     private GoodsAddDialogController goodsAddController;
     private GoodsEditDialogController goodsEditController;
+    private GoodsSaleDialogController goodsSaleController;
 
     /**
      * The data as an observable list of Persons, Goods and Schedule.
@@ -266,6 +267,33 @@ public class MainApp extends Application {
         }
     }
 
+    public boolean showGoodsSaleDialog(Goods goods) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/dialogs/GoodsSaleDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Продажа товара");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
+
+            goodsSaleController = loader.getController();
+            goodsSaleController.setDialogStage(dialogStage);
+            goodsSaleController.setGoods(goods);
+
+            dialogStage.showAndWait();
+
+            return  goodsSaleController.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean showEmployeeAddDialog(Employee employee) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -408,5 +436,9 @@ public class MainApp extends Application {
 
     public GoodsEditDialogController getGoodsEditController() {
         return goodsEditController;
+    }
+
+    public GoodsSaleDialogController getGoodsSaleController() {
+        return goodsSaleController;
     }
 }

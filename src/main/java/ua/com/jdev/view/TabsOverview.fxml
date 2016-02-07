@@ -60,6 +60,7 @@
                                         <Button fx:id="deleteBtnGoods" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteGoods" prefWidth="70.0" text="Удалить" />
                                     </children>
                                 </HBox>
+                        <Button fx:id="saleBtnGoods" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#handleSaleGoods" prefWidth="70.0" text="Продать" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                             </children>
                         </AnchorPane>
                     </content>
