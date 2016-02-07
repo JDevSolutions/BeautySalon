@@ -8,7 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ua.com.jdev.adapter.PersonMaker;
 import ua.com.jdev.dbase.DBHelper;
+import ua.com.jdev.dbase.DBRepository;
 import ua.com.jdev.model.Order;
+
+import java.sql.SQLException;
 
 public class OrderAddDialogController {
 
@@ -73,12 +76,14 @@ public class OrderAddDialogController {
      * Called when the user clicks ok.
      */
     @FXML
-    private void handleOk() {
+    private void handleOk() throws SQLException {
         if (isInputValid()) {
             order.setTime(timeOrderField.getText());
-            order.setEmployee(PersonMaker.makeEmployee(employeeOrderField.getText().trim()));
+            order.setEmployee(DBRepository.getEmployeeById(employeeOrderField.getText()));
+            order.setClient(DBRepository.getClientById(clientOrderField.getText()));
+            /*order.setEmployee(PersonMaker.makeEmployee(employeeOrderField.getText().trim()));
             order.setClient(PersonMaker.makeClient(clientOrderField.getText().trim()));
-            order.setPrice(Double.parseDouble(priceOrderField.getText()));
+            */order.setPrice(Double.parseDouble(priceOrderField.getText()));
             order.setPaid(paidOrderCheckBox.isSelected());
 
             DBHelper.insert(order);

@@ -185,22 +185,31 @@ public class DBRepository {
         return clientData;
     }
 
-    private static Employee getEmployeeById(String id) throws SQLException {
-        String query = "SELECT firstName, secondName, lastNamed, phone, position FROM " + Constants.TABLE_EMPLOYEES +
+    public static Employee getEmployeeById(String id) throws SQLException {
+        String query = "SELECT firstName, secondName, lastName, phone, profession FROM " + Constants.TABLE_EMPLOYEES +
                 " WHERE id = " + id + ";";
         connector(query);
-        Employee employee = new Employee(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
-                resultSet.getString(4), resultSet.getString(5));
+        Employee employee = null;
+        while (resultSet.next()) {
+            employee = new Employee(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4), resultSet.getString(5));
+        }
+        assert employee != null;
         employee.setId(id);
         closer(new AutoCloseable[]{connection, statement, resultSet});
         return employee;
     }
 
-    private static Client getClientById(String id) throws SQLException {
+    public static Client getClientById(String id) throws SQLException {
         String query = "SELECT firstName, secondName, lastName, phone, cardNumber FROM " + Constants.TABLE_CLIENTS +
                 " WHERE id = " + id + ";";
-        Client client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
-                resultSet.getString(4), resultSet.getString(5));
+        connector(query);
+        Client client = null;
+        while (resultSet.next()) {
+            client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4), resultSet.getString(5));
+        }
+        assert client != null;
         client.setId(id);
         closer(new AutoCloseable[]{connection, statement, resultSet});
         return client;
