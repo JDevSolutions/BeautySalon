@@ -24,7 +24,7 @@ public class OrderAddDialogController {
     private CheckBox paidOrderCheckBox;
 
     private Stage dialogStage;
-    // TODO: 22.01.2016  
+    // TODO: 22.01.2016
     private Order order;
     private boolean okClicked;
 
