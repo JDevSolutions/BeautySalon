@@ -10,10 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ua.com.jdev.dbase.DBHelper;
-import ua.com.jdev.model.Client;
-import ua.com.jdev.model.Employee;
-import ua.com.jdev.model.Goods;
-import ua.com.jdev.model.Order;
+import ua.com.jdev.model.*;
+import ua.com.jdev.view.RootLayoutController;
 import ua.com.jdev.view.TabsOverviewController;
 import ua.com.jdev.view.dialogs.*;
 
@@ -71,6 +69,10 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
             rootLayout = loader.load();
+
+            // Give the controller access to the main app.
+            RootLayoutController controller = loader.getController();
+            controller.setMainApp(this);
 
             // Show thr scene containing the root layout
             Scene scene = new Scene(rootLayout);
@@ -391,6 +393,29 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void showRestoreEmployeeDialog() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/dialogs/RestoreEmployeeDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Удаленные сотрудники");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            RestoreEmployeeDialogController controller = loader.getController();
+            controller.setMainApp(this);
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,5 +1,8 @@
 package ua.com.jdev.model;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -9,6 +12,7 @@ public abstract class Person extends BaseClass {
     protected StringProperty secondName;
     protected StringProperty lastName;
     protected StringProperty phone;
+    private ReadOnlyStringWrapper fullName = new ReadOnlyStringWrapper();
 
     public Person(String firstName, String secondName, String lastName) {
         this.firstName = new SimpleStringProperty(firstName);
@@ -21,9 +25,15 @@ public abstract class Person extends BaseClass {
         this.secondName = new SimpleStringProperty(secondName);
         this.lastName = new SimpleStringProperty(lastName);
         this.phone = new SimpleStringProperty(phone);
+
+        this.fullName.bind(Bindings.concat(this.lastName, " ", this.firstName, " ", this.secondName));
     }
 
     protected Person() {}
+
+    public ReadOnlyStringProperty fullNameProperty() {
+        return fullName.getReadOnlyProperty();
+    }
 
     public String getFirstName() {
         return firstName.get();
