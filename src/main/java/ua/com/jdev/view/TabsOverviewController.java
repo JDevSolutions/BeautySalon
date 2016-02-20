@@ -146,10 +146,10 @@ public class TabsOverviewController {
         goods.setAmount(Integer.parseInt(controller.getAmountGoodsField().getText()));
     }
     private void editGoods(Goods goods, GoodsSaleDialogController controller) {
-        goods.setCode(controller.getCodeGoodsField().getText());
-        goods.setName(controller.getNameGoodsField().getText());
-        goods.setPrice(Double.parseDouble(controller.getPriceGoodsField().getText()));
-        goods.setAmount(Integer.parseInt(controller.getAmountGoodsField().getText()));
+//        goods.setCode(controller.getCodeGoodsField().getText());
+//        goods.setName(controller.getNameGoodsField().getText());
+//        goods.setPrice(Double.parseDouble(controller.getPriceGoodsField().getText()));
+//        goods.setAmount(Integer.parseInt(controller.getAmountGoodsField().getText()));
     }
     private void editEmployee(Employee employee, EmployeeEditDialogController controller) {
         employee.setFirstName(controller.getFirstNameEmployeeField().getText());
@@ -194,6 +194,7 @@ public class TabsOverviewController {
         if (okClicked) {
             editOrder(selectedOrder, controller);
         }
+        orderTable.refresh();
     }
     @FXML
     private void handleDeleteOrder() {
@@ -233,6 +234,7 @@ public class TabsOverviewController {
         if (okClicked) {
             editGoods(selectedGoods, controller);
         }
+        goodsTable.refresh();
     }
     @FXML
     private void handleDeleteGoods() {
@@ -282,6 +284,7 @@ public class TabsOverviewController {
         if (okClicked) {
             editEmployee(selectedEmployee, controller);
         }
+        employeeTable.refresh();
     }
     @FXML
     private void handleDeleteEmployee() {
@@ -321,6 +324,7 @@ public class TabsOverviewController {
             if (okClicked) {
                 editClient(selectedClient, controller);
             }
+        clientTable.refresh();
     }
 
     @FXML
