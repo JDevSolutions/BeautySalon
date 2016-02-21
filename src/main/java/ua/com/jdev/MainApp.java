@@ -267,7 +267,7 @@ public class MainApp extends Application {
         }
     }
 
-    public boolean showGoodsSaleDialog(Goods goods) {
+    public boolean showGoodsSaleDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/dialogs/GoodsSaleDialog.fxml"));
@@ -283,7 +283,6 @@ public class MainApp extends Application {
 
             goodsSaleController = loader.getController();
             goodsSaleController.setDialogStage(dialogStage);
-            goodsSaleController.setGoods(goods);
 
             dialogStage.showAndWait();
 

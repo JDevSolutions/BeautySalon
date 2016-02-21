@@ -17,10 +17,10 @@ import ua.com.jdev.view.dialogs.*;
 public class TabsOverviewController {
 
     @FXML private TableView<Order> orderTable;
-    @FXML private TableColumn<Order, String> timeColumnSchedule;
-    @FXML private TableColumn<Order, Employee> employeeColumnSchedule;
-    @FXML private TableColumn<Order, Client> clientColumnSchedule;
-    @FXML private TableColumn<Order, Double> priceColumnSchedule;
+    @FXML private TableColumn<Order, String> timeColumnOrder;
+    @FXML private TableColumn<Order, Employee> employeeColumnOrder;
+    @FXML private TableColumn<Order, Client> clientColumnOrder;
+    @FXML private TableColumn<Order, Double> priceColumnOrder;
     @FXML private Button editBtnOrder;
     @FXML private Button deleteBtnOrder;
 
@@ -69,7 +69,6 @@ public class TabsOverviewController {
     private void initialize() {
         editBtnOrder.setDisable(true);
         deleteBtnOrder.setDisable(true);
-        saleBtnGoods.setDisable(true);
         editBtnGoods.setDisable(true);
         deleteBtnGoods.setDisable(true);
         editBtnEmployee.setDisable(true);
@@ -78,10 +77,10 @@ public class TabsOverviewController {
         deleteBtnClient.setDisable(true);
         // Initialize all tabs
         // Schedule
-        timeColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
-        employeeColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().employeeProperty());
-        clientColumnSchedule.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
-        priceColumnSchedule.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+        timeColumnOrder.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
+        employeeColumnOrder.setCellValueFactory(cellData -> cellData.getValue().employeeProperty());
+        clientColumnOrder.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
+        priceColumnOrder.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
         // Goods
         codeColumnGoods.setCellValueFactory(cellData -> cellData.getValue().codeProperty());
         nameColumnGoods.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -107,7 +106,7 @@ public class TabsOverviewController {
         );
         goodsTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> {
-                    saleBtnGoods.setDisable(false); editBtnGoods.setDisable(false); deleteBtnGoods.setDisable(false);})
+                    editBtnGoods.setDisable(false); deleteBtnGoods.setDisable(false);})
         );
         employeeTable.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> {
@@ -250,12 +249,8 @@ public class TabsOverviewController {
 
     @FXML
     private void handleSaleGoods() {
-        Goods selectedGoods = goodsTable.getSelectionModel().getSelectedItem();
-        boolean okClicked = mainApp.showGoodsSaleDialog(selectedGoods);
+        boolean addClicked = mainApp.showGoodsSaleDialog();
         GoodsSaleDialogController controller = mainApp.getGoodsSaleController();
-        if (okClicked) {
-            editGoods(selectedGoods, controller);
-        }
     }
 
     /**

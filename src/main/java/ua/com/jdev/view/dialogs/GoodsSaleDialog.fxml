@@ -8,11 +8,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.com.jdev.view.dialogs.GoodsSaleDialogController">
    <children>
-      <TableView layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="goodsSaleTableView" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Товар" />
-          <TableColumn prefWidth="75.0" text="Цена" />
-            <TableColumn prefWidth="75.0" text="Количество" />
+          <TableColumn fx:id="nameColumnSale" prefWidth="75.0" text="Товар" />
+          <TableColumn fx:id="priceColumnSale" prefWidth="75.0" text="Цена" />
+            <TableColumn fx:id="amountColumnSale" prefWidth="75.0" text="Количество" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -20,8 +20,8 @@
       </TableView>
       <HBox layoutX="75.0" layoutY="195.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
          <children>
-            <Button mnemonicParsing="false" prefWidth="110.0" text="Добавить товар" />
-            <Button mnemonicParsing="false" prefWidth="110.0" text="Удалить" />
+            <Button fx:id="addBtnGoodsSale" mnemonicParsing="false" onAction="#handleAdd" prefWidth="110.0" text="Добавить товар" />
+            <Button fx:id="deleteBtnGoodsSale" mnemonicParsing="false" onAction="#handleDelete" prefWidth="110.0" text="Удалить товар" />
          </children>
       </HBox>
       <HBox layoutX="85.0" layoutY="205.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
