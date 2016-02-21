@@ -8,6 +8,8 @@ import ua.com.jdev.model.Goods;
 import ua.com.jdev.model.Employee;
 import ua.com.jdev.model.Order;
 
+import java.sql.ResultSet;
+
 /**
  * Created by Yurii Mikhailichenko on 17.01.2016.
  *
@@ -55,9 +57,19 @@ public class DBHelper {
         }
     }
 
-/*    public static void main(String[] args) {
-        Goods g = new Goods("53", "Шузы", 354.4, 71);
-        insert(g);
-        sale(g, 7, 67);
-    }*/
+    public static ObservableList<? extends BaseClass> search(String search) {
+        String query = "SELECT * FROM goods WHERE isActive = true AND name LIKE '%" + search + "%';";
+        outcomingData = dbRep.executeQuery(query, Constants.TABLE_GOODS);
+        return outcomingData;
+    }
+
+    public static void main(String[] args) {
+        insert(new Goods("53", "Шузы", 354.4, 71));
+        insert(new Goods("45", "Кеды", 361.34, 65));
+        insert(new Goods("12", "Водолазка", 150.4, 32));
+        insert(new Goods("08", "Мастерка", 221.8, 12));
+        insert(new Goods("99", "Шапка", 98.0, 112));
+        insert(new Goods("44", "Куртяк", 1311.94, 21));
+        search("ка");
+    }
 }
