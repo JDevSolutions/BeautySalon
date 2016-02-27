@@ -50,10 +50,10 @@ public class DBHelper {
         dbRep.executeUpdate(query);
     }
 
-    public static void sale(ObservableList<Goods> goodsList, Integer[] amounts) {
-        assert goodsList.size() == amounts.length;
-        for (int i = 0; i < goodsList.size(); i++) {
-            sale(goodsList.get(i), amounts[i]);
+    public static void sale(ObservableList<Goods> goodsList) {
+        //assert goodsList.size() == amounts.length;
+        for (Goods goods : goodsList) {
+            sale(goods, goods.getAmount(), goods.getPrice());
         }
     }
 
