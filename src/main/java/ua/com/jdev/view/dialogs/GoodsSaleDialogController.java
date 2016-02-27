@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ua.com.jdev.dbase.DBHelper;
 import ua.com.jdev.model.EditingCellGoodsDouble;
 import ua.com.jdev.model.EditingCellGoodsInteger;
 import ua.com.jdev.model.Goods;
@@ -115,7 +116,7 @@ public class GoodsSaleDialogController {
     @FXML
     private void handleOk() {
 
-            //DBHelper.sale(goodsData);
+            DBHelper.sale(goodsData);
 
             okClicked = true;
             dialogStage.close();
