@@ -11,6 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ua.com.jdev.model.EditingCellGoodsDouble;
+import ua.com.jdev.model.EditingCellGoodsInteger;
 import ua.com.jdev.model.Goods;
 
 import java.io.IOException;
@@ -18,8 +20,12 @@ import java.io.IOException;
 public class GoodsSaleDialogController {
 
     private Stage dialogStage;
-    private Goods goods;
     private boolean okClicked;
+
+    public ObservableList<Goods> getGoodsData() {
+        return goodsData;
+    }
+
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
 
     @FXML private TableView<Goods> goodsSaleTableView;
@@ -33,9 +39,17 @@ public class GoodsSaleDialogController {
      */
     @FXML
     private void initialize() {
+        goodsSaleTableView.setEditable(true);
         nameColumnSale.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         priceColumnSale.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+        priceColumnSale.setCellFactory(param -> new EditingCellGoodsDouble());
+        priceColumnSale.setOnEditCommit(event ->
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setPrice(event.getNewValue()));
         amountColumnSale.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAmount()));
+        amountColumnSale.setCellFactory(param -> new EditingCellGoodsInteger());
+        amountColumnSale.setOnEditCommit(event ->
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setAmount(event.getNewValue()));
+
     }
 
     /**
@@ -101,7 +115,7 @@ public class GoodsSaleDialogController {
     @FXML
     private void handleOk() {
 
-            //DBHelper.sale(goods);
+            //DBHelper.sale(goodsData);
 
             okClicked = true;
             dialogStage.close();
@@ -115,9 +129,7 @@ public class GoodsSaleDialogController {
         dialogStage.close();
     }
 
-    public void setGoodsData(ObservableList<Goods> goodsData) {
-        this.goodsData = goodsData;
+    public void updateTable() {
         goodsSaleTableView.setItems(goodsData);
-        //goodsSaleTableView.refresh();
     }
 }

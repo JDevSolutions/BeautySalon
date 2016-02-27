@@ -18,11 +18,18 @@ public class GoodsSearchDialogController {
     private boolean okClicked;
 
     private ObservableList<Goods> goodsList = FXCollections.observableArrayList();
-    @FXML private TextField goodsSearchField;
-    @FXML private TableView<Goods> goodsTableView;
-    @FXML private TableColumn<Goods, String> nameColumnOrder;
-    @FXML private TableColumn<Goods, Double> priceColumnOrder;
-    @FXML private TableColumn<Goods, Integer> amountColumnOrder;
+
+    @FXML
+    private TextField goodsSearchField;
+    @FXML
+    private TableView<Goods> goodsTableView;
+    @FXML
+    private TableColumn<Goods, String> nameColumnOrder;
+    @FXML
+    private TableColumn<Goods, Double> priceColumnOrder;
+    @FXML
+    private TableColumn<Goods, Integer> amountColumnOrder;
+    private Goods goods;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -30,12 +37,10 @@ public class GoodsSearchDialogController {
      */
     @FXML
     private void initialize() {
-        goodsSearchField.setOnKeyPressed((event) -> {
-            goodsList = (ObservableList<Goods>) DBHelper.search(goodsSearchField.getText());
-            goodsTableView.setItems(goodsList);
-            goodsTableView.refresh();
-        });
-        goodsSearchField.onKeyPressedProperty();
+        goodsSearchField.setOnKeyTyped((event1 ->
+                goodsTableView.setItems((ObservableList<Goods>) DBHelper.search(goodsSearchField.getText()))));
+        //goodsSearchField.setOnKeyPressed((event) ->
+        //        goodsTableView.setItems((ObservableList<Goods>) DBHelper.search(goodsSearchField.getText())));
         nameColumnOrder.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         priceColumnOrder.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
         amountColumnOrder.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getAmount()));
@@ -54,11 +59,14 @@ public class GoodsSearchDialogController {
     }
 
     /**
-     *    *** BUTTONS HANDLING ***
+     * *** BUTTONS HANDLING ***
      */
     @FXML
     private void handleOk() {
-        parentController.setGoodsData(goodsList);
+        //parentController.setGoodsData(goodsList);
+        goods = goodsTableView.getSelectionModel().getSelectedItem();
+        parentController.getGoodsData().add(goods);
+        parentController.updateTable();
         okClicked = true;
         dialogStage.close();
     }
@@ -69,5 +77,9 @@ public class GoodsSearchDialogController {
     @FXML
     private void handleCancel() {
         dialogStage.close();
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
     }
 }
