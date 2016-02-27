@@ -50,11 +50,23 @@ public class DBHelper {
         dbRep.executeUpdate(query);
     }
 
-    public static void sale(Goods goods, int amount, double price) {
+    public static void sale(ObservableList<Goods> goodsList, Integer[] amounts) {
+        assert goodsList.size() == amounts.length;
+        for (int i = 0; i < goodsList.size(); i++) {
+            sale(goodsList.get(i), amounts[i]);
+        }
+    }
+
+    private static void sale(Goods goods, int amount, double price) {
         String[] sale = goods.getSaleQuery(amount, price);
         for (String s : sale) {
             dbRep.executeUpdate(s);
         }
+    }
+
+    private static void sale(Goods goods, int amount) {
+        double price = goods.getPrice();
+        sale(goods, amount, price);
     }
 
     public static ObservableList<? extends BaseClass> search(String search) {
@@ -64,12 +76,12 @@ public class DBHelper {
     }
 
     public static void main(String[] args) {
-        insert(new Goods("53", "Шузы", 354.4, 71));
-        insert(new Goods("45", "Кеды", 361.34, 65));
-        insert(new Goods("12", "Водолазка", 150.4, 32));
-        insert(new Goods("08", "Мастерка", 221.8, 12));
-        insert(new Goods("99", "Шапка", 98.0, 112));
-        insert(new Goods("44", "Куртяк", 1311.94, 21));
-        search("ка");
+        insert(new Goods("53", "Shoes", 354.4, 71));
+        insert(new Goods("45", "Nike", 361.34, 65));
+        insert(new Goods("12", "Swetter", 150.4, 32));
+        insert(new Goods("08", "Masterko", 221.8, 12));
+        insert(new Goods("99", "Hat228", 98.0, 112));
+        insert(new Goods("44", "Coat", 1311.94, 21));
+        //search("ка");
     }
 }
